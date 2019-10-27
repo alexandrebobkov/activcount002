@@ -1,2 +1,3 @@
-# activcount002
- v2
+# activcount v.2
+ 
+ Accounting app
