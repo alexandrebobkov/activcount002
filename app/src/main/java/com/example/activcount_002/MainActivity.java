@@ -2,10 +2,15 @@ package com.example.activcount_002;
 
 import android.os.Bundle;
 
+import com.example.activcount_002.ui.about.AboutFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import androidx.fragment.app.Fragment;
+
+import android.widget.TextView;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -51,19 +56,46 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        setAboutMsg("link");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        setAboutMsg("link");
         return true;
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        setAboutMsg("link");
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onAttachFragment (Fragment fragment)
+    {
+        if (fragment instanceof AboutFragment) {
+            Bundle args = new Bundle();
+            args.putString("link", "link");
+            fragment.setArguments(args);
+        }
+    }
+
+    public void setAboutMsg (String link)
+    {
+        AboutFragment about_frg = new AboutFragment();
+
+        //AboutFragment about_frg = (AboutFragment) findFragmentById(R.id.nav_about);
+        Bundle bundle = new Bundle();
+        String msg_value = "ok ok";
+        bundle.putString("link", msg_value);
+        //bundle.putString("link");
+        about_frg.setArguments(bundle);
+        about_frg.setMsgValue("link");
     }
 }
