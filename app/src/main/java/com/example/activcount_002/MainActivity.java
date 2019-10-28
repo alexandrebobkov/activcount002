@@ -29,6 +29,7 @@ import android.view.Menu;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    public String status_msg = "message";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        /*TextView status_txt = (TextView) findViewById(R.id.status_msg);
+        status_txt.setText("Status: updated");*/
         setAboutMsg("link");
     }
 
@@ -97,5 +100,10 @@ public class MainActivity extends AppCompatActivity {
         //bundle.putString("link");
         about_frg.setArguments(bundle);
         about_frg.setMsgValue("link");
+    }
+
+    public void setStatusMsg(String s)
+    {
+        status_msg = s;
     }
 }
