@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
@@ -27,13 +28,8 @@ public class AboutFragment extends Fragment {
 
     private Listener listener;
 
-
-
     // This interface can be implemented by the Activity, parent Fragment,
     // or a separate test implementation.
-    public interface Listener {
-        //public void onItemSelected(String str);
-    }
 
 
     private AboutViewModel aboutViewModel;
@@ -43,8 +39,16 @@ public class AboutFragment extends Fragment {
     {
         context = getActivity();
 
+
         //aboutViewModel = ViewModelProviders.of(this).get(AboutViewModel.class);
         View root = inflater.inflate(R.layout.fragment_about, container, false);
+        Button btn_ok = (Button) root.findViewById(R.id.btn_001);
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateDetail();
+            }
+        });
 
         TextView msg_txt = (TextView) context.findViewById(R.id.text_home);
         //msg_txt.setText("ok");
@@ -62,25 +66,50 @@ public class AboutFragment extends Fragment {
                 //textView.setText(context.setStatusMsg("ok"));
             }
        });*/
+        //updateDetail();
        return root;
+    }
+    public interface Listener {
+        public void onItemSelected(String link);
+    }
+    @Override
+    public void onAttach (Activity activity)
+    {
+        super.onAttach(activity);
+        if (activity instanceof Listener)
+            listener = (Listener) activity;
+        else
+            throw new ClassCastException(activity.toString() + " must implement AboutFragment.listener");
     }
 
     public void setMsg(String text) {
         TextView view = (TextView) getView().findViewById(R.id.credits_text);
-        view.setText(text);
+        view.append(" n" +text);
     }
 
     public void setMsgValue (String text)
     {
         msg = text;
+        //TextView sts = (TextView) getView().findViewById(R.id.app_objective);
+        //sts.append(text);
     }
 
-    public static AboutFragment newInstance (String msg)
+    /*public static AboutFragment newInstance (String msg)
     {
         AboutFragment af = new AboutFragment();
         Bundle b = new Bundle();
         b.putString("link", msg);
         af.setArguments(b);
         return (af);
+    }*/
+
+    public void updateDetail()
+    {
+        String s = "done!";
+        //if (listener != null)
+            listener.onItemSelected(s);
+        TextView sts = (TextView) getView().findViewById(R.id.credits_text);
+        sts.append(" 2019");
+        sts.append(" " +msg);
     }
 }

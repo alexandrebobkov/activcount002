@@ -91,10 +91,18 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.Lis
         }
     }*/
 
-    //@Override
+    @Override
     public void onItemSelected (String str)
     {
-        //HomeFragment home_frg = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.nav_home);
+        HomeFragment home_frg = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.nav_home);
+        if (home_frg != null)//  && home_frg.isInLayout())
+            home_frg.setText(str);
+
+        AboutFragment about_frg = (AboutFragment) getSupportFragmentManager().findFragmentById(R.id.nav_about);
+        if (about_frg != null)
+            about_frg.setMsgValue(str);
+        //TextView status_view = (TextView) findViewById(R.id.status_msg);
+        //status_view.append("works!");
     }
 
     public void setAboutMsg (String link)

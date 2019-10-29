@@ -32,4 +32,9 @@ public class HomeFragment extends Fragment {
         });
         return root;
     }
+
+    public void setText(String text) {
+        TextView view = (TextView) getView().findViewById(R.id.status_msg);
+        view.setText("22");
+    }
 }

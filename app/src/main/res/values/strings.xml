@@ -16,6 +16,9 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
 
+    <string name="btn_ok">OK</string>
+    <string name="status_msg">...</string>
+
 
     <string name="app_objective">This program provides condensed visualization of financial information about your business. In addition, program provides: key ratio analysis, forecasting, and pro-forma financial statements.</string>
     <string name="company_name">Alexandre Comptabilité Spécialisé</string>
