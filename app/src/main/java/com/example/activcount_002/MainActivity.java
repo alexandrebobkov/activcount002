@@ -3,6 +3,7 @@ package com.example.activcount_002;
 import android.os.Bundle;
 
 import com.example.activcount_002.ui.about.AboutFragment;
+import com.example.activcount_002.ui.home.HomeFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -26,7 +27,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AboutFragment.Listener
+{
 
     private AppBarConfiguration mAppBarConfiguration;
     public String status_msg = "message";
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    @Override
+    /*@Override
     public void onAttachFragment (Fragment fragment)
     {
         if (fragment instanceof AboutFragment) {
@@ -87,6 +89,12 @@ public class MainActivity extends AppCompatActivity {
             args.putString("link", "link");
             fragment.setArguments(args);
         }
+    }*/
+
+    //@Override
+    public void onItemSelected (String str)
+    {
+        //HomeFragment home_frg = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.nav_home);
     }
 
     public void setAboutMsg (String link)

@@ -1,6 +1,8 @@
 package com.example.activcount_002.ui.about;
 
 import android.app.Activity;
+//import android.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
+//import android.annotation.SuppressLint;
+//import android.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -22,10 +25,14 @@ public class AboutFragment extends Fragment {
 
     Activity context;
 
+    private Listener listener;
+
+
+
     // This interface can be implemented by the Activity, parent Fragment,
     // or a separate test implementation.
-    public interface OnHeadlineSelectedListener {
-        public void onArticleSelected(int position);
+    public interface Listener {
+        //public void onItemSelected(String str);
     }
 
 
@@ -36,7 +43,7 @@ public class AboutFragment extends Fragment {
     {
         context = getActivity();
 
-        aboutViewModel = ViewModelProviders.of(this).get(AboutViewModel.class);
+        //aboutViewModel = ViewModelProviders.of(this).get(AboutViewModel.class);
         View root = inflater.inflate(R.layout.fragment_about, container, false);
 
         TextView msg_txt = (TextView) context.findViewById(R.id.text_home);
@@ -48,13 +55,13 @@ public class AboutFragment extends Fragment {
         msg_txt.setText("ok");*/
 
        final TextView textView = root.findViewById(R.id.credits_text);
-       aboutViewModel.getText().observe(this, new Observer<String>() {
+       /*aboutViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(msg);
                 //textView.setText(context.setStatusMsg("ok"));
             }
-       });
+       });*/
        return root;
     }
 
