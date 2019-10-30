@@ -29,16 +29,18 @@ import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity implements AboutFragment.Listener
 {
-
     private AppBarConfiguration mAppBarConfiguration;
     public String status_msg = "message";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.Lis
                         .setAction("Action", null).show();
             }
         });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -56,27 +59,28 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.Lis
                 R.id.nav_tools, R.id.nav_about, R.id.nav_share, R.id.nav_send)
                 .setDrawerLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
         /*TextView status_txt = (TextView) findViewById(R.id.status_msg);
         status_txt.setText("Status: updated");*/
-        setAboutMsg("link");
+        //setAboutMsg("link");
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        setAboutMsg("link");
+        //setAboutMsg("link");
         return true;
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        setAboutMsg("link");
+        //setAboutMsg("link");
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
