@@ -1,3 +1,16 @@
+/**
+ *
+ *  Date Created:       October 15, 2019
+ *  Last time updated:  October 30, 2019
+ *  Revision:           2
+ *
+ *  Author: Alexandre Bobkov
+ *  Company: Alexandre Comptabilite Specialise Ltee.
+ *
+ *  Program purpose: To display key accounting information and financial overview.
+ *
+**/
+
 package com.example.activcount_002;
 
 import android.os.Bundle;
@@ -24,11 +37,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
+import android.widget.Button;
 
 import android.view.Menu;
 
-public class MainActivity extends AppCompatActivity implements AboutFragment.Listener
+public class MainActivity extends AppCompatActivity implements AboutFragment.Listener //View.OnClickListener //
 {
+    MainViewModel mainViewModel;
+    Button ok_btn;
+    TextView status_txt;
+
     private AppBarConfiguration mAppBarConfiguration;
     public String status_msg = "message";
 
@@ -37,6 +56,14 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.Lis
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /*
+        // MainViewModel
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        status_txt = (TextView) findViewById(R.id.status_msg);
+        ok_btn = findViewById(R.id.btn_001);
+        ok_btn.setOnClickListener(this);
+        */
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -86,12 +113,12 @@ public class MainActivity extends AppCompatActivity implements AboutFragment.Lis
     }
 
     /*@Override
-    public void onAttachFragment (Fragment fragment)
+    public void onClick(View v)
     {
-        if (fragment instanceof AboutFragment) {
-            Bundle args = new Bundle();
-            args.putString("link", "link");
-            fragment.setArguments(args);
+        switch (v.getId())
+        {
+            case R.id.btn_001:
+                break;
         }
     }*/
 

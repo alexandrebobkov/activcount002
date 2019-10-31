@@ -19,23 +19,28 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.activcount_002.MainActivity;
+import com.example.activcount_002.MainViewModel;
 import com.example.activcount_002.R;
 import com.example.activcount_002.ui.home.HomeFragment;
+import com.example.activcount_002.MainActivity;
 
 import org.w3c.dom.Text;
 
-public class AboutFragment extends Fragment {
+public class AboutFragment extends Fragment
+{
 
+    MainViewModel mainViewModel;
     Activity context;
     private Listener listener;
     private AboutViewModel aboutViewModel;
 
-    String msg = "";
+    String msg = "done!";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle bundle)
     {
         context = getActivity();
         aboutViewModel = ViewModelProviders.of(this).get(AboutViewModel.class);
+        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         View root = inflater.inflate(R.layout.fragment_about, container, false);
 
         final TextView credits_text_view = root.findViewById(R.id.credits_text);
@@ -46,13 +51,20 @@ public class AboutFragment extends Fragment {
             public void onClick(View v)
             {
                 updateDetail();
+                mainViewModel.setStatus_msg("2019");
             }
         });
 
-        aboutViewModel.getText().observe(this, new Observer<String>() {
+        mainViewModel.getStatus_msg().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {     credits_text_view.setText(s);   }
         });
+
+        /*aboutViewModel.getText().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {     credits_text_view.setText(s);   }
+        });
+        */
         return root;
     }
 
@@ -74,8 +86,13 @@ public class AboutFragment extends Fragment {
     {
         String s = "done!";
         //if (listener != null)
-            listener.onItemSelected(s);
+            //listener.onItemSelected(s);
         TextView sts = (TextView) getView().findViewById(R.id.credits_text);
         sts.setText(" 2019");
+        //sts.setText(mainViewModel.getStatus_msg());
+        mainViewModel.setStatus_msg("2019");
+        mainViewModel.status_msg = "ok";
+
+
     }
 }
