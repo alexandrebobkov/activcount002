@@ -13,7 +13,7 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
-//import android.annotation.SuppressLint;
+import android.annotation.SuppressLint;
 //import android.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -38,12 +38,13 @@ public class AboutFragment extends Fragment
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle bundle)
     {
-        context = getActivity();
+        //context = getActivity();
         aboutViewModel = ViewModelProviders.of(this).get(AboutViewModel.class);
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         View root = inflater.inflate(R.layout.fragment_about, container, false);
 
         final TextView credits_text_view = root.findViewById(R.id.credits_text);
+        final TextView home_textView = root.findViewById(R.id.status_msg);
         final Button btn_ok = root.findViewById(R.id.btn_001);
 
         btn_ok.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +52,11 @@ public class AboutFragment extends Fragment
             public void onClick(View v)
             {
                 updateDetail();
-                mainViewModel.setStatus_msg("2019");
+                //mainViewModel.setStatus_msg("2019");
+                //msg = mainViewModel.get_status_msg();
+                mainViewModel.setStatus_msg(msg);
+                /** PASS VALUE TO MAIN_VIEW_MODEL FIRST; THEN PULL IT AT HOME FRAGMENT **/
+                mainViewModel.setHomeStatus_msg("updated!");
             }
         });
 
@@ -59,6 +64,10 @@ public class AboutFragment extends Fragment
             @Override
             public void onChanged(@Nullable String s) {     credits_text_view.setText(s);   }
         });
+        /*mainViewModel.getStatus_msg().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {     home_textView.setText(s);   }
+        });*/
 
         /*aboutViewModel.getText().observe(this, new Observer<String>() {
             @Override
@@ -88,10 +97,11 @@ public class AboutFragment extends Fragment
         //if (listener != null)
             //listener.onItemSelected(s);
         TextView sts = (TextView) getView().findViewById(R.id.credits_text);
-        sts.setText(" 2019");
+        sts.setText(s);
+        //sts.setText("2019");
         //sts.setText(mainViewModel.getStatus_msg());
-        mainViewModel.setStatus_msg("2019");
-        mainViewModel.status_msg = "ok";
+        //mainViewModel.setStatus_msg("2019");
+        //mainViewModel.status_msg = "ok";
 
 
     }
