@@ -1,12 +1,21 @@
 package com.example.activcount_002;
 
-import android.widget.TextView;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteOpenHelper;
 
 public class MainData
 {
     private static float assets_current, assets_supplies, assets_total;
     private static float liabilities_current, liabilities_long_term, liabilities_total;
     private static float net_revenues, direct_costs, operating_expenses;
+
+    private static final int DATABASE_VERSION   = 1;
+    private static final String DATANASE_NAME   = "activcount_database";    // Database name
+    private static final String TABLE_Data      = "Data";                   // Table name
+    private static final String KEY_ID          = "id";                     // Column name
+    private static final String KEY_NAME        = "value";
 
     public MainData()
     {
