@@ -18,7 +18,7 @@ import com.example.activcount_002.R;
 public class AboutFragment extends Fragment
 {
     private MainViewModel   mainViewModel;
-    String  msg     =       "done!";
+    String  msg     =       "";
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle bundle)
     {
@@ -34,9 +34,6 @@ public class AboutFragment extends Fragment
             public void onClick(View v)
             {
                 updateDetail();
-                mainViewModel.setStatus_msg(msg);
-                /** PASS VALUE TO MAIN_VIEW_MODEL FIRST; THEN PULL IT AT HOME FRAGMENT **/
-                mainViewModel.setHomeStatus_msg("updated!");
             }
         });
 
@@ -51,8 +48,11 @@ public class AboutFragment extends Fragment
 
     private void updateDetail()
     {
-        String      s   = "done!";
-        TextView    sts = (TextView) getView().findViewById(R.id.credits_text);
-        sts.setText(s);
+        msg   = "done!";
+        mainViewModel.setStatus_msg(msg);
+        mainViewModel.setHomeStatus_msg("updated!");
+
+        //TextView    sts = (TextView) getView().findViewById(R.id.credits_text);
+        //sts.setText(msg);
     }
 }

@@ -9,17 +9,17 @@
             android:icon="@drawable/icon_bank"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_ratios"
             android:icon="@drawable/icon_ledger"
-            android:title="@string/menu_gallery" />
+            android:title="@string/menu_ratios" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/icon_calculator2"
             android:title="@string/menu_reports" />
         <item
-            android:id="@+id/nav_tools"
+            android:id="@+id/nav_data"
             android:icon="@drawable/icon_pencil"
-            android:title="@string/menu_tools" />
+            android:title="@string/menu_data" />
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/icon_seal"

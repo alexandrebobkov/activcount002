@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
+        android:id="@+id/nav_ratios"
+        android:name="com.example.activcount_002.ui.ratios.RatiosFragment"
+        android:label="@string/menu_ratios"
+        tools:layout="@layout/fragment_ratios" />
+
+    <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.activcount_002.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_reports"
@@ -28,6 +34,11 @@
         android:name="com.example.activcount_002.ui.tools.ToolsFragment"
         android:label="@string/menu_tools"
         tools:layout="@layout/fragment_tools" />
+    <fragment
+        android:id="@+id/nav_data"
+        android:name="com.example.activcount_002.ui.data.DataFragment"
+        android:label="@string/menu_data"
+        tools:layout="@layout/fragment_data" />
     <fragment
         android:id="@+id/nav_about"
         android:name="com.example.activcount_002.ui.about.AboutFragment"
