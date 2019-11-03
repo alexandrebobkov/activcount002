@@ -49,15 +49,12 @@ public class HomeFragment extends Fragment
         dbManager = new DBManager(getContext());
         dbManager.open();
         Cursor cursor = dbManager.fetch();
-        theList.add(cursor.getString(1));
-        ListAdapter listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
-        listView.setAdapter(listAdapter);
+        while (cursor.moveToNext()) {
+            theList.add(cursor.getString(1));
+            ListAdapter listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
+            listView.setAdapter(listAdapter);
+        }
 
         return root;
     }
-
-    /*public void onClick(View v)
-    {
-        intent = new Intent(HomeFragment.this, AboutFragment.class);
-    }*/
 }

@@ -20,6 +20,8 @@ import com.example.activcount_002.db.DBManager;
 
 import org.w3c.dom.Text;
 
+import java.util.Calendar;
+
 public class DataFragment extends Fragment {
 
     private MainViewModel mainViewModel;
@@ -70,8 +72,7 @@ public class DataFragment extends Fragment {
                         +"\nTA: "+mainData.getAssetsTotal());
 
                 dbManager.open();
-                dbManager.insert("assets", "current");
-                dbManager.insert("assets", "current 2");
+                dbManager.insert("assets " + Calendar.getInstance().getTime(), "current");
             }
         });
 
