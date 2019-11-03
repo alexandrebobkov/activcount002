@@ -12,9 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.activcount_002.MainActivity;
 import com.example.activcount_002.MainViewModel;
 import com.example.activcount_002.MainData;
 import com.example.activcount_002.R;
+import com.example.activcount_002.db.DBManager;
 
 import org.w3c.dom.Text;
 
@@ -22,6 +24,7 @@ public class DataFragment extends Fragment {
 
     private MainViewModel mainViewModel;
     private MainData mainData;
+    private DBManager dbManager;
     private View view;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -31,6 +34,10 @@ public class DataFragment extends Fragment {
         view = getView();
         mainViewModel   = ViewModelProviders.of(this).get(MainViewModel.class);
         View root = inflater.inflate(R.layout.fragment_data, container, false);
+
+        dbManager = new DBManager(getContext());
+        dbManager.open();
+        dbManager.insert("assets", "current");
 
         final Button    btn_ok              = root.findViewById(R.id.btn_data_submit);
         final TextView  assets_current      = root.findViewById(R.id.data_cash_and_deposits);
@@ -63,6 +70,8 @@ public class DataFragment extends Fragment {
                         +"\nCA: " +mainData.getAssetsCurrent()
                         +"\nLA: " +mainData.getAssetsSupplies()
                         +"\nTA: "+mainData.getAssetsTotal());
+
+                dbManager.insert("assets", "none");
             }
         });
 
