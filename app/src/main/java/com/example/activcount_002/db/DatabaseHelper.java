@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DESC = "description";
 
     // Database Information
-    static final String DB_NAME = "ACTIVCOUNT_DATA.DB";
+    static final String DB_NAME = "ACTIVCOUNT_DATA_002.DB";
 
     // database version
     static final int DB_VERSION = 1;

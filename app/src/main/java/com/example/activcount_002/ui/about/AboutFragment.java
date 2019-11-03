@@ -1,5 +1,6 @@
 package com.example.activcount_002.ui.about;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +15,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.activcount_002.MainViewModel;
 import com.example.activcount_002.R;
+import com.example.activcount_002.ui.home.HomeFragment;
 
 public class AboutFragment extends Fragment
 {
+    Intent intent;
     private MainViewModel   mainViewModel;
     String  msg     =       "";
 
@@ -55,4 +58,9 @@ public class AboutFragment extends Fragment
         //TextView    sts = (TextView) getView().findViewById(R.id.credits_text);
         //sts.setText(msg);
     }
+
+    /*public void onClick(View v)
+    {
+        intent = new Intent(AboutFragment.this, HomeFragment.class);
+    }*/
 }

@@ -36,8 +36,6 @@ public class DataFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_data, container, false);
 
         dbManager = new DBManager(getContext());
-        dbManager.open();
-        dbManager.insert("assets", "current");
 
         final Button    btn_ok              = root.findViewById(R.id.btn_data_submit);
         final TextView  assets_current      = root.findViewById(R.id.data_cash_and_deposits);
@@ -71,7 +69,9 @@ public class DataFragment extends Fragment {
                         +"\nLA: " +mainData.getAssetsSupplies()
                         +"\nTA: "+mainData.getAssetsTotal());
 
-                dbManager.insert("assets", "none");
+                dbManager.open();
+                dbManager.insert("assets", "current");
+                dbManager.insert("assets", "current 2");
             }
         });
 
