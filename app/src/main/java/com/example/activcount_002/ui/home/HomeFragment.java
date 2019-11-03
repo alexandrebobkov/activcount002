@@ -10,9 +10,14 @@ import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.ListView;
+import android.widget.ListAdapter;
+import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import com.example.activcount_002.MainActivity;
 import com.example.activcount_002.R;
@@ -39,9 +44,14 @@ public class HomeFragment extends Fragment
         final   TextView statusMsg  = root.findViewById(R.id.status_msg);
         statusMsg.setText(mainViewModel.get_home_status_msg());
 
+        listView = (ListView) root.findViewById(R.id.list_view);
+        ArrayList<String> theList = new ArrayList<>();
         dbManager = new DBManager(getContext());
         dbManager.open();
         Cursor cursor = dbManager.fetch();
+        theList.add(cursor.getString(1));
+        ListAdapter listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
+        listView.setAdapter(listAdapter);
 
         return root;
     }

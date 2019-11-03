@@ -23,10 +23,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
         android:gravity="center"
         android:text="@string/status_msg"
-        app:layout_constraintBottom_toTopOf="@+id/list_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/empty" />
@@ -34,11 +34,13 @@
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="32dp"
         android:dividerHeight="1dp"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"></ListView>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/status_msg"></ListView>
 
     <TextView
         android:id="@+id/empty"
