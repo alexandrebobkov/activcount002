@@ -1,5 +1,6 @@
 package com.example.activcount_002.ui.data;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,7 +73,13 @@ public class DataFragment extends Fragment {
                         +"\nTA: "+mainData.getAssetsTotal());
 
                 dbManager.open();
-                dbManager.insert("assets " + Calendar.getInstance().getTime(), "current");
+                //if (dbManager.doesTableExist("TABLE_DATA")) {}
+                dbManager.insert("created", "" + Calendar.getInstance().getTime());
+                dbManager.insert("business name", "activcount.ca");
+                dbManager.insert("business number", "145-5897-25");
+                dbManager.insert("anniversary date", "Jan 1, 2019");
+
+                //dbManager.insert();
             }
         });
 

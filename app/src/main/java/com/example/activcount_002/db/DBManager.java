@@ -18,7 +18,6 @@ public class DBManager {
     public DBManager(Context c) {
         context = c;
     }
-    //public DBManager() {}
 
     public DBManager open() throws SQLException {
         dbHelper = new DatabaseHelper(context);
@@ -32,14 +31,14 @@ public class DBManager {
 
     public void insert(String name, String desc) {
         ContentValues contentValue = new ContentValues();
-        contentValue.put(DatabaseHelper.SUBJECT, name);
-        contentValue.put(DatabaseHelper.DESC, desc);
-        database.insert(DatabaseHelper.TABLE_NAME, null, contentValue);
+        contentValue.put(DatabaseHelper.DATA, name);
+        contentValue.put(DatabaseHelper.DESCRIPTION, desc);
+        database.insert(DatabaseHelper.DATA_TABLE_NAME, null, contentValue);
     }
 
     public Cursor fetch() {
-        String[] columns = new String[] { DatabaseHelper._ID, DatabaseHelper.SUBJECT, DatabaseHelper.DESC };
-        Cursor cursor = database.query(DatabaseHelper.TABLE_NAME, columns, null, null, null, null, null);
+        String[] columns = new String[] { DatabaseHelper._ID, DatabaseHelper.DATA, DatabaseHelper.DESCRIPTION };
+        Cursor cursor = database.query(DatabaseHelper.DATA_TABLE_NAME, columns, null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
         }
@@ -48,14 +47,27 @@ public class DBManager {
 
     public int update(long _id, String name, String desc) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(DatabaseHelper.SUBJECT, name);
-        contentValues.put(DatabaseHelper.DESC, desc);
-        int i = database.update(DatabaseHelper.TABLE_NAME, contentValues, DatabaseHelper._ID + " = " + _id, null);
+        contentValues.put(DatabaseHelper.DATA, name);
+        contentValues.put(DatabaseHelper.DESCRIPTION, desc);
+        int i = database.update(DatabaseHelper.DATA_TABLE_NAME, contentValues, DatabaseHelper._ID + " = " + _id, null);
         return i;
     }
 
     public void delete(long _id) {
-        database.delete(DatabaseHelper.TABLE_NAME, DatabaseHelper._ID + "=" + _id, null);
+        database.delete(DatabaseHelper.DATA_TABLE_NAME, DatabaseHelper._ID + "=" + _id, null);
+    }
+
+    public boolean doesTableExist(String tableName) {
+        Cursor cursor = database.rawQuery("select DISTINCT 'TABLE_DATA' from ACTIVCOUNT_DATA_002.DB where tbl_name = '" + tableName + "'", null);
+
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.close();
+                return true;
+            }
+            cursor.close();
+        }
+        return false;
     }
 
 }
