@@ -36,7 +36,9 @@ public class AboutFragment extends Fragment
             @Override
             public void onClick(View v)
             {
+
                 updateDetail();
+                credits_text_view.setText(msg);
             }
         });
 

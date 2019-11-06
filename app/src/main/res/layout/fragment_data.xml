@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,200 +10,256 @@
     android:scrollbars="vertical"
     app:layout_scrollFlags="scroll">
 
-    <TextView
-        android:id="@+id/label_data_inventory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/data_inventory"
-        app:layout_constraintBottom_toBottomOf="@+id/data_inventory"
+    <ScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_data_submit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/data_inventory" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/data_inventory"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/data_cash_and_deposits"
-        tools:text="5.15" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/label_data_cash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/data_cash"
-        app:layout_constraintBottom_toBottomOf="@+id/data_cash_and_deposits"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/data_cash_and_deposits" />
+            <TextView
+                android:id="@+id/label_data_inventory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:gravity="center"
+                android:text="@string/data_inventory"
+                app:layout_constraintBottom_toBottomOf="@+id/data_inventory"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/data_inventory" />
 
-    <EditText
-        android:id="@+id/data_cash_and_deposits"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="10.25" />
+            <EditText
+                android:id="@+id/data_inventory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:ems="10"
+                android:gravity="center|center_vertical"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/data_cash_and_deposits"
+                tools:text="5.15" />
 
-    <TextView
-        android:id="@+id/label_total_assets"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/data_total_assets"
-        android:textStyle="normal|bold"
-        app:layout_constraintBottom_toBottomOf="@+id/data_total_assets"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/data_total_assets" />
+            <TextView
+                android:id="@+id/label_data_cash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="@string/data_cash"
+                app:layout_constraintBottom_toBottomOf="@+id/data_cash_and_deposits"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/data_cash_and_deposits" />
 
-    <EditText
-        android:id="@+id/data_total_assets"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:textStyle="normal|bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/data_inventory"
-        tools:text="15.75" />
+            <EditText
+                android:id="@+id/data_cash_and_deposits"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:ems="10"
+                android:gravity="center|center_vertical"
+                android:inputType="numberDecimal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="10.25" />
 
-    <TextView
-        android:id="@+id/label_current_liabilities"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/data_current_liabilities"
-        app:layout_constraintBottom_toBottomOf="@+id/data_current_liabilities"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/data_current_liabilities" />
+            <TextView
+                android:id="@+id/label_total_assets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:gravity="center"
+                android:text="@string/data_total_assets"
+                android:textStyle="normal|bold"
+                app:layout_constraintBottom_toBottomOf="@+id/data_total_assets"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/data_total_assets" />
 
-    <EditText
-        android:id="@+id/data_current_liabilities"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="0.00"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/data_total_assets"
-        tools:text="0.00" />
+            <EditText
+                android:id="@+id/data_total_assets"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:ems="10"
+                android:gravity="center|center_vertical"
+                android:inputType="numberDecimal"
+                android:textStyle="normal|bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/data_inventory"
+                tools:text="15.75" />
 
-    <TextView
-        android:id="@+id/label_long_term_liabilities"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/data_long_term_liabilities"
-        app:layout_constraintBottom_toBottomOf="@+id/data_long_term_liabilities"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/data_long_term_liabilities" />
+            <TextView
+                android:id="@+id/label_current_liabilities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:gravity="center"
+                android:text="@string/data_current_liabilities"
+                app:layout_constraintBottom_toBottomOf="@+id/data_current_liabilities"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/data_current_liabilities" />
 
-    <EditText
-        android:id="@+id/data_long_term_liabilities"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="0.00"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/data_current_liabilities"
-        tools:text="0.00" />
+            <EditText
+                android:id="@+id/data_current_liabilities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:ems="10"
+                android:gravity="center|center_vertical"
+                android:inputType="numberDecimal"
+                android:text="0.00"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/data_total_assets"
+                tools:text="0.00" />
 
-    <TextView
-        android:id="@+id/label_total_liabilities"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/data_total_liabilities"
-        android:textStyle="normal|bold"
-        app:layout_constraintBottom_toBottomOf="@+id/data_total_liabilities"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/data_total_liabilities" />
+            <TextView
+                android:id="@+id/label_long_term_liabilities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:gravity="center"
+                android:text="@string/data_long_term_liabilities"
+                app:layout_constraintBottom_toBottomOf="@+id/data_long_term_liabilities"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/data_long_term_liabilities" />
 
-    <EditText
-        android:id="@+id/data_total_liabilities"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:textStyle="normal|bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/data_long_term_liabilities"
-        tools:text="0.00" />
+            <EditText
+                android:id="@+id/data_long_term_liabilities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:ems="10"
+                android:gravity="center|center_vertical"
+                android:inputType="numberDecimal"
+                android:text="0.00"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/data_current_liabilities"
+                tools:text="0.00" />
+
+            <TextView
+                android:id="@+id/label_total_liabilities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:gravity="center"
+                android:text="@string/data_total_liabilities"
+                android:textStyle="normal|bold"
+                app:layout_constraintBottom_toBottomOf="@+id/data_total_liabilities"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/data_total_liabilities" />
+
+            <EditText
+                android:id="@+id/data_total_liabilities"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:ems="10"
+                android:gravity="center|center_vertical"
+                android:inputType="numberDecimal"
+                android:textStyle="normal|bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/data_long_term_liabilities"
+                tools:text="0.00" />
 
 
-    <TextView
-        android:id="@+id/label_Net_Revenues"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/data_net_revenues"
-        app:layout_constraintBottom_toBottomOf="@+id/data_net_revenues"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/data_net_revenues" />
+            <TextView
+                android:id="@+id/label_Net_Revenues"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:gravity="center"
+                android:text="@string/data_net_revenues"
+                app:layout_constraintBottom_toBottomOf="@+id/data_net_revenues"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/data_net_revenues" />
 
-    <EditText
-        android:id="@+id/data_net_revenues"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="0.00"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/data_total_liabilities" />
+            <EditText
+                android:id="@+id/data_net_revenues"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="64dp"
+                android:layout_marginBottom="16dp"
+                android:ems="10"
+                android:gravity="center|center_vertical"
+                android:inputType="numberDecimal"
+                android:numeric="decimal"
+                android:text="0.00"
+                android:textColor="#CC074A"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/data_total_liabilities" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/data_direct_costs"
-        app:layout_constraintBottom_toBottomOf="@+id/data_direct_costs"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/data_direct_costs" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:gravity="center"
+                android:text="@string/data_direct_costs"
+                app:layout_constraintBottom_toBottomOf="@+id/data_direct_costs"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/data_direct_costs" />
 
-    <EditText
-        android:id="@+id/data_direct_costs"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="0.00"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/data_net_revenues" />
+            <EditText
+                android:id="@+id/data_direct_costs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:ems="10"
+                android:gravity="center|center_vertical"
+                android:inputType="numberDecimal"
+                android:text="0.00"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/data_net_revenues" />
 
+
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/btn_data_submit"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="16dp"
+        android:gravity="center"
         android:text="@string/btn_data_submit"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

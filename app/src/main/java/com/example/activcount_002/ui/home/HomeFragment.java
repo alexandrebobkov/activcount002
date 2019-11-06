@@ -2,6 +2,7 @@ package com.example.activcount_002.ui.home;
 
 import android.database.Cursor;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,14 +52,17 @@ public class HomeFragment extends Fragment
         dbManager.open();
         //boolean table_exists = dbManager.doesTableExist("TABLE_DATA");
 
-        Cursor cursor = dbManager.fetch();
-        do {
-            theList.add(cursor.getString(0));
-            theList.add(cursor.getString(1));
-            theList.add(cursor.getString(2));
-            ListAdapter listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
-            listView.setAdapter(listAdapter);
-        } while (cursor.moveToNext());
+        try {
+            Cursor cursor = dbManager.fetch();
+
+            do {
+                theList.add(cursor.getString(0));
+                theList.add(cursor.getString(1));
+                theList.add(cursor.getString(2));
+                ListAdapter listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
+                listView.setAdapter(listAdapter);
+            } while (cursor.moveToNext());
+        } catch (SQLException e) {}
 
         listView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)

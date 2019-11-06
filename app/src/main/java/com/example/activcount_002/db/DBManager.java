@@ -36,7 +36,7 @@ public class DBManager {
         database.insert(DatabaseHelper.DATA_TABLE_NAME, null, contentValue);
     }
 
-    public Cursor fetch() {
+    public Cursor fetch() throws SQLException {
         String[] columns = new String[] { DatabaseHelper._ID, DatabaseHelper.DATA, DatabaseHelper.DESCRIPTION };
         Cursor cursor = database.query(DatabaseHelper.DATA_TABLE_NAME, columns, null, null, null, null, null);
         if (cursor != null) {
