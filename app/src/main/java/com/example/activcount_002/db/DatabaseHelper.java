@@ -29,6 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CREATE_DATA_TABLE = "create table " + DATA_TABLE_NAME + "(" + _ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DATA + " TEXT NOT NULL, " + DESCRIPTION + " TEXT);";
 
+    private static final String DELETE_DATA_TABLE = "DROP TABLE IF EXISTS " + DATA_TABLE_NAME;
+
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -40,7 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + DATA_TABLE_NAME);
+        db.execSQL(DELETE_DATA_TABLE);
         onCreate(db);
     }
 
