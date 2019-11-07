@@ -7,6 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import com.example.activcount_002.db.DatabaseHelper;
 
+import java.util.Calendar;
+
 public class DBManager {
 
     private DatabaseHelper dbHelper;
@@ -70,4 +72,28 @@ public class DBManager {
         return false;
     }
 
+    public void prepareDataTable()
+    {
+        ContentValues cont_val = new ContentValues();
+
+        //cont_val.put(DatabaseHelper.DATA, "created");
+        //cont_val.put(DatabaseHelper.DESCRIPTION, "" + Calendar.getInstance().getTime());
+        //database.insert(DatabaseHelper.DATA_TABLE_NAME, null, cont_val);
+        insert("Incorporated on:", "" + Calendar.getInstance().getTime());
+
+        //cont_val.put(DatabaseHelper.DATA, "business name");
+        //cont_val.put(DatabaseHelper.DESCRIPTION, "activcount.ca");
+        //database.insert(DatabaseHelper.DATA_TABLE_NAME, null, cont_val);
+        insert("Operating Name", "activcount.ca");
+
+        //cont_val.put(DatabaseHelper.DATA, "business number");
+        //cont_val.put(DatabaseHelper.DESCRIPTION,  "145-5897-25");
+        //database.insert(DatabaseHelper.DATA_TABLE_NAME, null, cont_val);
+        insert("Business Number", "145-5897-25");
+
+        //cont_val.put(DatabaseHelper.DATA, "anniversary date");
+        //cont_val.put(DatabaseHelper.DESCRIPTION, "" + Calendar.getInstance().getTime());
+        //database.insert(DatabaseHelper.DATA_TABLE_NAME, null, cont_val);
+        insert("Anniversary Date", "" + Calendar.getInstance().getTime());
+    }
 }

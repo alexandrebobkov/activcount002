@@ -56,9 +56,7 @@ public class HomeFragment extends Fragment
             Cursor cursor = dbManager.fetch();
 
             do {
-                theList.add(cursor.getString(0));
-                theList.add(cursor.getString(1));
-                theList.add(cursor.getString(2));
+                theList.add("_id: " +cursor.getString(0) + ". " +cursor.getString(1) + "   " +cursor.getString(2));
                 ListAdapter listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
                 listView.setAdapter(listAdapter);
             } while (cursor.moveToNext());
@@ -69,12 +67,12 @@ public class HomeFragment extends Fragment
             {
                 final int _id = arg2;
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("Item Selected " +arg2)
+                builder.setMessage("Item Selected " +((long)arg2+1))
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
-                                Toast.makeText(getContext(), "Selected item # " +_id, Toast.LENGTH_SHORT).show();
-                                dbManager.update((long)_id, "ASSET", "cash");
+                                Toast.makeText(getContext(), "Selected item # " +((long)1+_id), Toast.LENGTH_SHORT).show();
+                                dbManager.update(1+(long)_id, "__DELETED__", "__NA__");
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
