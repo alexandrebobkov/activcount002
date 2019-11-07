@@ -1,3 +1,16 @@
+/**
+ *
+ *  Date Created:       October 15, 2019
+ *  Last time updated:  November 7, 2019
+ *  Revision:           2
+ *
+ *  Author: Alexandre Bobkov
+ *  Company: Alexandre Comptabilite Specialise Ltee.
+ *
+ *  Program purpose: To display key accounting information and financial overview.
+ *
+ **/
+
 package com.example.activcount_002.ui.home;
 
 import android.database.Cursor;
@@ -15,7 +28,9 @@ import android.widget.ListAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -31,10 +46,10 @@ import com.example.activcount_002.db.DatabaseHelper;
 
 public class HomeFragment extends Fragment
 {
-    Intent intent;
-    MainViewModel mainViewModel;
-    private ListView listView;
-    private DBManager dbManager;
+    //Intent                      intent;
+    MainViewModel               mainViewModel;
+    private ListView            listView;
+    private DBManager           dbManager;
     private SimpleCursorAdapter adapter;
     //final String[] from = new String[] {DatabaseHelper._ID, DatabaseHelper.DATA, DatabaseHelper.DESCRIPTION};
 
@@ -53,12 +68,16 @@ public class HomeFragment extends Fragment
         //boolean table_exists = dbManager.doesTableExist("TABLE_DATA");
 
         try {
+            // Define cursor for db table data
             Cursor cursor = dbManager.fetch();
 
+            // Read table rows.
             do {
+                // Combine 3 table fields into 1 string
                 theList.add("_id: " +cursor.getString(0) + ". " +cursor.getString(1) + "   " +cursor.getString(2));
                 ListAdapter listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
                 listView.setAdapter(listAdapter);
+                // Move to the next row.
             } while (cursor.moveToNext());
         } catch (SQLException e) {}
 
@@ -86,6 +105,13 @@ public class HomeFragment extends Fragment
                 d.show();
             }
         });
+
+        // ADD VIEW MODEL LIST VIEW REFRESH CODE
+        /*mainViewModel.getAssetsCurrentText().observe(this, new Observer<String>()
+        {
+            @Override
+            public void onChanged(@Nullable String s)   {   assets_current.setText(s);   }
+        });*/
 
         return root;
     }

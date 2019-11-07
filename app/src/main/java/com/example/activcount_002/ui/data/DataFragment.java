@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Button;
 import androidx.annotation.Nullable;
@@ -46,6 +47,7 @@ public class DataFragment extends Fragment {
         final TextView  assets_total        = root.findViewById(R.id.data_total_assets);
         final TextView  net_revenues        = root.findViewById(R.id.data_net_revenues);
         final TextView  direct_costs        = root.findViewById(R.id.data_direct_costs);
+        //final ListView  data_list           = root.findViewById(R.id.db_list_view);
 
         btn_ok.setOnClickListener(new View.OnClickListener()
         {
