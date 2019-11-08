@@ -2,4 +2,4 @@
  
  Accounting app
  
- Contacts: app@activcount.ca
+ Contact e-mail: app@activcount.ca
