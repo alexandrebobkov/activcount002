@@ -12,10 +12,23 @@
 **/
 
 package com.example.activcount_002;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+
+import com.example.activcount_002.ui.data.DataFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import android.provider.ContactsContract;
 import android.view.View;
+import android.view.ViewGroup;
+import android.content.Intent;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -25,6 +38,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -38,9 +52,29 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setOnClickListener(new View.OnClickListener()
+        {
+            /*FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            DataFragment newFragment = new DataFragment();
+            @Override
+            public void onClick(View view) {
+
+                ft.replace(R.id.nav_host_fragment, newFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+            }*/
+
+            @Override
+            public void onClick(View view)
+            {
+                Snackbar.make(view, "Toolbar clicked", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                //setContentView(R.layout.fragment_data);
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)

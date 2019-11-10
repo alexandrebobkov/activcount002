@@ -2,6 +2,7 @@ package com.example.activcount_002.ui.data;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,14 @@ public class DataFragment extends Fragment {
     private MainData mainData;
     private DBManager dbManager;
     private View view;
+
+    public static DataFragment newInstance()
+    {
+        DataFragment dfrag = new DataFragment();
+        Bundle args = new Bundle();
+        dfrag.setArguments(args);
+        return dfrag;
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
