@@ -13,10 +13,12 @@
 
 package com.example.activcount_002.ui.home;
 
+import android.app.Dialog;
 import android.database.Cursor;
 import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.widget.Button;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,12 +48,9 @@ import com.example.activcount_002.db.DatabaseHelper;
 
 public class HomeFragment extends Fragment
 {
-    //Intent                      intent;
     MainViewModel               mainViewModel;
     private ListView            listView;
     private DBManager           dbManager;
-    private SimpleCursorAdapter adapter;
-    //final String[] from = new String[] {DatabaseHelper._ID, DatabaseHelper.DATA, DatabaseHelper.DESCRIPTION};
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
@@ -81,10 +80,36 @@ public class HomeFragment extends Fragment
             } while (cursor.moveToNext());
         } catch (SQLException e) {}
 
-        listView.setOnItemClickListener(new OnItemClickListener() {
+        listView.setOnItemClickListener(new OnItemClickListener()
+        {
+            Button btn_save, btn_close;
+            // Execute if list item was clicked.
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
             {
-                final int _id = arg2;
+                final Dialog dialog = new Dialog(getContext());
+                dialog.setTitle("SQLITE DATA");
+                dialog.setContentView(R.layout.app_dialog_layout);
+
+                btn_save    =   (Button) dialog.findViewById(R.id.dialog_btn_update);
+                btn_close   =   (Button) dialog.findViewById(R.id.dialog_btn_close);
+
+                btn_save.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //dialog.cancel();
+                    }
+                });
+                btn_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                    }
+                });
+
+
+                dialog.show();
+
+                /*final int _id = arg2;
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setMessage("Item Selected " +((long)arg2+1))
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
@@ -102,7 +127,7 @@ public class HomeFragment extends Fragment
 
                 AlertDialog d = builder.create();
                 d.setTitle("Update selected item?");
-                d.show();
+                d.show();*/
             }
         });
 

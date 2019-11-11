@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
             {
                 Snackbar.make(view, "Toolbar clicked", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
-                getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new DataFragment()).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+                //getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new DataFragment()).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
 
                 /*Fragment fragment = new DataFragment();
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
