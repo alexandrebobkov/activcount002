@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         toolbar.setOnClickListener(new View.OnClickListener()
         {
-            /*FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             DataFragment newFragment = new DataFragment();
-            @Override
+            /*@Override
             public void onClick(View view) {
 
                 ft.replace(R.id.nav_host_fragment, newFragment);
@@ -68,6 +68,13 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 Snackbar.make(view, "Toolbar clicked", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+                Fragment fragment = new DataFragment();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.detail_fragment_container, fragment);
+                ft.addToBackStack(null);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();
                 //setContentView(R.layout.fragment_data);
             }
         });
