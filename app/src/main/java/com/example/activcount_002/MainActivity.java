@@ -52,32 +52,7 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setOnClickListener(new View.OnClickListener()
-        {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            DataFragment newFragment = new DataFragment();
-            /*@Override
-            public void onClick(View view) {
 
-                ft.replace(R.id.nav_host_fragment, newFragment);
-                ft.addToBackStack(null);
-                ft.commit();
-            }*/
-
-            @Override
-            public void onClick(View view)
-            {
-                Snackbar.make(view, "Toolbar clicked", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
-                Fragment fragment = new DataFragment();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.detail_fragment_container, fragment);
-                ft.addToBackStack(null);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();
-                //setContentView(R.layout.fragment_data);
-            }
-        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
@@ -102,6 +77,38 @@ public class MainActivity extends AppCompatActivity
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        toolbar.setOnClickListener(new View.OnClickListener()
+        {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            DataFragment newFragment = new DataFragment();
+            /*@Override
+            public void onClick(View view) {
+
+                ft.replace(R.id.nav_host_fragment, newFragment);
+                ft.addToBackStack(null);
+                ft.commit();
+            }*/
+
+            @Override
+            public void onClick(View view)
+            {
+                Snackbar.make(view, "Toolbar clicked", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+                getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new DataFragment()).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
+
+                /*Fragment fragment = new DataFragment();
+                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.detail_fragment_container, fragment);
+                ft.addToBackStack(null);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+                ft.commit();*/
+                //setContentView(R.layout.fragment_data);
+
+                //Navigation.findNavController(view).navigate(R.id.fragment_data);
+                //Navigation.findNavController(view).navigate(R.id.action_to_nav_data);
+            }
+        });
     }
 
     // Inflate the menu; this adds items to the action bar if it is present.
