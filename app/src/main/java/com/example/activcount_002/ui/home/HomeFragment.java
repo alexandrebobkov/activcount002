@@ -46,6 +46,8 @@ import com.example.activcount_002.MainViewModel;
 import com.example.activcount_002.db.DBManager;
 import com.example.activcount_002.db.DatabaseHelper;
 
+import org.w3c.dom.Text;
+
 public class HomeFragment extends Fragment
 {
     MainViewModel               mainViewModel;
@@ -55,9 +57,10 @@ public class HomeFragment extends Fragment
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        mainViewModel               = ViewModelProviders.of(this).get(MainViewModel.class);
-        View    root                = inflater.inflate(R.layout.fragment_home, container, false);
-        final   TextView statusMsg  = root.findViewById(R.id.status_msg);
+        mainViewModel                   = ViewModelProviders.of(this).get(MainViewModel.class);
+        View    root                    = inflater.inflate(R.layout.fragment_home, container, false);
+        final   TextView statusMsg      = root.findViewById(R.id.status_msg);
+
         statusMsg.setText(mainViewModel.get_home_status_msg());
 
         listView = (ListView) root.findViewById(R.id.db_list_view);
@@ -83,19 +86,28 @@ public class HomeFragment extends Fragment
         listView.setOnItemClickListener(new OnItemClickListener()
         {
             Button btn_save, btn_close;
+            TextView field_value;
+
             // Execute if list item was clicked.
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
             {
+                final String msg;
                 final Dialog dialog = new Dialog(getContext());
                 dialog.setTitle("SQLITE DATA");
                 dialog.setContentView(R.layout.app_dialog_layout);
 
                 btn_save    =   (Button) dialog.findViewById(R.id.dialog_btn_update);
                 btn_close   =   (Button) dialog.findViewById(R.id.dialog_btn_close);
+                field_value =   (TextView) dialog.findViewById(R.id.dialog_field);
+
+                msg = "_id: " +(long)(arg2+1);
+                field_value.setText(msg);
 
                 btn_save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        field_value.setText("updated!");
+
                         //dialog.cancel();
                     }
                 });
@@ -108,6 +120,7 @@ public class HomeFragment extends Fragment
 
 
                 dialog.show();
+
 
                 /*final int _id = arg2;
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
