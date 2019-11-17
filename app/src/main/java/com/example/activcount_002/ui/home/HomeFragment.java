@@ -1,7 +1,7 @@
 /**
  *
  *  Date Created:       October 15, 2019
- *  Last time updated:  November 7, 2019
+ *  Last time updated:  November 16, 2019
  *  Revision:           2
  *
  *  Author: Alexandre Bobkov
@@ -37,14 +37,10 @@ import androidx.lifecycle.ViewModelProviders;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-
 import com.example.activcount_002.R;
-
 import com.example.activcount_002.MainViewModel;
 import com.example.activcount_002.db.DBManager;
-import com.example.activcount_002.db.DatabaseHelper;
 
 import org.w3c.dom.Text;
 
@@ -91,8 +87,10 @@ public class HomeFragment extends Fragment
             // Execute if list item was clicked.
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
             {
-                final String msg;
-                final Dialog dialog = new Dialog(getContext());
+                final   int     argument_2;
+                final   String  msg;
+                final   Dialog  dialog = new Dialog(getContext());
+
                 dialog.setTitle("SQLITE DATA");
                 dialog.setContentView(R.layout.app_dialog_layout);
 
@@ -101,26 +99,32 @@ public class HomeFragment extends Fragment
                 field_value =   (TextView) dialog.findViewById(R.id.dialog_field);
 
                 msg = "_id: " +(long)(arg2+1);
+                argument_2 = arg2;
                 field_value.setText(msg);
 
+                // UPDATE button. Store entered value into database.
                 btn_save.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        field_value.setText("updated!");
-
-                        //dialog.cancel();
-                    }
-                });
-                btn_close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    public void onClick(View v)
+                    {
+                        update_field(false, argument_2, "" +field_value.getText());
+                        Toast.makeText(getContext(), "Updated!", Toast.LENGTH_SHORT).show();
                         dialog.cancel();
                     }
                 });
 
+                // CLOSE button. Delete entry.
+                btn_close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        update_field(true, argument_2, "__DELETED__");
+                        Toast.makeText(getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    }
+                });
 
                 dialog.show();
-
 
                 /*final int _id = arg2;
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -144,13 +148,18 @@ public class HomeFragment extends Fragment
             }
         });
 
-        // ADD VIEW MODEL LIST VIEW REFRESH CODE
-        /*mainViewModel.getAssetsCurrentText().observe(this, new Observer<String>()
-        {
-            @Override
-            public void onChanged(@Nullable String s)   {   assets_current.setText(s);   }
-        });*/
-
         return root;
+    }
+
+    private void update_field (boolean delete, int arg2, String field)
+    {
+        if (delete)
+        {
+            dbManager.update(1+(long)arg2, "__DELETED__", "__NA__");
+        }
+        else
+        {
+            dbManager.update(1+(long)arg2, field, "__NA__");
+        }
     }
 }
