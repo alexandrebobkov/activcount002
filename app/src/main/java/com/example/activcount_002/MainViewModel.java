@@ -12,11 +12,16 @@
  **/
 package com.example.activcount_002;
 
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import java.util.ArrayList;
 
 public class MainViewModel extends ViewModel
 {
@@ -32,10 +37,15 @@ public class MainViewModel extends ViewModel
     private static String str_net_revenues          = "15000.00";
     private static String str_direct_costs          = "500.00";
     private static String str_operating_expenses    = "2500.00";
-    private MutableLiveData<String> statusText;
-    private MutableLiveData<String> homeStatusText;
-    private MutableLiveData<String> assetsCurrentText, assetsSuppliesText, assetsTotalText;
-    private MutableLiveData<String> net_revenues, direct_costs, operating_expenses;
+    private MutableLiveData<String>     statusText;
+    private MutableLiveData<String>     homeStatusText;
+    private MutableLiveData<String>     assetsCurrentText, assetsSuppliesText, assetsTotalText;
+    private MutableLiveData<String>     net_revenues, direct_costs, operating_expenses;
+
+    private static ArrayList<String>            theList;
+    //private static ArrayAdapter<ArrayList>      listAdapter;
+    private static ListAdapter                  listAdapter;
+    private MutableLiveData<ListView>           entries_view;
 
     public MainViewModel()
     {
@@ -47,6 +57,10 @@ public class MainViewModel extends ViewModel
         net_revenues        = new MutableLiveData<>();
         direct_costs        = new MutableLiveData<>();
         operating_expenses  = new MutableLiveData<>();
+
+        entries_view        = new MutableLiveData<>();
+        theList             = new ArrayList<>();
+        //listAdapter         = new ListAdapter<>();
 
         statusText.setValue(status_msg);
         homeStatusText.setValue(home_status_msg);
@@ -69,6 +83,8 @@ public class MainViewModel extends ViewModel
     public void setNetRevenues(TextView tv)             {   str_net_revenues = ""+tv.getText();         }
     public void setDirectCosts(TextView tv)             {   str_direct_costs = ""+tv.getText();         }
 
+    public void setEntriesList(ListView lv)             {   entries_view.setValue(lv);                  }
+
     public String getAssetsCurrent()                    {   return str_assets_current;  }
     public String getAssetsSupplies()                   {   return str_assets_supplies; }
     public String getAssetsTotal()                      {   return str_assets_total;    }
@@ -81,5 +97,7 @@ public class MainViewModel extends ViewModel
     public LiveData<String> getAssetsTotalText()        {   return assetsTotalText;     }
     public LiveData<String> getNetRevenuesText()        {   return net_revenues;        }
     public LiveData<String> getDirectCostsText()        {   return direct_costs;        }
-    public LiveData<String> getOperatingExpensesText()  {   return operating_expenses;        }
+    public LiveData<String> getOperatingExpensesText()  {   return operating_expenses;  }
+
+    public ListAdapter getEntriesList()                 {   return listAdapter;        }
 }

@@ -48,6 +48,7 @@ public class HomeFragment extends Fragment
 {
     MainViewModel               mainViewModel;
     private ListView            listView;
+    private ListAdapter         listAdapter;
     private DBManager           dbManager;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -73,16 +74,18 @@ public class HomeFragment extends Fragment
             do {
                 // Combine 3 table fields into 1 string
                 theList.add("_id: " +cursor.getString(0) + ". " +cursor.getString(1) + "   " +cursor.getString(2));
-                ListAdapter listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
+                //ListAdapter
+                listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
                 listView.setAdapter(listAdapter);
                 // Move to the next row.
             } while (cursor.moveToNext());
+            mainViewModel.setEntriesList(listView);
         } catch (SQLException e) {}
 
         listView.setOnItemClickListener(new OnItemClickListener()
         {
-            Button btn_save, btn_close;
-            TextView field_value;
+            Button      btn_save, btn_del, btn_close;
+            TextView    field_value, field_value_1, field_value_2;
 
             // Execute if list item was clicked.
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
@@ -94,32 +97,49 @@ public class HomeFragment extends Fragment
                 dialog.setTitle("SQLITE DATA");
                 dialog.setContentView(R.layout.app_dialog_layout);
 
-                btn_save    =   (Button) dialog.findViewById(R.id.dialog_btn_update);
-                btn_close   =   (Button) dialog.findViewById(R.id.dialog_btn_close);
-                field_value =   (TextView) dialog.findViewById(R.id.dialog_field);
+                btn_save    =   (Button)    dialog.findViewById(R.id.dialog_btn_update);
+                btn_del     =   (Button)    dialog.findViewById(R.id.dialog_btn_delete);
+                btn_close   =   (Button)    dialog.findViewById(R.id.dialog_btn_close);
+
+                field_value     =   (TextView)  dialog.findViewById(R.id.dialog_field);
+                field_value_1   =   (TextView)  dialog.findViewById(R.id.dialog_field_1);
+                field_value_2   =   (TextView)  dialog.findViewById(R.id.dialog_field_2);
 
                 msg = "_id: " +(long)(arg2+1);
                 argument_2 = arg2;
                 field_value.setText(msg);
 
                 // UPDATE button. Store entered value into database.
-                btn_save.setOnClickListener(new View.OnClickListener() {
+                btn_save.setOnClickListener(new View.OnClickListener()
+                {
                     @Override
                     public void onClick(View v)
                     {
-                        update_field(false, argument_2, "" +field_value.getText());
+                        update_field(false, argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
                         Toast.makeText(getContext(), "Updated!", Toast.LENGTH_SHORT).show();
+                        //listView.setAdapter(mainViewModel.getEntriesList());
                         dialog.cancel();
                     }
                 });
 
-                // CLOSE button. Delete entry.
+                // DELETE button. Delete entry.
+                btn_del.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        update_field(true, argument_2, "__DELETED__",  "__NA__");
+                        Toast.makeText(getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+                        dialog.cancel();
+                    }
+                });
+
+                // CLOSE button. Close the dialog.
                 btn_close.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v)
                     {
-                        update_field(true, argument_2, "__DELETED__");
-                        Toast.makeText(getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+                        //update_field(true, argument_2, "__DELETED__");
+                        Toast.makeText(getContext(), "No changes were made!", Toast.LENGTH_SHORT).show();
                         dialog.cancel();
                     }
                 });
@@ -151,7 +171,7 @@ public class HomeFragment extends Fragment
         return root;
     }
 
-    private void update_field (boolean delete, int arg2, String field)
+    private void update_field (boolean delete, int arg2, String field, String description)
     {
         if (delete)
         {
@@ -159,7 +179,7 @@ public class HomeFragment extends Fragment
         }
         else
         {
-            dbManager.update(1+(long)arg2, field, "__NA__");
+            dbManager.update(1+(long)arg2, field, description);
         }
     }
 }

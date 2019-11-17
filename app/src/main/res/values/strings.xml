@@ -22,6 +22,7 @@
     <string name="btn_ok">OK</string>
     <string name="btn_data_submit">SUBMIT</string>
     <string name="btn_update">UPDATE</string>
+    <string name="btn_delete">DELETE</string>
     <string name="btn_close">CLOSE</string>
     <string name="status_msg">...</string>
 
