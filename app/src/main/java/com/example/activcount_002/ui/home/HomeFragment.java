@@ -62,9 +62,12 @@ public class HomeFragment extends Fragment
 
         listView = (ListView) root.findViewById(R.id.db_list_view);
         ArrayList<String> theList = new ArrayList<>();
+
         dbManager = new DBManager(getContext());
         dbManager.open();
         //boolean table_exists = dbManager.doesTableExist("TABLE_DATA");
+
+        //mainViewModel.setEntriesList().observe(this, {item -> });
 
         try {
             // Define cursor for db table data

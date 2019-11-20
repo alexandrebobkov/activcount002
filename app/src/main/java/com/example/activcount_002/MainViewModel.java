@@ -12,6 +12,8 @@
  **/
 package com.example.activcount_002;
 
+import android.os.Handler;
+
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -22,6 +24,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainViewModel extends ViewModel
 {
@@ -46,6 +49,23 @@ public class MainViewModel extends ViewModel
     //private static ArrayAdapter<ArrayList>      listAdapter;
     private static ListAdapter                  listAdapter;
     private MutableLiveData<ListView>           entries_view;
+
+    private MutableLiveData<List<String>> entriesList;
+
+    LiveData<List<String>> getEntriesList()
+    {
+        if (entriesList == null)
+        {
+            entriesList = new MutableLiveData<>();
+            loadEntries();
+        }
+        return entriesList;
+    }
+
+    private void loadEntries()
+    {
+        
+    }
 
     public MainViewModel()
     {
@@ -99,5 +119,5 @@ public class MainViewModel extends ViewModel
     public LiveData<String> getDirectCostsText()        {   return direct_costs;        }
     public LiveData<String> getOperatingExpensesText()  {   return operating_expenses;  }
 
-    public ListAdapter getEntriesList()                 {   return listAdapter;        }
+    //public ListAdapter getEntriesList()                 {   return listAdapter;        }
 }
