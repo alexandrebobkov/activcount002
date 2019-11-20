@@ -67,8 +67,6 @@ public class HomeFragment extends Fragment
         dbManager.open();
         //boolean table_exists = dbManager.doesTableExist("TABLE_DATA");
 
-        //mainViewModel.setEntriesList().observe(this, {item -> });
-
         try {
             // Define cursor for db table data
             Cursor cursor = dbManager.fetch();
