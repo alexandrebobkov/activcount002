@@ -76,10 +76,12 @@ public class HomeFragment extends Fragment
                 // Combine 3 table fields into 1 string
                 theList.add("_id: " +cursor.getString(0) + ". " +cursor.getString(1) + "   " +cursor.getString(2));
                 //ListAdapter
-                listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
-                listView.setAdapter(listAdapter);
+                //listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
+                //listView.setAdapter(listAdapter);
                 // Move to the next row.
             } while (cursor.moveToNext());
+            listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
+            listView.setAdapter(listAdapter);
             mainViewModel.setEntriesList(listView);
         } catch (SQLException e) {}
 

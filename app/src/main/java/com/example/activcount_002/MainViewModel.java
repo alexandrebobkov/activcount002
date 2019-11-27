@@ -7,7 +7,7 @@
  *  Author:             Alexandre Bobkov
  *  Company:            Alexandre Comptabilite Specialise Ltee.
  *
- *  Objective:          main class for handling all UX items (textboxes, buttons, etc).
+ *  Objective:          main class for handling all UX items (textboxes, buttons, list views, etc).
  *
  **/
 package com.example.activcount_002;
@@ -28,8 +28,8 @@ import java.util.List;
 
 public class MainViewModel extends ViewModel
 {
-    private static String status_msg         = "initial value";         // define static variable: one for all instances.
-    private static String home_status_msg    = "initial home status";   // define static variable: one for all instances.
+    private static String status_msg                = "initial value";         // define static variable: one for all instances.
+    private static String home_status_msg           = "initial home status";   // define static variable: one for all instances.
 
     private static String str_assets_current        = "20.25";
     private static String str_assets_supplies       = "10.15";
@@ -40,6 +40,7 @@ public class MainViewModel extends ViewModel
     private static String str_net_revenues          = "15000.00";
     private static String str_direct_costs          = "500.00";
     private static String str_operating_expenses    = "2500.00";
+
     private MutableLiveData<String>     statusText;
     private MutableLiveData<String>     homeStatusText;
     private MutableLiveData<String>     assetsCurrentText, assetsSuppliesText, assetsTotalText;
@@ -50,7 +51,7 @@ public class MainViewModel extends ViewModel
     private static ListAdapter                  listAdapter;
     private MutableLiveData<ListView>           entries_view;
 
-    private MutableLiveData<List<String>> entriesList;
+    private MutableLiveData<List<String>>       entriesList;
 
     LiveData<List<String>> getEntriesList()
     {
