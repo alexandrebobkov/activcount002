@@ -15,7 +15,6 @@ package com.example.activcount_002.ui.home;
 
 import android.app.Dialog;
 import android.database.Cursor;
-import android.content.Intent;
 import android.database.SQLException;
 import android.os.Bundle;
 import android.widget.Button;
@@ -23,19 +22,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.ListView;
 import android.widget.ListAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.widget.Toast;
 import java.util.ArrayList;
 import com.example.activcount_002.R;
@@ -62,39 +56,12 @@ public class HomeFragment extends Fragment
         statusMsg.setText(mainViewModel.get_home_status_msg());
 
         listView = (ListView) root.findViewById(R.id.db_list_view);
-        //ArrayList<String> theList = new ArrayList<>();
         theList = new ArrayList<>();
 
         dbManager = new DBManager(getContext());
         dbManager.open();
-        //boolean table_exists = dbManager.doesTableExist("TABLE_DATA");
 
         fetchEntries(dbManager.fetch(), theList);
-
-        /*try {
-            // Define cursor for db table data
-            Cursor cursor = dbManager.fetch();
-
-            // Read table rows.
-            do {
-                // Combine 3 table fields into 1 string
-                theList.add("_id: " +cursor.getString(0) + ". " +cursor.getString(1) + "   " +cursor.getString(2));
-                //mainViewModel.addEntries(cursor.getString(0), cursor.getString(1), cursor.getString(2));
-                //ListAdapter
-                //listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
-                //listView.setAdapter(listAdapter);
-                // Move to the next row.
-            } while (cursor.moveToNext());
-
-            mainViewModel.loadEntries(theList);
-            listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getEntriesList());
-
-            //listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
-            listView.setAdapter(listAdapter);
-            //mainViewModel.setEntriesList(listView);
-
-
-        } catch (SQLException e) {}*/
 
         listView.setOnItemClickListener(new OnItemClickListener()
         {
@@ -166,35 +133,8 @@ public class HomeFragment extends Fragment
                 //theList = new ArrayList<>();
                 //fetchEntries(dbManager.fetch(), theList);
                 dialog.show();
-
-                /*final int _id = arg2;
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("Item Selected " +((long)arg2+1))
-                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                Toast.makeText(getContext(), "Selected item # " +((long)1+_id), Toast.LENGTH_SHORT).show();
-                                dbManager.update(1+(long)_id, "__DELETED__", "__NA__");
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
-                            }
-                        });
-
-                AlertDialog d = builder.create();
-                d.setTitle("Update selected item?");
-                d.show();*/
             }
-
         });
-
-        /*mainViewModel.updateEntriesList().observe(this, new Observer<ArrayList>()
-        {
-            @Override
-            public void onChanged(@Nullable String s)   {      }
-        });*/
 
         return root;
     }
@@ -221,20 +161,12 @@ public class HomeFragment extends Fragment
             do {
                 // Combine 3 table fields into 1 string
                 l.add("_id: " +c.getString(0) + ". " +c.getString(1) + "   " +c.getString(2));
-                //mainViewModel.addEntries(cursor.getString(0), cursor.getString(1), cursor.getString(2));
-                //ListAdapter
-                //listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
-                //listView.setAdapter(listAdapter);
                 // Move to the next row.
             } while (c.moveToNext());
 
             mainViewModel.loadEntries(l);
             listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getEntriesList());
-
-            //listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
             listView.setAdapter(listAdapter);
-            //mainViewModel.setEntriesList(listView);
-
 
         } catch (SQLException e) {}
     }
