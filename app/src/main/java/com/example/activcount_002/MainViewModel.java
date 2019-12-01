@@ -12,17 +12,10 @@
  **/
 package com.example.activcount_002;
 
-import android.os.Handler;
-
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,44 +24,21 @@ public class MainViewModel extends ViewModel
     private static String status_msg                = "initial value";         // define static variable: one for all instances.
     private static String home_status_msg           = "initial home status";   // define static variable: one for all instances.
 
-    private static String str_assets_current        = "20.25";
-    private static String str_assets_supplies       = "10.15";
-    private static String str_assets_total          = "35.75";
-    private static String str_liabilities_current   = "0.00";
-    private static String str_liabilities_long_term = "0.00";
-    private static String str_liabilities_total     = "0.00";
-    private static String str_net_revenues          = "15000.00";
-    private static String str_direct_costs          = "500.00";
-    private static String str_operating_expenses    = "2500.00";
+    private static String               str_assets_current        = "20.25";
+    private static String               str_assets_supplies       = "10.15";
+    private static String               str_assets_total          = "35.75";
+    private static String               str_liabilities_current   = "0.00";
+    private static String               str_liabilities_long_term = "0.00";
+    private static String               str_liabilities_total     = "0.00";
+    private static String               str_net_revenues          = "15000.00";
+    private static String               str_direct_costs          = "500.00";
+    private static String               str_operating_expenses    = "2500.00";
+    private static ArrayList<String>    theList;
 
     private MutableLiveData<String>     statusText;
     private MutableLiveData<String>     homeStatusText;
     private MutableLiveData<String>     assetsCurrentText, assetsSuppliesText, assetsTotalText;
     private MutableLiveData<String>     net_revenues, direct_costs, operating_expenses;
-
-    private MutableLiveData<ArrayList<String>>  the_entries_list;
-
-    private static ArrayList<String>            theList;
-
-    //private static ArrayAdapter<ArrayList>      listAdapter;
-    private static ListAdapter                  listAdapter;
-    private MutableLiveData<ListView>           entries_view;
-
-    private MutableLiveData<List<String>>       entriesList;
-
-    /*LiveData<List<String>> getEntriesList()
-    {
-        if (theList == null)
-        {
-            theList = new ArrayList<>();
-            initEntries();
-        }
-        return entriesList;
-    }*/
-
-    private void initEntries()
-    {
-    }
 
     public MainViewModel()
     {
@@ -80,10 +50,7 @@ public class MainViewModel extends ViewModel
         net_revenues        = new MutableLiveData<>();
         direct_costs        = new MutableLiveData<>();
         operating_expenses  = new MutableLiveData<>();
-
-        entries_view        = new MutableLiveData<>();
         theList             = new ArrayList<>();
-        //listAdapter         = new ListAdapter<>();
 
         statusText.setValue(status_msg);
         homeStatusText.setValue(home_status_msg);
@@ -106,17 +73,7 @@ public class MainViewModel extends ViewModel
     public void setNetRevenues(TextView tv)             {   str_net_revenues = ""+tv.getText();         }
     public void setDirectCosts(TextView tv)             {   str_direct_costs = ""+tv.getText();         }
 
-    public void setEntriesList(ListView lv)             {   entries_view.setValue(lv);                  }
-
-    public void addEntries(String field_1, String field_2, String field_3)
-    {
-        theList.add("_id: " +field_1 + ". " +field_2 + "   " +field_3);
-    }
-    public void loadEntries(ArrayList<String> list)
-    {
-        theList = list;
-        //the_entries_list.postValue(list);
-    }
+    public void loadEntries(ArrayList<String> list)     {   theList = list;             }
 
     public String getAssetsCurrent()                    {   return str_assets_current;  }
     public String getAssetsSupplies()                   {   return str_assets_supplies; }
@@ -132,7 +89,5 @@ public class MainViewModel extends ViewModel
     public LiveData<String> getDirectCostsText()        {   return direct_costs;        }
     public LiveData<String> getOperatingExpensesText()  {   return operating_expenses;  }
 
-    //public ListAdapter getEntriesList()                 {   return listAdapter;        }
     public ArrayList<String> getEntriesList()           {   return theList;             }
-    public LiveData<ArrayList<String>> updateEntriesList()  {   return the_entries_list;     }
 }
