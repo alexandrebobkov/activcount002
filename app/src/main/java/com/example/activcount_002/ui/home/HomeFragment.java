@@ -75,14 +75,21 @@ public class HomeFragment extends Fragment
             do {
                 // Combine 3 table fields into 1 string
                 theList.add("_id: " +cursor.getString(0) + ". " +cursor.getString(1) + "   " +cursor.getString(2));
+                //mainViewModel.addEntries(cursor.getString(0), cursor.getString(1), cursor.getString(2));
                 //ListAdapter
                 //listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
                 //listView.setAdapter(listAdapter);
                 // Move to the next row.
             } while (cursor.moveToNext());
-            listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
+
+            mainViewModel.loadEntries(theList);
+            listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getEntriesList());
+
+            //listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
             listView.setAdapter(listAdapter);
-            mainViewModel.setEntriesList(listView);
+            //mainViewModel.setEntriesList(listView);
+
+
         } catch (SQLException e) {}
 
         listView.setOnItemClickListener(new OnItemClickListener()
@@ -100,9 +107,9 @@ public class HomeFragment extends Fragment
                 dialog.setTitle("SQLITE DATA");
                 dialog.setContentView(R.layout.app_dialog_layout);
 
-                btn_save    =   (Button)    dialog.findViewById(R.id.dialog_btn_update);
-                btn_del     =   (Button)    dialog.findViewById(R.id.dialog_btn_delete);
-                btn_close   =   (Button)    dialog.findViewById(R.id.dialog_btn_close);
+                btn_save        =   (Button)    dialog.findViewById(R.id.dialog_btn_update);
+                btn_del         =   (Button)    dialog.findViewById(R.id.dialog_btn_delete);
+                btn_close       =   (Button)    dialog.findViewById(R.id.dialog_btn_close);
 
                 field_value     =   (TextView)  dialog.findViewById(R.id.dialog_field);
                 field_value_1   =   (TextView)  dialog.findViewById(R.id.dialog_field_1);
@@ -147,6 +154,8 @@ public class HomeFragment extends Fragment
                     }
                 });
 
+                //listView.setAdapter(listAdapter);
+
                 dialog.show();
 
                 /*final int _id = arg2;
@@ -170,6 +179,12 @@ public class HomeFragment extends Fragment
                 d.show();*/
             }
         });
+
+        /*mainViewModel.updateEntriesList().observe(this, new Observer<ArrayList>()
+        {
+            @Override
+            public void onChanged(@Nullable String s)   {      }
+        });*/
 
         return root;
     }

@@ -46,26 +46,28 @@ public class MainViewModel extends ViewModel
     private MutableLiveData<String>     assetsCurrentText, assetsSuppliesText, assetsTotalText;
     private MutableLiveData<String>     net_revenues, direct_costs, operating_expenses;
 
+    private MutableLiveData<ArrayList<String>>  the_entries_list;
+
     private static ArrayList<String>            theList;
+
     //private static ArrayAdapter<ArrayList>      listAdapter;
     private static ListAdapter                  listAdapter;
     private MutableLiveData<ListView>           entries_view;
 
     private MutableLiveData<List<String>>       entriesList;
 
-    LiveData<List<String>> getEntriesList()
+    /*LiveData<List<String>> getEntriesList()
     {
-        if (entriesList == null)
+        if (theList == null)
         {
-            entriesList = new MutableLiveData<>();
-            loadEntries();
+            theList = new ArrayList<>();
+            initEntries();
         }
         return entriesList;
-    }
+    }*/
 
-    private void loadEntries()
+    private void initEntries()
     {
-        
     }
 
     public MainViewModel()
@@ -106,6 +108,16 @@ public class MainViewModel extends ViewModel
 
     public void setEntriesList(ListView lv)             {   entries_view.setValue(lv);                  }
 
+    public void addEntries(String field_1, String field_2, String field_3)
+    {
+        theList.add("_id: " +field_1 + ". " +field_2 + "   " +field_3);
+    }
+    public void loadEntries(ArrayList<String> list)
+    {
+        theList = list;
+        //the_entries_list.postValue(list);
+    }
+
     public String getAssetsCurrent()                    {   return str_assets_current;  }
     public String getAssetsSupplies()                   {   return str_assets_supplies; }
     public String getAssetsTotal()                      {   return str_assets_total;    }
@@ -121,4 +133,6 @@ public class MainViewModel extends ViewModel
     public LiveData<String> getOperatingExpensesText()  {   return operating_expenses;  }
 
     //public ListAdapter getEntriesList()                 {   return listAdapter;        }
+    public ArrayList<String> getEntriesList()           {   return theList;             }
+    public LiveData<ArrayList<String>> updateEntriesList()  {   return the_entries_list;     }
 }

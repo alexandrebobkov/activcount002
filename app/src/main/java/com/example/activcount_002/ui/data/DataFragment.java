@@ -114,10 +114,10 @@ public class DataFragment extends Fragment {
             public void onChanged(@Nullable String s)   {   net_revenues.setText(s);   }
         });
         mainViewModel.getDirectCostsText().observe(this, new Observer<String>()
-        {
-            @Override
-            public void onChanged(@Nullable String s)   {   direct_costs.setText(s);   }
-        });
+                {
+                    @Override
+                    public void onChanged(@Nullable String s)   {   direct_costs.setText(s);   }
+                });
 
         return root;
     }
