@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment
     private ListView            listView;
     private ListAdapter         listAdapter;
     private DBManager           dbManager;
+    private ArrayList<String>   theList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
@@ -61,13 +62,16 @@ public class HomeFragment extends Fragment
         statusMsg.setText(mainViewModel.get_home_status_msg());
 
         listView = (ListView) root.findViewById(R.id.db_list_view);
-        ArrayList<String> theList = new ArrayList<>();
+        //ArrayList<String> theList = new ArrayList<>();
+        theList = new ArrayList<>();
 
         dbManager = new DBManager(getContext());
         dbManager.open();
         //boolean table_exists = dbManager.doesTableExist("TABLE_DATA");
 
-        try {
+        fetchEntries(dbManager.fetch(), theList);
+
+        /*try {
             // Define cursor for db table data
             Cursor cursor = dbManager.fetch();
 
@@ -90,7 +94,7 @@ public class HomeFragment extends Fragment
             //mainViewModel.setEntriesList(listView);
 
 
-        } catch (SQLException e) {}
+        } catch (SQLException e) {}*/
 
         listView.setOnItemClickListener(new OnItemClickListener()
         {
@@ -127,7 +131,8 @@ public class HomeFragment extends Fragment
                     {
                         update_field(false, argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
                         Toast.makeText(getContext(), "Updated!", Toast.LENGTH_SHORT).show();
-                        //listView.setAdapter(mainViewModel.getEntriesList());
+                        theList = new ArrayList<>();
+                        fetchEntries(dbManager.fetch(), theList);
                         dialog.cancel();
                     }
                 });
@@ -139,6 +144,8 @@ public class HomeFragment extends Fragment
                     {
                         update_field(true, argument_2, "__DELETED__",  "__NA__");
                         Toast.makeText(getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+                        theList = new ArrayList<>();
+                        fetchEntries(dbManager.fetch(), theList);
                         dialog.cancel();
                     }
                 });
@@ -150,12 +157,14 @@ public class HomeFragment extends Fragment
                     {
                         //update_field(true, argument_2, "__DELETED__");
                         Toast.makeText(getContext(), "No changes were made!", Toast.LENGTH_SHORT).show();
+                        theList = new ArrayList<>();
+                        fetchEntries(dbManager.fetch(), theList);
                         dialog.cancel();
                     }
                 });
 
-                //listView.setAdapter(listAdapter);
-
+                //theList = new ArrayList<>();
+                //fetchEntries(dbManager.fetch(), theList);
                 dialog.show();
 
                 /*final int _id = arg2;
@@ -178,6 +187,7 @@ public class HomeFragment extends Fragment
                 d.setTitle("Update selected item?");
                 d.show();*/
             }
+
         });
 
         /*mainViewModel.updateEntriesList().observe(this, new Observer<ArrayList>()
@@ -199,5 +209,33 @@ public class HomeFragment extends Fragment
         {
             dbManager.update(1+(long)arg2, field, description);
         }
+    }
+
+    private void fetchEntries(Cursor c, ArrayList<String> l)
+    {
+        try {
+            // Define cursor for db table data
+            c = dbManager.fetch();
+
+            // Read table rows.
+            do {
+                // Combine 3 table fields into 1 string
+                l.add("_id: " +c.getString(0) + ". " +c.getString(1) + "   " +c.getString(2));
+                //mainViewModel.addEntries(cursor.getString(0), cursor.getString(1), cursor.getString(2));
+                //ListAdapter
+                //listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
+                //listView.setAdapter(listAdapter);
+                // Move to the next row.
+            } while (c.moveToNext());
+
+            mainViewModel.loadEntries(l);
+            listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getEntriesList());
+
+            //listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, theList);
+            listView.setAdapter(listAdapter);
+            //mainViewModel.setEntriesList(listView);
+
+
+        } catch (SQLException e) {}
     }
 }
