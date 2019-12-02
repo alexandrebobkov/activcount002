@@ -62,10 +62,10 @@ public class HomeFragment extends Fragment
         theEntriesList  = new ArrayList<String[]>();
 
         dbManager = new DBManager(getContext());
-        dbManager.prepareDataTable();
         dbManager.open();
-
-        fetchEntries(dbManager.fetch(), theList);
+        dbManager.prepareDataTable();
+        //dbManager.open();
+        //fetchEntries(dbManager.fetch(), theList);
 
         listView.setOnItemClickListener(new OnItemClickListener()
         {
