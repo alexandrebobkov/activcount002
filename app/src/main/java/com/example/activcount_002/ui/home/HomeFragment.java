@@ -46,6 +46,8 @@ public class HomeFragment extends Fragment
     private DBManager           dbManager;
     private ArrayList<String>   theList;
 
+    private ArrayList<String[]> theEntriesList;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
@@ -57,8 +59,10 @@ public class HomeFragment extends Fragment
 
         listView = (ListView) root.findViewById(R.id.db_list_view);
         theList = new ArrayList<>();
+        theEntriesList  = new ArrayList<String[]>();
 
         dbManager = new DBManager(getContext());
+        dbManager.prepareDataTable();
         dbManager.open();
 
         fetchEntries(dbManager.fetch(), theList);
@@ -71,7 +75,8 @@ public class HomeFragment extends Fragment
             // Execute if list item was clicked.
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
             {
-                final   int     argument_2;
+                final   int     argument_2; // position
+                final   long    argument_3; // id
                 final   String  msg;
                 final   Dialog  dialog = new Dialog(getContext());
 
@@ -88,6 +93,7 @@ public class HomeFragment extends Fragment
 
                 msg = "_id: " +(long)(arg2+1);
                 argument_2 = arg2;
+                argument_3 = arg3;
                 field_value.setText(msg);
 
                 // UPDATE button. Store entered value into database.
@@ -96,10 +102,15 @@ public class HomeFragment extends Fragment
                     @Override
                     public void onClick(View v)
                     {
+                        String entry[] = theEntriesList.get(argument_2);
+                        //update_field(false, argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
+
                         update_field(false, argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
-                        Toast.makeText(getContext(), "Updated!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Updated! _id: " +entry[0], Toast.LENGTH_SHORT).show();
                         theList = new ArrayList<>();
                         fetchEntries(dbManager.fetch(), theList);
+                        //int row = Integer.getInteger(entry[0]);
+
                         dialog.cancel();
                     }
                 });
@@ -109,8 +120,13 @@ public class HomeFragment extends Fragment
                     @Override
                     public void onClick(View v)
                     {
-                        update_field(true, argument_2, "__DELETED__",  "__NA__");
-                        Toast.makeText(getContext(), "Deleted!", Toast.LENGTH_SHORT).show();
+
+                        String entry[] = theEntriesList.get(argument_2);
+
+                        //update_field(true, Integer.getInteger(entry[0]), "__DELETED__",  "__NA__");
+                        //update_field(true, Integer.getInteger("" +field_value.getText()), "__DELETED__",  "__NA__");
+                        Toast.makeText(getContext(), "Deleted! pos: " +argument_2 + " id: " +argument_3 +" _id: " +entry[0], Toast.LENGTH_SHORT).show();
+
                         theList = new ArrayList<>();
                         fetchEntries(dbManager.fetch(), theList);
                         dialog.cancel();
@@ -143,7 +159,8 @@ public class HomeFragment extends Fragment
     {
         if (delete)
         {
-            dbManager.update(1+(long)arg2, "__DELETED__", "__NA__");
+            dbManager.update(1+(long)arg2, field, description);
+            //dbManager.delete(1+(long)arg2);
         }
         else
         {
@@ -160,7 +177,10 @@ public class HomeFragment extends Fragment
             // Read table rows.
             do {
                 // Combine 3 table fields into 1 string
-                l.add("_id: " +c.getString(0) + ". " +c.getString(1) + "   " +c.getString(2));
+                String[] entry = {c.getString(0), c.getString(1), c.getString(2)};
+                theEntriesList.add(entry);
+
+                l.add("_id: " +c.getString(0) + " | " +c.getString(1) + "   " +c.getString(2));
                 // Move to the next row.
             } while (c.moveToNext());
 

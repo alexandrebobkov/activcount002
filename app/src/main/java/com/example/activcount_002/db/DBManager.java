@@ -55,7 +55,7 @@ public class DBManager {
         return i;
     }
 
-    public void delete(long _id) {
+    public void deleteRow(long _id) {
         database.delete(DatabaseHelper.DATA_TABLE_NAME, DatabaseHelper._ID + "=" + _id, null);
     }
 
