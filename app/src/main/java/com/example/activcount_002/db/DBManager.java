@@ -60,7 +60,10 @@ public class DBManager {
     }
 
     public boolean doesTableExist(String tableName) {
-        Cursor cursor = database.rawQuery("select DISTINCT 'TABLE_DATA' from ACTIVCOUNT_DATA_002.DB where tbl_name = '" + tableName + "'", null);
+        // String POSTS_SELECT_QUERY = String.format("SELECT * FROM %s LEFT OUTER JOIN %s ON %s.%s = %s.%s", TABLE_POSTS, TABLE_USERS, TABLE_POSTS, KEY_POST_USER_ID_FK, TABLE_USERS, KEY_USER_ID);
+
+        //Cursor cursor = database.rawQuery("select DISTINCT 'TABLE_DATA' from ACTIVCOUNT_DATA_002.DB where tbl_name = '" + tableName + "'", null);
+        Cursor cursor = database.rawQuery("select DISTINCT 'TABLE_DATA' from " +DatabaseHelper.DB_NAME +" where tbl_name = '" + tableName + "'", null);
 
         if (cursor != null) {
             if (cursor.getCount() > 0) {

@@ -65,7 +65,7 @@ public class HomeFragment extends Fragment
         dbManager.open();
         dbManager.prepareDataTable();
         //dbManager.open();
-        //fetchEntries(dbManager.fetch(), theList);
+        fetchEntries(dbManager.fetch(), theList);
 
         listView.setOnItemClickListener(new OnItemClickListener()
         {

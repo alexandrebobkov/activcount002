@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.activcount_002.db.Entry;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Tables names
@@ -36,6 +38,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
+    public void onConfigure(SQLiteDatabase db)
+    {
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true);
+    }
+    @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_DATA_TABLE);
     }
@@ -51,5 +59,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + DATA_TABLE_NAME, null);
         return data;
+    }
+
+    public void addEntry(Entry entry)
+    {
+
     }
 }
