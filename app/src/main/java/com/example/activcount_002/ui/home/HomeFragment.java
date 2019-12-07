@@ -111,7 +111,7 @@ public class HomeFragment extends Fragment
                         //update_field(false, argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
 
                         update_field(false, argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
-                        Toast.makeText(getContext(), "Updated! _id: " +entry[0] + " arg3: " +argument_3, Toast.LENGTH_SHORT).show();
+
                         theList = new ArrayList<>();
                         fetchEntries(dbManager.fetch(), theList);
                         //int row = Integer.getInteger(entry[0]);
@@ -121,6 +121,7 @@ public class HomeFragment extends Fragment
                         e.memo = "" +field_value_2.getText();
                         dbManager.addEntry(e);
 
+                        Toast.makeText(getContext(), "Updated! _id: " +entry[0] + " arg3: " +argument_3 +" entry.id: " +e.id, Toast.LENGTH_SHORT).show();
                         dialog.cancel();
                     }
                 });
