@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import com.example.activcount_002.db.DatabaseHelper;
+import com.example.activcount_002.db.Entry;
 
 import java.util.Calendar;
 
@@ -98,5 +99,10 @@ public class DBManager {
         //cont_val.put(DatabaseHelper.DESCRIPTION, "" + Calendar.getInstance().getTime());
         //database.insert(DatabaseHelper.DATA_TABLE_NAME, null, cont_val);
         insert("Anniversary Date", "" + Calendar.getInstance().getTime());
+    }
+
+    public void addEntry(Entry entry)
+    {
+        dbHelper.addEntry(entry);
     }
 }

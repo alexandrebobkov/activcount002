@@ -1,5 +1,7 @@
 package com.example.activcount_002.db;
 
+import java.util.ArrayList;
+import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -7,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.SQLException;
 
-import com.example.activcount_002.db.Entry;
+//import com.example.activcount_002.db.Entry;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -72,11 +74,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void addEntry(Entry entry)
     {
         SQLiteDatabase db = getWritableDatabase();
-        db.beginTransaction();;
+        db.beginTransaction();
 
         try
         {
             long id = addOrUpdateEntry(entry);
+            ContentValues values = new ContentValues();
+            values.put(KEY_ENTRY_ID_FK, id);
+            values.put(KEY_ENTRY_MEMO, entry.memo);
+
+            // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
+            db.insertOrThrow(TABLE_ENTRIES, null, values);
+            db.setTransactionSuccessful();
+
         } catch (Exception e) {}
         finally
         {
@@ -134,5 +144,68 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
         return id;
+    }
+
+    // Get all entries in the database
+    public List<Entry> getAllEntries()
+    {
+        List<Entry> posts = new ArrayList<>();
+
+        // SELECT * FROM POSTS
+        // LEFT OUTER JOIN USERS
+        // ON POSTS.KEY_POST_USER_ID_FK = USERS.KEY_USER_ID
+        String POSTS_SELECT_QUERY = String.format("SELECT * FROM %s",
+                        TABLE_ENTRIES);
+
+        // "getReadableDatabase()" and "getWriteableDatabase()" return the same object (except under low
+        // disk space scenarios)
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(POSTS_SELECT_QUERY, null);
+        try
+        {
+            if (cursor.moveToFirst())
+            {
+                do
+                {
+                    Entry newEntry = new Entry();
+                    newEntry.id = cursor.getLong(cursor.getColumnIndex(KEY_ENTRY_ID));
+                    newEntry.date = cursor.getString(cursor.getColumnIndex(KEY_ENTRY_DATE));
+                    newEntry.memo = cursor.getString(cursor.getColumnIndex(KEY_ENTRY_MEMO));
+                } while(cursor.moveToNext());
+            }
+        } catch (Exception e) {
+        } finally {
+            if (cursor != null && !cursor.isClosed())
+            {
+                cursor.close();
+            }
+        }
+        return posts;
+    }
+
+    // Update the entry memo
+    public int updateEntry(Entry entry) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_ENTRY_MEMO, entry.memo);
+
+        // Updating profile picture url for user with that userName
+        return db.update(TABLE_ENTRIES, values, KEY_ENTRY_MEMO + " = ?",
+                new String[] { String.valueOf(entry.memo) });
+    }
+
+    // Delete all posts and users in the database
+    public void deleteAllEntries() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            // Order of deletions is important when foreign key relationships exist.
+            db.delete(TABLE_ENTRIES, null, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+        } finally {
+            db.endTransaction();
+        }
     }
 }

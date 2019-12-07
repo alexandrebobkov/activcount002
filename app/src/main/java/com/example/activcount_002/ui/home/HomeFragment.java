@@ -37,6 +37,7 @@ import com.example.activcount_002.MainViewModel;
 import com.example.activcount_002.db.DBManager;
 
 import org.w3c.dom.Text;
+import com.example.activcount_002.db.Entry;
 
 public class HomeFragment extends Fragment
 {
@@ -45,6 +46,7 @@ public class HomeFragment extends Fragment
     private ListAdapter         listAdapter;
     private DBManager           dbManager;
     private ArrayList<String>   theList;
+    private Entry e;
 
     private ArrayList<String[]> theEntriesList;
 
@@ -54,6 +56,7 @@ public class HomeFragment extends Fragment
         mainViewModel                   = ViewModelProviders.of(this).get(MainViewModel.class);
         View    root                    = inflater.inflate(R.layout.fragment_home, container, false);
         final   TextView statusMsg      = root.findViewById(R.id.status_msg);
+        e = new Entry();
 
         statusMsg.setText(mainViewModel.get_home_status_msg());
 
@@ -80,6 +83,8 @@ public class HomeFragment extends Fragment
                 final   String  msg;
                 final   Dialog  dialog = new Dialog(getContext());
 
+
+
                 dialog.setTitle("SQLITE DATA");
                 dialog.setContentView(R.layout.app_dialog_layout);
 
@@ -87,9 +92,9 @@ public class HomeFragment extends Fragment
                 btn_del         =   (Button)    dialog.findViewById(R.id.dialog_btn_delete);
                 btn_close       =   (Button)    dialog.findViewById(R.id.dialog_btn_close);
 
-                field_value     =   (TextView)  dialog.findViewById(R.id.dialog_field);
-                field_value_1   =   (TextView)  dialog.findViewById(R.id.dialog_field_1);
-                field_value_2   =   (TextView)  dialog.findViewById(R.id.dialog_field_2);
+                field_value     =   (TextView)  dialog.findViewById(R.id.dialog_field);     // id
+                field_value_1   =   (TextView)  dialog.findViewById(R.id.dialog_field_1);   // value
+                field_value_2   =   (TextView)  dialog.findViewById(R.id.dialog_field_2);   // description
 
                 msg = "_id: " +(long)(arg2+1);
                 argument_2 = arg2;
@@ -106,10 +111,15 @@ public class HomeFragment extends Fragment
                         //update_field(false, argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
 
                         update_field(false, argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
-                        Toast.makeText(getContext(), "Updated! _id: " +entry[0], Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Updated! _id: " +entry[0] + " arg3: " +argument_3, Toast.LENGTH_SHORT).show();
                         theList = new ArrayList<>();
                         fetchEntries(dbManager.fetch(), theList);
                         //int row = Integer.getInteger(entry[0]);
+
+                        e.id = argument_2;
+                        e.date = "" +field_value_1.getText();
+                        e.memo = "" +field_value_2.getText();
+                        dbManager.addEntry(e);
 
                         dialog.cancel();
                     }
