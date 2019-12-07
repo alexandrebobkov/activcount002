@@ -1,9 +1,11 @@
 package com.example.activcount_002.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.SQLException;
 
 import com.example.activcount_002.db.Entry;
 
@@ -12,6 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Tables names
     public static final String DATA_TABLE_NAME = "DATA";
     public static final String ITEMS_TABLE_NAME = "ITEMS";
+    public static final String TABLE_ENTRIES = "ENTRIES";
 
     // Table columns
     public static final String _ID = "_id";
@@ -19,7 +22,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String ITEM = "item";
     public static final String DESCRIPTION = "description";
     public static final String SUBJECT = "subject";
-    //public static final String DESC = "description";
+
+    // Entries Table Columns
+    private static final String KEY_ENTRY_ID    = "id";
+    private static final String KEY_ENTRY_ID_FK = "entryId";
+    private static final String KEY_ENTRY_DATE  = "date";
+    private static final String KEY_ENTRY_MEMO  = "memo";
 
     // Database Information
     static final String DB_NAME = "ACTIVCOUNT_DATA_008.DB";
@@ -63,6 +71,68 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void addEntry(Entry entry)
     {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();;
 
+        try
+        {
+            long id = addOrUpdateEntry(entry);
+        } catch (Exception e) {}
+        finally
+        {
+            db.endTransaction();
+        }
+    }
+    public long addOrUpdateEntry (Entry entry)
+    {
+        SQLiteDatabase db = getWritableDatabase();
+        long id = -1;
+
+        db.beginTransaction();
+
+        try
+        {
+            ContentValues values = new ContentValues();
+
+            values.put(KEY_ENTRY_DATE, entry.date);
+            values.put(KEY_ENTRY_MEMO, entry.memo);
+
+            int rows = db.update(TABLE_ENTRIES, values, KEY_ENTRY_ID + "= ?", new String[]{String.valueOf(entry.id)});
+
+            if (rows == 1)
+            {
+                // Get the primary key of the user we just updated
+                String usersSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?", KEY_ENTRY_ID, TABLE_ENTRIES, KEY_ENTRY_MEMO);
+                Cursor cursor = db.rawQuery(usersSelectQuery, new String[]{String.valueOf(entry.memo)});
+                try
+                {
+                    if (cursor.moveToFirst())
+                    {
+                        id = cursor.getInt(0);
+                        db.setTransactionSuccessful();
+                    }
+                }
+                finally
+                {
+                    if (cursor != null && !cursor.isClosed())
+                    {
+                        cursor.close();
+                    }
+                }
+            }
+            else
+            {
+                // user with this userName did not already exist, so insert new user
+                id = db.insertOrThrow(TABLE_ENTRIES, null, values);
+                db.setTransactionSuccessful();
+            }
+        }
+        catch (SQLException e) {}
+        finally
+        {
+            db.endTransaction();
+        }
+
+        return id;
     }
 }
