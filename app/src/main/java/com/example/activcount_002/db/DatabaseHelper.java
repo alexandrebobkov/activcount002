@@ -11,15 +11,31 @@ import android.database.SQLException;
 
 //import com.example.activcount_002.db.Entry;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper
+{
+    static final String DB_NAME             =   "ACTIVCOUNT_DATA_008.DB";       // Database Information
+    static final int DB_VERSION             =   2;                              // Database version
 
     // Tables names
     public static final String DATA_TABLE_NAME = "DATA";
     public static final String ITEMS_TABLE_NAME = "ITEMS";
-    public static final String TABLE_ENTRIES = "ENTRIES";
+
+    private static final String TABLE_ENTRIES = "ENTRIES";
+
+    // ACCOUNTING
+    private static final String TBL_GJ      =   "GENERAL_JOURNAL";              // General Journal
+    private static final String TBL_POST    =   "JOURNAL_ENTRY";                // Journal entries
+    // Standardized table columns
+    public static final String _ID         =   "_id";                          // Table key
+    private static final String ENTRY_ID    =   "JE_ID";                        // Journal entry number
+    // General Journal table columns
+    private static final String JRNL_NAME   =   "JOURNAL NAME";                 // Journal descriptive name
+    // Journal Entry table columns
+    private static final String DATE        =   "DATE";                         // Journal entry date
+    private static final String MEMO        =   "MEMO";                         // Journal entry description
 
     // Table columns
-    public static final String _ID = "_id";
+
     public static final String DATA = "data";
     public static final String ITEM = "item";
     public static final String DESCRIPTION = "description";
@@ -31,13 +47,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_ENTRY_DATE  = "date";
     private static final String KEY_ENTRY_MEMO  = "memo";
 
-    // Database Information
-    static final String DB_NAME = "ACTIVCOUNT_DATA_008.DB";
 
-    // database version
-    static final int DB_VERSION = 2;
+    // QUERIES: CREATING TABLES
+    // Create General Journal table query
+    private static final String CREATE_GJ_TBL = "CREATE TABLE " +TBL_GJ + "(" +_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +JRNL_NAME + " TEXT NOT NULL, " + ENTRY_ID + " TEXT);";
 
-    // Creating table query
+    // Creating Data table query
     private static final String CREATE_DATA_TABLE = "create table " + DATA_TABLE_NAME + "(" + _ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DATA + " TEXT NOT NULL, " + DESCRIPTION + " TEXT);";
 
