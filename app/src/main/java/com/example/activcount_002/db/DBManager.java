@@ -19,6 +19,7 @@ public class DBManager {
     private DatabaseHelper dbHelper;
     private Context context;
     private SQLiteDatabase database;
+    private static Entry e;
 
     private List<Entry> entries;
 
@@ -41,6 +42,27 @@ public class DBManager {
         contentValue.put(DatabaseHelper.DATA, name);
         contentValue.put(DatabaseHelper.DESCRIPTION, desc);
         database.insert(DatabaseHelper.DATA_TABLE_NAME, null, contentValue);
+    }
+
+    private void insertEntry()
+    {
+        ContentValues cv = new ContentValues();
+        //cv.put(DatabaseHelper.KEY_ENTRY_ID, e.id);
+        cv.put(DatabaseHelper.KEY_ENTRY_DATE, ""+e.date);
+        cv.put(DatabaseHelper.KEY_ENTRY_MEMO, ""+e.memo);
+        database.insert(DatabaseHelper.TBL_JE, null, cv);
+    }
+    private void insertTransaction()
+    {
+        ContentValues cv = new ContentValues();
+        cv.put(DatabaseHelper.KEY_ENTRY_ID, "1");
+        cv.put(DatabaseHelper.KEY_ENTRY_MEMO, "Transaction");
+        cv.put(DatabaseHelper.KEY_ENTRY_ID_FK, "1");
+        database.insert(DatabaseHelper.TBL_GJ, null, cv);
+        cv.put(DatabaseHelper.KEY_ENTRY_ID, "2");
+        cv.put(DatabaseHelper.KEY_ENTRY_MEMO, "Transaction");
+        cv.put(DatabaseHelper.KEY_ENTRY_ID_FK, "1");
+        database.insert(DatabaseHelper.TBL_GJ, null, cv);
     }
 
     public Cursor fetch() throws SQLException {
@@ -115,10 +137,12 @@ public class DBManager {
 
     public void prepareEntriesTable()
     {
-        Entry e = new Entry();
-        e.date = "2019-12-15";
-        e.memo = "first entry";
-        dbHelper.addEntry(e);
+        e = new Entry();
+        e.date = "" +Calendar.getInstance().getTime();
+        e.memo = "second entry";
+        //addEntry(e);
+        insertEntry();
+        insertTransaction();
     }
     public void addEntry(Entry entry)
     {

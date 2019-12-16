@@ -13,7 +13,8 @@ import android.database.SQLException;
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {
-    static final String DB_NAME             =   "ACTIVCOUNT_DATA_008.DB";       // Database Information
+    static final String DB_NAME                     =   "ACTIVCOUNT_DATA_010.DB";       // Database Information
+    static final String DB_GENERAL_JOURNAL_NAME     =   "ACTIVCOUNT_GJ_001.DB";       // Database Information
     static final int DB_VERSION             =   2;                              // Database version
 
     // Tables names
@@ -23,10 +24,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private static final String TABLE_ENTRIES = "ENTRIES";
 
     // ACCOUNTING
-    private static final String TBL_GJ      =   "GENERAL_JOURNAL";              // General Journal
-    private static final String TBL_POST    =   "JOURNAL_ENTRY";                // Journal entries
+    public static final String TBL_GJ      =   "GENERAL_JOURNAL";              // General Journal
+    public static final String TBL_JE      =   "JOURNAL_ENTRY";                // Journal entries
     // Standardized table columns
-    public static final String _ID         =   "_id";                          // Table key
+    public static final String _ID          =   "_id";                          // Table key
     private static final String ENTRY_ID    =   "JE_ID";                        // Journal entry number
     // General Journal table columns
     private static final String JRNL_NAME   =   "JOURNAL NAME";                 // Journal descriptive name
@@ -42,15 +43,19 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public static final String SUBJECT = "subject";
 
     // Entries Table Columns
-    private static final String KEY_ENTRY_ID    = "id";
-    private static final String KEY_ENTRY_ID_FK = "entryId";
-    private static final String KEY_ENTRY_DATE  = "date";
-    private static final String KEY_ENTRY_MEMO  = "memo";
+    public static final String KEY_ENTRY_ID    = "id";
+    public static final String KEY_ENTRY_ID_FK = "entryId";
+    public static final String KEY_ENTRY_DATE  = "date";
+    public static final String KEY_ENTRY_MEMO  = "memo";
 
 
     // QUERIES: CREATING TABLES
     // Create General Journal table query
-    private static final String CREATE_GJ_TBL = "CREATE TABLE " +TBL_GJ + "(" +_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +JRNL_NAME + " TEXT NOT NULL, " + ENTRY_ID + " TEXT);";
+    //private static final String CREATE_GJ_TBL = "CREATE TABLE " +TBL_GJ + "(" +_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +JRNL_NAME + " TEXT NOT NULL, " + ENTRY_ID + " TEXT);";
+
+    // Create 2 tables with 1-to-many relationship.
+    private static final String CREATE_JOURNAL_ENTRIES_TABLE = "CREATE TABLE " +TBL_JE +" ( " +KEY_ENTRY_ID +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " +KEY_ENTRY_DATE +" TEXT NOT NULL, "+ KEY_ENTRY_MEMO +" TEXT ); ";
+    private static final String CREATE_GENERAL_JOURNAL_TABLE = "CREATE TABLE " +TBL_GJ +" ( " +KEY_ENTRY_ID +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +KEY_ENTRY_MEMO +" TEXT ," +KEY_ENTRY_ID_FK +" INTEGER, FOREIGN KEY(" +KEY_ENTRY_ID_FK + ") REFERENCES " +TBL_GJ +"(" +KEY_ENTRY_ID +"));";
 
     // Creating Data table query
     private static final String CREATE_DATA_TABLE = "create table " + DATA_TABLE_NAME + "(" + _ID
@@ -72,7 +77,11 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL(CREATE_DATA_TABLE);
-        db.execSQL(CREATE_GJ_TBL);
+        //db.execSQL(CREATE_GJ_TBL);
+
+        // Create 2 tables with 1-to-many relationship (one post - many entries).
+        db.execSQL(CREATE_JOURNAL_ENTRIES_TABLE);   // Create Journal Entries table
+        db.execSQL(CREATE_GENERAL_JOURNAL_TABLE);   // Create General Journal table
     }
 
     @Override
@@ -101,11 +110,12 @@ public class DatabaseHelper extends SQLiteOpenHelper
         {
             long id = addOrUpdateEntry(entry);
             ContentValues values = new ContentValues();
-            values.put(KEY_ENTRY_ID_FK, id);
+            values.put(KEY_ENTRY_ID, id);
             values.put(KEY_ENTRY_MEMO, entry.memo);
 
             // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
-            db.insertOrThrow(TABLE_ENTRIES, null, values);
+            //db.insertOrThrow(TABLE_ENTRIES, null, values);
+            db.insertOrThrow(TBL_GJ, null, values);
             db.setTransactionSuccessful();
 
         } catch (Exception e) {}
@@ -128,12 +138,12 @@ public class DatabaseHelper extends SQLiteOpenHelper
             values.put(KEY_ENTRY_DATE, entry.date);
             values.put(KEY_ENTRY_MEMO, entry.memo);
 
-            int rows = db.update(TABLE_ENTRIES, values, KEY_ENTRY_ID + "= ?", new String[]{String.valueOf(entry.id)});
+            int rows = db.update(TBL_GJ, values, KEY_ENTRY_ID + "= ?", new String[]{String.valueOf(entry.id)});
 
             if (rows == 1)
             {
                 // Get the primary key of the user we just updated
-                String usersSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?", KEY_ENTRY_ID, TABLE_ENTRIES, KEY_ENTRY_MEMO);
+                String usersSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?", KEY_ENTRY_ID, TBL_GJ, KEY_ENTRY_MEMO);
                 Cursor cursor = db.rawQuery(usersSelectQuery, new String[]{String.valueOf(entry.memo)});
                 try
                 {
@@ -154,7 +164,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
             else
             {
                 // user with this userName did not already exist, so insert new user
-                id = db.insertOrThrow(TABLE_ENTRIES, null, values);
+                id = db.insertOrThrow(TBL_GJ, null, values);
                 db.setTransactionSuccessful();
             }
         }
