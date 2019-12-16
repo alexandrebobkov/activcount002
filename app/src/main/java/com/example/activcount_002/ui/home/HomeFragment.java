@@ -76,6 +76,7 @@ public class HomeFragment extends Fragment
         fetchEntries(dbManager.fetch(), theList);
 
         dbManager.prepareEntriesTable();
+        dbManager.postBeginningBalances();
         //entries_list = new ArrayList<>();
         //entries_list = dbManager.getListOfEntries();
 

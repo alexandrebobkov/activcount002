@@ -52,6 +52,18 @@ public class DBManager {
         cv.put(DatabaseHelper.KEY_ENTRY_MEMO, ""+e.memo);
         database.insert(DatabaseHelper.TBL_JE, null, cv);
     }
+    private void postEntry()
+    {
+        ContentValues entry = new ContentValues();
+        entry.put(DatabaseHelper.GJ_JE_ID, "" +e.je);
+        entry.put(DatabaseHelper.GJ_DATE, "" +e.date);
+        entry.put(DatabaseHelper.GJ_MEMO, "" +e.memo);
+        entry.put(DatabaseHelper.GJ_DATE, "" +e.date);
+        entry.put(DatabaseHelper.GJ_DR_ACCT, "" +e.dr_acct);
+        entry.put(DatabaseHelper.GJ_CR_ACCT, "" +e.cr_acct);
+        entry.put(DatabaseHelper.GJ_AMOUNT, "" +e.amount);
+        database.insert(DatabaseHelper.TBL_GenJrnl, null, entry);
+    }
     private void insertTransaction()
     {
         ContentValues cv = new ContentValues();
@@ -143,6 +155,24 @@ public class DBManager {
         //addEntry(e);
         insertEntry();
         insertTransaction();
+    }
+    public void postBeginningBalances()
+    {
+        e = new Entry();
+        e.je        = 1;
+        e.date      = "16-12-2019";
+        e.memo      = "Balance forward";
+        e.dr_acct   = "Cash";
+        e.amount    = 500;
+        postEntry();
+
+        e = new Entry();
+        e.je        = 1;
+        e.date      = "16-12-2019";
+        e.memo      = "Balance forward";
+        e.cr_acct   = "Equity";
+        e.amount    = 500;
+        postEntry();
     }
     public void addEntry(Entry entry)
     {

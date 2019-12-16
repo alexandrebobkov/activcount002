@@ -13,9 +13,9 @@ import android.database.SQLException;
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {
-    static final String DB_NAME                     =   "ACTIVCOUNT_DATA_010.DB";       // Database Information
+    static final String DB_NAME                     =   "ACTIVCOUNT_DATA_014.DB";       // Database Information
     static final String DB_GENERAL_JOURNAL_NAME     =   "ACTIVCOUNT_GJ_001.DB";       // Database Information
-    static final int DB_VERSION             =   2;                              // Database version
+    static final int DB_VERSION             =   4;                              // Database version
 
     // Tables names
     public static final String DATA_TABLE_NAME = "DATA";
@@ -24,8 +24,9 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private static final String TABLE_ENTRIES = "ENTRIES";
 
     // ACCOUNTING
-    public static final String TBL_GJ      =   "GENERAL_JOURNAL";              // General Journal
-    public static final String TBL_JE      =   "JOURNAL_ENTRY";                // Journal entries
+    public static final String TBL_GJ       =   "GENERAL_JOURNAL";              // General Journal
+    public static final String TBL_GenJrnl  =   "GENERAL_JOURNAL_2";              // General Journal v.2
+    public static final String TBL_JE       =   "JOURNAL_ENTRY";                // Journal entries
     // Standardized table columns
     public static final String _ID          =   "_id";                          // Table key
     private static final String ENTRY_ID    =   "JE_ID";                        // Journal entry number
@@ -43,6 +44,14 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public static final String SUBJECT = "subject";
 
     // Entries Table Columns
+    public static final String GJ_ID        =   "ID";
+    public static final String GJ_JE_ID     =   "JE";
+    public static final String GJ_DATE      =   "DATE";
+    public static final String GJ_MEMO      =   "MEMO";
+    public static final String GJ_DR_ACCT   =   "DR_ACCOUNT";
+    public static final String GJ_CR_ACCT   =   "CR_ACCOUNT";
+    public static final String GJ_AMOUNT    =   "AMOUNT";
+
     public static final String KEY_ENTRY_ID    = "id";
     public static final String KEY_ENTRY_ID_FK = "entryId";
     public static final String KEY_ENTRY_DATE  = "date";
@@ -54,14 +63,27 @@ public class DatabaseHelper extends SQLiteOpenHelper
     //private static final String CREATE_GJ_TBL = "CREATE TABLE " +TBL_GJ + "(" +_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +JRNL_NAME + " TEXT NOT NULL, " + ENTRY_ID + " TEXT);";
 
     // Create 2 tables with 1-to-many relationship.
-    private static final String CREATE_JOURNAL_ENTRIES_TABLE = "CREATE TABLE " +TBL_JE +" ( " +KEY_ENTRY_ID +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " +KEY_ENTRY_DATE +" TEXT NOT NULL, "+ KEY_ENTRY_MEMO +" TEXT ); ";
-    private static final String CREATE_GENERAL_JOURNAL_TABLE = "CREATE TABLE " +TBL_GJ +" ( " +KEY_ENTRY_ID +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +KEY_ENTRY_MEMO +" TEXT ," +KEY_ENTRY_ID_FK +" INTEGER, FOREIGN KEY(" +KEY_ENTRY_ID_FK + ") REFERENCES " +TBL_GJ +"(" +KEY_ENTRY_ID +"));";
+    private static final String CREATE_JOURNAL_ENTRIES_TABLE    = "CREATE TABLE " +TBL_JE       +" ( "  +KEY_ENTRY_ID   +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " +KEY_ENTRY_DATE +" TEXT NOT NULL, "+ KEY_ENTRY_MEMO +" TEXT ); ";
+    private static final String CREATE_GENERAL_JOURNAL_TABLE    = "CREATE TABLE " +TBL_GJ       +" ( "  +KEY_ENTRY_ID   +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "        +KEY_ENTRY_MEMO +" TEXT , " +KEY_ENTRY_ID_FK    +" INTEGER, FOREIGN KEY(" +KEY_ENTRY_ID_FK + ") REFERENCES " +TBL_GJ +"(" +KEY_ENTRY_ID +"));";
+    private static final String CREATE_GenJrnl_TABLE            =
+            "CREATE TABLE " +TBL_GenJrnl  +" ( "
+            +GJ_ID      +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, "
+            +GJ_JE_ID   +" INTEGER, "
+            +GJ_DATE    +" TEXT, "
+            +GJ_MEMO    +" TEXT, "
+            +GJ_DR_ACCT +" TEXT, "
+            +GJ_CR_ACCT +" TEXT, "
+            +GJ_AMOUNT  +" NUMERIC, "
+            +"FOREIGN KEY(" +GJ_JE_ID + ") REFERENCES " +TBL_JE +"(" +KEY_ENTRY_ID +"));";
 
     // Creating Data table query
     private static final String CREATE_DATA_TABLE = "create table " + DATA_TABLE_NAME + "(" + _ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DATA + " TEXT NOT NULL, " + DESCRIPTION + " TEXT);";
 
-    private static final String DELETE_DATA_TABLE = "DROP TABLE IF EXISTS " + DATA_TABLE_NAME;
+    private static final String DELETE_DATA_TABLE   = "DROP TABLE IF EXISTS " +DATA_TABLE_NAME;
+    private static final String DELETE_TBL_GenJrnl  = "DROP TABLE IF EXISTS " +TBL_GenJrnl;
+    private static final String DELETE_TBL_GJ       = "DROP TABLE IF EXISTS " +TBL_GJ;
+    private static final String DELETE_TBL_JE       = "DROP TABLE IF EXISTS " +TBL_JE;
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -82,11 +104,15 @@ public class DatabaseHelper extends SQLiteOpenHelper
         // Create 2 tables with 1-to-many relationship (one post - many entries).
         db.execSQL(CREATE_JOURNAL_ENTRIES_TABLE);   // Create Journal Entries table
         db.execSQL(CREATE_GENERAL_JOURNAL_TABLE);   // Create General Journal table
+        db.execSQL(CREATE_GenJrnl_TABLE);           // Create General Journal table v.2
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(DELETE_DATA_TABLE);
+        db.execSQL(DELETE_TBL_GenJrnl);
+        db.execSQL(DELETE_TBL_GJ);
+        db.execSQL(DELETE_TBL_JE);
         onCreate(db);
     }
 
