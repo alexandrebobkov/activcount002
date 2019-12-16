@@ -5,18 +5,22 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
+
 import com.example.activcount_002.db.DatabaseHelper;
 import com.example.activcount_002.db.Entry;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class DBManager {
 
     private DatabaseHelper dbHelper;
-
     private Context context;
-
     private SQLiteDatabase database;
+
+    private List<Entry> entries;
 
     public DBManager(Context c) {
         context = c;
@@ -46,6 +50,14 @@ public class DBManager {
             cursor.moveToFirst();
         }
         return cursor;
+    }
+
+    public List<Entry> getListOfEntries() throws SQLException
+    {
+        entries = new ArrayList<>();
+        entries = dbHelper.getAllEntries();
+
+        return entries;
     }
 
     public int update(long _id, String name, String desc) {
@@ -101,6 +113,13 @@ public class DBManager {
         insert("Anniversary Date", "" + Calendar.getInstance().getTime());
     }
 
+    public void prepareEntriesTable()
+    {
+        Entry e = new Entry();
+        e.date = "2019-12-15";
+        e.memo = "first entry";
+        dbHelper.addEntry(e);
+    }
     public void addEntry(Entry entry)
     {
         dbHelper.addEntry(entry);

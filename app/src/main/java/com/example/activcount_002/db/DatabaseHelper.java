@@ -69,8 +69,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.setForeignKeyConstraintsEnabled(true);
     }
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db)
+    {
         db.execSQL(CREATE_DATA_TABLE);
+        db.execSQL(CREATE_GJ_TBL);
     }
 
     @Override
@@ -79,12 +81,16 @@ public class DatabaseHelper extends SQLiteOpenHelper
         onCreate(db);
     }
 
-    public Cursor getListContents()
+    /*public Cursor getListContents()
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        //SQLiteDatabase db = this.getWritableDatabase();
+        String[] columns = new String[] { KEY_ENTRY_ID, KEY_ENTRY_ID_FK, KEY_ENTRY_DATE, KEY_ENTRY_MEMO };
+
+        //Cursor data = db.query(TBL_GJ, columns, null, null, null);
         Cursor data = db.rawQuery("SELECT * FROM " + DATA_TABLE_NAME, null);
+        //Cursor data = db.rawQuery("SELECT * FROM " + TBL_GJ, null);
         return data;
-    }
+    }*/
 
     public void addEntry(Entry entry)
     {
@@ -169,8 +175,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
         // SELECT * FROM POSTS
         // LEFT OUTER JOIN USERS
         // ON POSTS.KEY_POST_USER_ID_FK = USERS.KEY_USER_ID
-        String POSTS_SELECT_QUERY = String.format("SELECT * FROM %s",
-                        TABLE_ENTRIES);
+        //String POSTS_SELECT_QUERY = String.format("SELECT * FROM " + TABLE_ENTRIES);
+        String POSTS_SELECT_QUERY = "SELECT * FROM " + TBL_GJ; //TABLE_ENTRIES;
 
         // "getReadableDatabase()" and "getWriteableDatabase()" return the same object (except under low
         // disk space scenarios)

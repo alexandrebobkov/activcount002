@@ -32,11 +32,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.List;
+
 import com.example.activcount_002.R;
 import com.example.activcount_002.MainViewModel;
 import com.example.activcount_002.db.DBManager;
 
 import org.w3c.dom.Text;
+
+import com.example.activcount_002.db.DatabaseHelper;
 import com.example.activcount_002.db.Entry;
 
 public class HomeFragment extends Fragment
@@ -45,10 +49,12 @@ public class HomeFragment extends Fragment
     private ListView            listView;
     private ListAdapter         listAdapter;
     private DBManager           dbManager;
+    private DatabaseHelper      dbHelper;
     private ArrayList<String>   theList;
     private Entry e;
 
     private ArrayList<String[]> theEntriesList;
+    private List<Entry>         entries_list;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
@@ -67,8 +73,16 @@ public class HomeFragment extends Fragment
         dbManager = new DBManager(getContext());
         dbManager.open();
         dbManager.prepareDataTable();
-        //dbManager.open();
         fetchEntries(dbManager.fetch(), theList);
+
+        dbManager.prepareEntriesTable();
+        //entries_list = new ArrayList<>();
+        //entries_list = dbManager.getListOfEntries();
+
+        //dbManager.open();
+
+
+        //loadEntries();
 
         listView.setOnItemClickListener(new OnItemClickListener()
         {
