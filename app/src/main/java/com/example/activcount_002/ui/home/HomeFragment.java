@@ -64,6 +64,8 @@ public class HomeFragment extends Fragment
         final   TextView statusMsg      = root.findViewById(R.id.status_msg);
         e = new Entry();
 
+        final Button    btn_reset              = root.findViewById(R.id.btn_reset);
+
         statusMsg.setText(mainViewModel.get_home_status_msg());
 
         listView = (ListView) root.findViewById(R.id.db_list_view);
@@ -84,6 +86,15 @@ public class HomeFragment extends Fragment
 
 
         //loadEntries();
+
+        btn_reset.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+            }
+        });
 
         listView.setOnItemClickListener(new OnItemClickListener()
         {

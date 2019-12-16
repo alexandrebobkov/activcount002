@@ -19,4 +19,14 @@ public class Entry
         cr_acct =   null;
         amount  =   0;
     }
+    public Entry (long id, long je, String date, String memo, String dr_acct, String cr_acct, long amount)
+    {
+        this.id         = id;
+        this.je         = je;
+        this.date       = date;
+        this.memo       = memo;
+        this.dr_acct    = dr_acct;
+        this.cr_acct    = cr_acct;
+        this.amount     = amount;
+    }
 }

@@ -158,20 +158,21 @@ public class DBManager {
     }
     public void postBeginningBalances()
     {
-        e = new Entry();
-        e.je        = 1;
+        e = new Entry(1, 1, "16-12-2019", "Balance forward", "Cash", null, 520);
+        /*e.je        = 1;
         e.date      = "16-12-2019";
         e.memo      = "Balance forward";
         e.dr_acct   = "Cash";
-        e.amount    = 500;
+        e.amount    = 500;*/
         postEntry();
 
-        e = new Entry();
+        e = new Entry(2, 1, "16-12-2019", "Balance forward", null, "Equity", 520);
+        /*e = new Entry();
         e.je        = 1;
         e.date      = "16-12-2019";
         e.memo      = "Balance forward";
         e.cr_acct   = "Equity";
-        e.amount    = 500;
+        e.amount    = 500;*/
         postEntry();
     }
     public void addEntry(Entry entry)
