@@ -179,4 +179,13 @@ public class DBManager {
     {
         dbHelper.addEntry(entry);
     }
+
+    public void resetTables() throws SQLException
+    {
+        try {
+            database.execSQL(dbHelper.DELETE_DATA_TABLE);
+            database.execSQL(dbHelper.CREATE_DATA_TABLE);
+        }
+        catch (SQLException e) {}
+    }
 }

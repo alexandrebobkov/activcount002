@@ -15,7 +15,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
 {
     static final String DB_NAME                     =   "ACTIVCOUNT_DATA_014.DB";       // Database Information
     static final String DB_GENERAL_JOURNAL_NAME     =   "ACTIVCOUNT_GJ_001.DB";       // Database Information
-    static final int DB_VERSION             =   4;                              // Database version
+    static final int DB_VERSION                     =   8;                              // Database version
 
     // Tables names
     public static final String DATA_TABLE_NAME = "DATA";
@@ -77,10 +77,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
             +"FOREIGN KEY(" +GJ_JE_ID + ") REFERENCES " +TBL_JE +"(" +KEY_ENTRY_ID +"));";
 
     // Creating Data table query
-    private static final String CREATE_DATA_TABLE = "create table " + DATA_TABLE_NAME + "(" + _ID
+    public static final String CREATE_DATA_TABLE = "create table " + DATA_TABLE_NAME + "(" + _ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DATA + " TEXT NOT NULL, " + DESCRIPTION + " TEXT);";
 
-    private static final String DELETE_DATA_TABLE   = "DROP TABLE IF EXISTS " +DATA_TABLE_NAME;
+    public static final String DELETE_DATA_TABLE   = "DROP TABLE IF EXISTS " +DATA_TABLE_NAME;
     private static final String DELETE_TBL_GenJrnl  = "DROP TABLE IF EXISTS " +TBL_GenJrnl;
     private static final String DELETE_TBL_GJ       = "DROP TABLE IF EXISTS " +TBL_GJ;
     private static final String DELETE_TBL_JE       = "DROP TABLE IF EXISTS " +TBL_JE;

@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:dividerHeight="2dp"
         android:fastScrollAlwaysVisible="false"
@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/status_msg"></ListView>
+        app:layout_constraintTop_toBottomOf="@+id/btn_post"></ListView>
 
     <TextView
         android:id="@+id/empty"
@@ -65,25 +65,40 @@
         app:layout_constraintTop_toBottomOf="@+id/text_home" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_init"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/design_default_color_primary"
+        android:clickable="true"
+        android:text="@string/btn_init"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/btn_reset"
+        app:layout_constraintTop_toBottomOf="@+id/status_msg" />
+
+    <Button
+        android:id="@+id/btn_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/side_nav_bar"
         android:text="@string/btn_post_je"
-        app:layout_constraintBottom_toTopOf="@+id/db_list_view"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/status_msg" />
 
     <Button
         android:id="@+id/btn_reset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@color/colorRed"
+        android:clickable="true"
         android:text="@string/btn_reset"
-        app:layout_constraintBottom_toTopOf="@+id/db_list_view"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/status_msg" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

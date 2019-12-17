@@ -64,7 +64,8 @@ public class HomeFragment extends Fragment
         final   TextView statusMsg      = root.findViewById(R.id.status_msg);
         e = new Entry();
 
-        final Button    btn_reset              = root.findViewById(R.id.btn_reset);
+        final Button    btn_reset   = root.findViewById(R.id.btn_reset);
+        final Button    btn_init    = root.findViewById(R.id.btn_init);
 
         statusMsg.setText(mainViewModel.get_home_status_msg());
 
@@ -79,20 +80,35 @@ public class HomeFragment extends Fragment
 
         dbManager.prepareEntriesTable();
         dbManager.postBeginningBalances();
-        //entries_list = new ArrayList<>();
-        //entries_list = dbManager.getListOfEntries();
-
-        //dbManager.open();
-
-
-        //loadEntries();
 
         btn_reset.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
+                dbManager.resetTables();
+                statusMsg.setText("Data was reset!");
 
+                theList = new ArrayList<>();
+                mainViewModel.loadEntries(theList);
+                listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getEntriesList());
+                listView.setAdapter(listAdapter);
+            }
+        });
+        btn_init.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                dbManager.resetTables();
+                dbManager.prepareDataTable();
+                statusMsg.setText("Data was initialized.");
+
+                theList = new ArrayList<>();
+                fetchEntries(dbManager.fetch(), theList);
+                mainViewModel.loadEntries(theList);
+                listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getEntriesList());
+                listView.setAdapter(listAdapter);
             }
         });
 
@@ -108,8 +124,6 @@ public class HomeFragment extends Fragment
                 final   long    argument_3; // id
                 final   String  msg;
                 final   Dialog  dialog = new Dialog(getContext());
-
-
 
                 dialog.setTitle("SQLITE DATA");
                 dialog.setContentView(R.layout.app_dialog_layout);
@@ -205,7 +219,7 @@ public class HomeFragment extends Fragment
         }
     }
 
-    private void fetchEntries(Cursor c, ArrayList<String> l)
+    private void fetchEntries(Cursor c, ArrayList<String> l) throws SQLException
     {
         try {
             // Define cursor for db table data
