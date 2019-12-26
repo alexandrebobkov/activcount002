@@ -9,6 +9,10 @@
             android:icon="@drawable/icon_bank"
             android:title="@string/menu_home" />
         <item
+            android:id="@+id/nav_journal"
+            android:icon="@drawable/icon_bank"
+            android:title="@string/menu_journal" />
+        <item
             android:id="@+id/nav_ratios"
             android:icon="@drawable/icon_ledger"
             android:title="@string/menu_ratios" />

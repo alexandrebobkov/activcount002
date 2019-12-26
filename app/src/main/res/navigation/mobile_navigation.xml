@@ -22,6 +22,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_journal"
+        android:name="com.example.activcount_002.ui.journal.JournalFragment"
+        android:label="@string/menu_journal"
+        tools:layout="@layout/fragment_journal" />
+
+    <fragment
         android:id="@+id/nav_gallery"
         android:name="com.example.activcount_002.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"

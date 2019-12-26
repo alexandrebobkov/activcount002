@@ -21,7 +21,7 @@ import java.util.List;
 
 public class MainViewModel extends ViewModel
 {
-    private static String status_msg                = "initial value";         // define static variable: one for all instances.
+    private static String status_msg                = "By: Alexandre Bobkov\n2019\n\nPRESS OK TO INITIALIZE DATA";         // define static variable: one for all instances.
     private static String home_status_msg           = "initial home status";   // define static variable: one for all instances.
 
     private static String               str_assets_current        = "20.25";
