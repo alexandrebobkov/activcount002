@@ -52,6 +52,81 @@ public class DBManager {
         cv.put(DatabaseHelper.KEY_ENTRY_MEMO, ""+e.memo);
         database.insert(DatabaseHelper.TBL_JE, null, cv);
     }
+    public void addEntry(Entry entry)
+    {
+        database.beginTransaction();
+
+        try
+        {
+            long id = addOrUpdateEntry(entry);
+            ContentValues values = new ContentValues();
+            values.put(dbHelper.KEY_ENTRY_ID, id);
+            values.put(dbHelper.KEY_ENTRY_MEMO, entry.memo);
+
+            // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
+            //db.insertOrThrow(TABLE_ENTRIES, null, values);
+            database.insertOrThrow(dbHelper.TBL_GJ, null, values);
+            database.setTransactionSuccessful();
+
+        } catch (Exception e) {}
+        finally
+        {
+            database.endTransaction();
+        }
+    }
+    public long addOrUpdateEntry (Entry entry)
+    {
+        //SQLiteDatabase db = getWritableDatabase();
+        long id = -1;
+
+        database.beginTransaction();
+
+        try
+        {
+            ContentValues values = new ContentValues();
+
+            values.put(dbHelper.KEY_ENTRY_DATE, entry.date);
+            values.put(dbHelper.KEY_ENTRY_MEMO, entry.memo);
+
+            int rows = database.update(dbHelper.TBL_GJ, values, dbHelper.KEY_ENTRY_ID + "= ?", new String[]{String.valueOf(entry.id)});
+
+            if (rows == 1)
+            {
+                // Get the primary key of the user we just updated
+                String usersSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?", dbHelper.KEY_ENTRY_ID, dbHelper.TBL_GJ, dbHelper.KEY_ENTRY_MEMO);
+                Cursor cursor = database.rawQuery(usersSelectQuery, new String[]{String.valueOf(entry.memo)});
+                try
+                {
+                    if (cursor.moveToFirst())
+                    {
+                        id = cursor.getInt(0);
+                        database.setTransactionSuccessful();
+                    }
+                }
+                finally
+                {
+                    if (cursor != null && !cursor.isClosed())
+                    {
+                        cursor.close();
+                    }
+                }
+            }
+            else
+            {
+                // user with this userName did not already exist, so insert new user
+                id = database.insertOrThrow(dbHelper.TBL_GJ, null, values);
+                database.setTransactionSuccessful();
+            }
+        }
+        catch (SQLException e) {}
+        finally
+        {
+            database.endTransaction();
+        }
+
+        return id;
+    }
+
     private void postEntry()
     {
         ContentValues entry = new ContentValues();
@@ -175,10 +250,10 @@ public class DBManager {
         e.amount    = 500;*/
         postEntry();
     }
-    public void addEntry(Entry entry)
+    /*public void addEntry(Entry entry)
     {
         dbHelper.addEntry(entry);
-    }
+    }*/
 
     public void resetTables() throws SQLException
     {

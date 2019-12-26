@@ -37,10 +37,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
 
     // Table columns
 
-    public static final String DATA = "data";
-    public static final String ITEM = "item";
-    public static final String DESCRIPTION = "description";
-    public static final String SUBJECT = "subject";
+    public static final String DATA         = "data";
+    public static final String ITEM         = "item";
+    public static final String DESCRIPTION  = "description";
+    public static final String SUBJECT      = "subject";
 
     // Entries Table Columns
     public static final String GJ_ID        =   "ID";
@@ -62,22 +62,35 @@ public class DatabaseHelper extends SQLiteOpenHelper
     //private static final String CREATE_GJ_TBL = "CREATE TABLE " +TBL_GJ + "(" +_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " +JRNL_NAME + " TEXT NOT NULL, " + ENTRY_ID + " TEXT);";
 
     // Create 2 tables with 1-to-many relationship.
-    private static final String CREATE_JOURNAL_ENTRIES_TABLE    = "CREATE TABLE " +TBL_JE       +" ( "  +KEY_ENTRY_ID   +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, " +KEY_ENTRY_DATE +" TEXT NOT NULL, "+ KEY_ENTRY_MEMO +" TEXT ); ";
-    private static final String CREATE_GENERAL_JOURNAL_TABLE    = "CREATE TABLE " +TBL_GJ       +" ( "  +KEY_ENTRY_ID   +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "        +KEY_ENTRY_MEMO +" TEXT , " +KEY_ENTRY_ID_FK    +" INTEGER, FOREIGN KEY(" +KEY_ENTRY_ID_FK + ") REFERENCES " +TBL_GJ +"(" +KEY_ENTRY_ID +"));";
-    private static final String CREATE_GenJrnl_TABLE            =
+    private static final String CREATE_JOURNAL_ENTRIES_TABLE =
+            "CREATE TABLE " +TBL_JE +" ( "
+                    +KEY_ENTRY_ID +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, "
+                    +KEY_ENTRY_DATE +" TEXT NOT NULL, "+ KEY_ENTRY_MEMO +" TEXT ); ";
+
+    private static final String CREATE_GENERAL_JOURNAL_TABLE =
+            "CREATE TABLE " +TBL_GJ +" ( "
+                    +KEY_ENTRY_ID   +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, "
+                    +KEY_ENTRY_MEMO +" TEXT , " +KEY_ENTRY_ID_FK
+                    +" INTEGER, FOREIGN KEY(" +KEY_ENTRY_ID_FK + ") REFERENCES "
+                    +TBL_GJ +"(" +KEY_ENTRY_ID +"));";
+
+    private static final String CREATE_GenJrnl_TABLE =
             "CREATE TABLE " +TBL_GenJrnl  +" ( "
-            +GJ_ID      +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, "
-            +GJ_JE_ID   +" INTEGER, "
-            +GJ_DATE    +" TEXT, "
-            +GJ_MEMO    +" TEXT, "
-            +GJ_DR_ACCT +" TEXT, "
-            +GJ_CR_ACCT +" TEXT, "
-            +GJ_AMOUNT  +" NUMERIC, "
-            +"FOREIGN KEY(" +GJ_JE_ID + ") REFERENCES " +TBL_JE +"(" +KEY_ENTRY_ID +"));";
+                    +GJ_ID      +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, "
+                    +GJ_JE_ID   +" INTEGER, "
+                    +GJ_DATE    +" TEXT, "
+                    +GJ_MEMO    +" TEXT, "
+                    +GJ_DR_ACCT +" TEXT, "
+                    +GJ_CR_ACCT +" TEXT, "
+                    +GJ_AMOUNT  +" NUMERIC, "
+                    +"FOREIGN KEY(" +GJ_JE_ID + ") REFERENCES " +TBL_JE +"(" +KEY_ENTRY_ID +"));";
 
     // Creating Data table query
-    public static final String CREATE_DATA_TABLE = "create table " + DATA_TABLE_NAME + "(" + _ID
-            + " INTEGER PRIMARY KEY AUTOINCREMENT, " + DATA + " TEXT NOT NULL, " + DESCRIPTION + " TEXT);";
+    public static final String CREATE_DATA_TABLE =
+            "CREATE TABLE " + DATA_TABLE_NAME + "("
+                    + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + DATA + " TEXT NOT NULL, "
+                    + DESCRIPTION + " TEXT);";
 
     public static final String DELETE_DATA_TABLE   = "DROP TABLE IF EXISTS " +DATA_TABLE_NAME;
     private static final String DELETE_TBL_GenJrnl  = "DROP TABLE IF EXISTS " +TBL_GenJrnl;
@@ -126,7 +139,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         return data;
     }*/
 
-    public void addEntry(Entry entry)
+    /*public void addEntry(Entry entry)
     {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
@@ -148,8 +161,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
         {
             db.endTransaction();
         }
-    }
-    public long addOrUpdateEntry (Entry entry)
+    }*/
+    /*public long addOrUpdateEntry (Entry entry)
     {
         SQLiteDatabase db = getWritableDatabase();
         long id = -1;
@@ -200,7 +213,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         }
 
         return id;
-    }
+    }*/
 
     // Get all entries in the database
     public List<Entry> getAllEntries()
