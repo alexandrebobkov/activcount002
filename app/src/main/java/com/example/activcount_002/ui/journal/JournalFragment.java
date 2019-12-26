@@ -91,11 +91,24 @@ public class JournalFragment extends Fragment
             // Move to the next row.
             } while (c.moveToNext());
 
-            mainViewModel.loadJournalEntries(entry);
+            /*mainViewModel.loadJournalEntries(entry);
             listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getJournalEntriesList());
-            journalView.setAdapter(listAdapter);
+            journalView.setAdapter(listAdapter);*/
 
         } catch (SQLException e) {}
+    }
+
+    public void listEntries (ArrayList<Entry> entry)
+    {
+        ArrayList<String> je = new ArrayList<>();
+
+        for (int i = 0; i < entry.size(); i++)
+        {
+            entry.indexOf(entry);
+        }
+        mainViewModel.loadJournalEntries(entry);
+        listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getJournalEntriesList());
+        journalView.setAdapter(listAdapter);
     }
 
 }

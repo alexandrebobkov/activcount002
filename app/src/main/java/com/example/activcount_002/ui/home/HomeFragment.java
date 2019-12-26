@@ -228,8 +228,8 @@ public class HomeFragment extends Fragment
             // Read table rows.
             do {
                 // Combine 3 table fields into 1 string
-                String[] entry = {c.getString(0), c.getString(1), c.getString(2)};
-                theEntriesList.add(entry);
+                //String[] entry = {c.getString(0), c.getString(1), c.getString(2)};
+                //theEntriesList.add(entry);
 
                 l.add("_id: " +c.getString(0) + " | " +c.getString(1) + "   " +c.getString(2));
                 // Move to the next row.
