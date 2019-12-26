@@ -49,7 +49,6 @@ public class HomeFragment extends Fragment
     private ListView            listView;
     private ListAdapter         listAdapter;
     private DBManager           dbManager;
-    private DatabaseHelper      dbHelper;
     private ArrayList<String>   theList;
     private Entry               e;
 
@@ -78,8 +77,8 @@ public class HomeFragment extends Fragment
         dbManager.prepareDataTable();
         fetchEntries(dbManager.fetch(), theList);
 
-        dbManager.prepareEntriesTable();
-        dbManager.postBeginningBalances();
+        //dbManager.prepareEntriesTable();
+        //dbManager.postBeginningBalances();
 
         btn_reset.setOnClickListener(new View.OnClickListener()
         {

@@ -127,7 +127,7 @@ public class DBManager {
         return id;
     }
 
-    private void postEntry()
+    /*private void postEntry()
     {
         ContentValues entry = new ContentValues();
         entry.put(DatabaseHelper.GJ_JE_ID, "" +e.je);
@@ -150,7 +150,7 @@ public class DBManager {
         cv.put(DatabaseHelper.KEY_ENTRY_MEMO, "Transaction");
         cv.put(DatabaseHelper.KEY_ENTRY_ID_FK, "1");
         database.insert(DatabaseHelper.TBL_GJ, null, cv);
-    }
+    }*/
 
     public Cursor fetch() throws SQLException {
         String[] columns = new String[] { DatabaseHelper._ID, DatabaseHelper.DATA, DatabaseHelper.DESCRIPTION };
@@ -161,31 +161,13 @@ public class DBManager {
         return cursor;
     }
 
-    public Cursor fetchEntries() throws SQLException
-    {
-        String[] columns = new String[] {
-                DatabaseHelper.GJ_ID,
-                DatabaseHelper.GJ_JE_ID,
-                DatabaseHelper.GJ_DATE,
-                DatabaseHelper.GJ_MEMO,
-                DatabaseHelper.GJ_DR_ACCT,
-                DatabaseHelper.GJ_CR_ACCT,
-                DatabaseHelper.GJ_AMOUNT };
-
-        Cursor cursor = database.query(DatabaseHelper.TBL_GJ, columns, null, null, null, null, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-        return cursor;
-    }
-
-    public List<Entry> getListOfEntries() throws SQLException
+   /*public List<Entry> getListOfEntries() throws SQLException
     {
         entries = new ArrayList<>();
         entries = dbHelper.getAllEntries();
 
         return entries;
-    }
+    }*/
 
     public int update(long _id, String name, String desc) {
         ContentValues contentValues = new ContentValues();
@@ -195,7 +177,7 @@ public class DBManager {
         return i;
     }
 
-    public void deleteRow(long _id) {
+    /*public void deleteRow(long _id) {
         database.delete(DatabaseHelper.DATA_TABLE_NAME, DatabaseHelper._ID + "=" + _id, null);
     }
 
@@ -213,7 +195,7 @@ public class DBManager {
             cursor.close();
         }
         return false;
-    }
+    }*/
 
     public void prepareDataTable()
     {
@@ -240,7 +222,7 @@ public class DBManager {
         insert("Anniversary Date", "" + Calendar.getInstance().getTime());
     }
 
-    public void prepareEntriesTable()
+    /*public void prepareEntriesTable()
     {
         e = new Entry();
         e.date = "" +Calendar.getInstance().getTime();
@@ -252,22 +234,23 @@ public class DBManager {
     public void postBeginningBalances()
     {
         e = new Entry(1, 1, "16-12-2019", "Balance forward", "Cash", null, 520);
-        /*e.je        = 1;
+        e.je        = 1;
         e.date      = "16-12-2019";
         e.memo      = "Balance forward";
         e.dr_acct   = "Cash";
-        e.amount    = 500;*/
+        e.amount    = 500;
         postEntry();
 
         e = new Entry(2, 1, "16-12-2019", "Balance forward", null, "Equity", 520);
-        /*e = new Entry();
+        e = new Entry();
         e.je        = 1;
         e.date      = "16-12-2019";
         e.memo      = "Balance forward";
         e.cr_acct   = "Equity";
-        e.amount    = 500;*/
+        e.amount    = 500;
         postEntry();
     }
+    */
     /*public void addEntry(Entry entry)
     {
         dbHelper.addEntry(entry);

@@ -14,6 +14,8 @@
 package com.example.activcount_002.ui.journal;
 
 import android.app.Dialog;
+import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -33,6 +35,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import android.widget.Toast;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.example.activcount_002.R;
@@ -50,7 +53,10 @@ public class JournalFragment extends Fragment
     private ListAdapter         listAdapter;
     private ListView            journalView;
     private DBManager           dbManager;
+    private DatabaseHelper      dbHelper;
+    private SQLiteDatabase      database;
     private ArrayList<Entry>    entriesList;
+    private Cursor              c;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
@@ -62,34 +68,58 @@ public class JournalFragment extends Fragment
 
         journalView = (ListView) root.findViewById(R.id.db_journal_view);
 
-        dbManager.open();
-        readEntries(dbManager.fetch(), entriesList);
-        dbManager.close();
+        /** DATABASE OPERATIONS **/
+        dbHelper = new DatabaseHelper(getContext());
+        database = dbHelper.getWritableDatabase();
+        initJournal();
+        initGenJrnl();
+        readEntries(entriesList);
+        database.close();
 
         return root;
     }
 
-    public void readEntries (Cursor c, ArrayList<Entry> entry) throws SQLException
+    public void readEntries (ArrayList<Entry> entry) throws SQLException
     {
+        String[] columns = new String[] {
+                DatabaseHelper.GJ_ID,
+                DatabaseHelper.GJ_JE_ID,
+                DatabaseHelper.GJ_DATE,
+                DatabaseHelper.GJ_MEMO,
+                DatabaseHelper.GJ_DR_ACCT,
+                DatabaseHelper.GJ_CR_ACCT,
+                DatabaseHelper.GJ_AMOUNT };
+
+        String SELECT_ENTRIES_QUERY = String.format(
+                "SELECT * FROM %s",
+                DatabaseHelper.TBL_GenJrnl);
+
         try {
-            // Define cursor for db table data
-            c = dbManager.fetchEntries();
+            //c = database.query(DatabaseHelper.TBL_GenJrnl, columns, null, null, null, null, null);
+            c = database.rawQuery(SELECT_ENTRIES_QUERY, null);
 
-            // Read table rows.
-            do {
+            if (c != null) {
+                c.moveToFirst();
 
-                Entry e = new Entry ();
-                e.id        = Long.getLong(c.getString(0));
-                e.je        = Long.getLong(c.getString(1));
-                e.date      = c.getString(2);
-                e.memo      = c.getString(3);
-                e.dr_acct   = c.getString(4);
-                e.cr_acct   = c.getString(5);
-                e.amount    = Long.getLong(c.getString(6));
-                entry.add(e);
-
-            // Move to the next row.
-            } while (c.moveToNext());
+                // Read table rows.
+                do {
+                    if (c.getCount()>0)
+                    {
+                        Entry e = new Entry();
+                        e.id        = Long.parseLong(c.getString(c.getColumnIndex(  DatabaseHelper.GJ_ID)));
+                        e.je        = Long.parseLong(c.getString(c.getColumnIndex(  DatabaseHelper.GJ_JE_ID)));
+                        e.date      = c.getString(c.getColumnIndex(                 DatabaseHelper.GJ_DATE));
+                        e.memo      = c.getString(c.getColumnIndex(                 DatabaseHelper.GJ_MEMO));
+                        e.dr_acct   = c.getString(c.getColumnIndex(                 DatabaseHelper.GJ_DR_ACCT));
+                        e.cr_acct   = c.getString(c.getColumnIndex(                 DatabaseHelper.GJ_CR_ACCT));
+                        e.amount    = Long.parseLong(c.getString(c.getColumnIndex(  DatabaseHelper.GJ_AMOUNT)));
+                        entry.add(e);
+                    }
+                    else
+                        break;
+                    // Move to the next row.
+                } while (c.moveToNext());
+            }
 
             /*mainViewModel.loadJournalEntries(entry);
             listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getJournalEntriesList());
@@ -109,6 +139,41 @@ public class JournalFragment extends Fragment
         mainViewModel.loadJournalEntries(entry);
         listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getJournalEntriesList());
         journalView.setAdapter(listAdapter);
+    }
+
+    public void initJournal ()
+    {
+        ContentValues cv = new ContentValues();
+        cv.put(DatabaseHelper.KEY_ENTRY_DATE, "" + Calendar.getInstance().getTime());
+        cv.put(DatabaseHelper.KEY_ENTRY_MEMO, "Balance forward");
+        database.insert(DatabaseHelper.TBL_JE, null, cv);
+    }
+
+    public void initGenJrnl () throws SQLException
+    {
+        try
+        {
+            //database.beginTransaction();
+
+            ContentValues v = new ContentValues();
+            //v.put(DatabaseHelper.GJ_ID, 1);
+            v.put(DatabaseHelper.GJ_JE_ID, 1);
+            v.put(DatabaseHelper.GJ_DATE, "26-12-2019");
+            v.put(DatabaseHelper.GJ_MEMO, "Balance forward");
+            v.put(DatabaseHelper.GJ_DR_ACCT, "Cash");
+            v.put(DatabaseHelper.GJ_CR_ACCT, "");
+            v.put(DatabaseHelper.GJ_AMOUNT, 1500);
+            database.insert(DatabaseHelper.TBL_GenJrnl, null, v);
+            v.put(DatabaseHelper.GJ_JE_ID, 1);
+            v.put(DatabaseHelper.GJ_DATE, "26-12-2019");
+            v.put(DatabaseHelper.GJ_MEMO, "Balance forward");
+            v.put(DatabaseHelper.GJ_DR_ACCT, "");
+            v.put(DatabaseHelper.GJ_CR_ACCT, "Equity");
+            v.put(DatabaseHelper.GJ_AMOUNT, 1500);
+            database.insert(DatabaseHelper.TBL_GenJrnl, null, v);
+            //database.setTransactionSuccessful();
+        }
+        catch (SQLException e) {}
     }
 
 }
