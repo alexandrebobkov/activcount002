@@ -13,28 +13,27 @@ import android.database.SQLException;
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {
-    static final String DB_NAME                     =   "ACTIVCOUNT_DATA_014.DB";       // Database Information
-    static final String DB_GENERAL_JOURNAL_NAME     =   "ACTIVCOUNT_GJ_001.DB";       // Database Information
-    static final int DB_VERSION                     =   8;                              // Database version
+    static final String     DB_NAME                     =   "ACTIVCOUNT_DATA_014.DB";       // Database Information
+    static final String     DB_GENERAL_JOURNAL_NAME     =   "ACTIVCOUNT_GJ_001.DB";       // Database Information
+    static final int        DB_VERSION                  =   8;                              // Database version
 
     // Tables names
-    public static final String DATA_TABLE_NAME = "DATA";
-    public static final String ITEMS_TABLE_NAME = "ITEMS";
-
-    private static final String TABLE_ENTRIES = "ENTRIES";
+    public  static final String DATA_TABLE_NAME     = "DATA";
+    public  static final String ITEMS_TABLE_NAME    = "ITEMS";
+    private static final String TABLE_ENTRIES       = "ENTRIES";
 
     // ACCOUNTING
-    public static final String TBL_GJ       =   "GENERAL_JOURNAL";              // General Journal
-    public static final String TBL_GenJrnl  =   "GENERAL_JOURNAL_2";              // General Journal v.2
-    public static final String TBL_JE       =   "JOURNAL_ENTRY";                // Journal entries
+    public  static final String TBL_GJ          =   "GENERAL_JOURNAL";              // General Journal
+    public  static final String TBL_GenJrnl     =   "GENERAL_JOURNAL_2";              // General Journal v.2
+    public  static final String TBL_JE          =   "JOURNAL_ENTRY";                // Journal entries
     // Standardized table columns
-    public static final String _ID          =   "_id";                          // Table key
-    private static final String ENTRY_ID    =   "JE_ID";                        // Journal entry number
+    public  static final String _ID             =   "_id";                          // Table key
+    private static final String ENTRY_ID        =   "JE_ID";                        // Journal entry number
     // General Journal table columns
-    private static final String JRNL_NAME   =   "JOURNAL NAME";                 // Journal descriptive name
+    private static final String JRNL_NAME       =   "JOURNAL NAME";                 // Journal descriptive name
     // Journal Entry table columns
-    private static final String DATE        =   "DATE";                         // Journal entry date
-    private static final String MEMO        =   "MEMO";                         // Journal entry description
+    private static final String DATE            =   "DATE";                         // Journal entry date
+    private static final String MEMO            =   "MEMO";                         // Journal entry description
 
     // Table columns
 

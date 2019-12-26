@@ -45,10 +45,23 @@ import com.example.activcount_002.db.Entry;
 
 public class JournalFragment extends Fragment
 {
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    private ListView        journalView;
+    private DBManager       dbManager;
+    private Entry           entry;
+    private ArrayList       entriesList;
 
-        View root = inflater.inflate(R.layout.fragment_journal, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState)
+    {
+        entriesList = new ArrayList<>();
+        entry       = new Entry();
+        dbManager   = new DBManager(getContext());
+        View root   = inflater.inflate(R.layout.fragment_journal, container, false);
+
+        journalView = (ListView) root.findViewById(R.id.db_journal_view);
+
+        dbManager.open();
+        dbManager.close();
 
         return root;
     }

@@ -6,11 +6,11 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/text_journal"
+        android:id="@+id/db_journal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -20,13 +20,14 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
-        android:id="@+id/db_list_view"
+        android:id="@+id/db_journal_view"
         style="@android:style/Widget.Material.ListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:dividerHeight="2dp"
         android:fastScrollAlwaysVisible="false"
         android:fastScrollEnabled="false"
@@ -35,6 +36,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_home"></ListView>
+        app:layout_constraintTop_toBottomOf="@+id/db_journal"></ListView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

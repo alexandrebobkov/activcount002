@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment
     private DBManager           dbManager;
     private DatabaseHelper      dbHelper;
     private ArrayList<String>   theList;
-    private Entry e;
+    private Entry               e;
 
     private ArrayList<String[]> theEntriesList;
     private List<Entry>         entries_list;
