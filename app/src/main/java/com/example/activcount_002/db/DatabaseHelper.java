@@ -36,7 +36,6 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private static final String MEMO            =   "MEMO";                         // Journal entry description
 
     // Table columns
-
     public static final String DATA         = "data";
     public static final String ITEM         = "item";
     public static final String DESCRIPTION  = "description";

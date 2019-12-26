@@ -16,6 +16,7 @@ package com.example.activcount_002.ui.journal;
 import android.app.Dialog;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.view.LayoutInflater;
@@ -45,24 +46,56 @@ import com.example.activcount_002.db.Entry;
 
 public class JournalFragment extends Fragment
 {
-    private ListView        journalView;
-    private DBManager       dbManager;
-    private Entry           entry;
-    private ArrayList       entriesList;
+    MainViewModel               mainViewModel;
+    private ListAdapter         listAdapter;
+    private ListView            journalView;
+    private DBManager           dbManager;
+    private ArrayList<Entry>    entriesList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        entriesList = new ArrayList<>();
-        entry       = new Entry();
-        dbManager   = new DBManager(getContext());
-        View root   = inflater.inflate(R.layout.fragment_journal, container, false);
+        mainViewModel   = ViewModelProviders.of(this).get(MainViewModel.class);
+        entriesList     = new ArrayList<>();
+        dbManager       = new DBManager(getContext());
+        View root       = inflater.inflate(R.layout.fragment_journal, container, false);
 
         journalView = (ListView) root.findViewById(R.id.db_journal_view);
 
         dbManager.open();
+        readEntries(dbManager.fetch(), entriesList);
         dbManager.close();
 
         return root;
     }
+
+    public void readEntries (Cursor c, ArrayList<Entry> entry) throws SQLException
+    {
+        try {
+            // Define cursor for db table data
+            c = dbManager.fetchEntries();
+
+            // Read table rows.
+            do {
+
+                Entry e = new Entry ();
+                e.id        = Long.getLong(c.getString(0));
+                e.je        = Long.getLong(c.getString(1));
+                e.date      = c.getString(2);
+                e.memo      = c.getString(3);
+                e.dr_acct   = c.getString(4);
+                e.cr_acct   = c.getString(5);
+                e.amount    = Long.getLong(c.getString(6));
+                entry.add(e);
+
+            // Move to the next row.
+            } while (c.moveToNext());
+
+            mainViewModel.loadJournalEntries(entry);
+            listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getJournalEntriesList());
+            journalView.setAdapter(listAdapter);
+
+        } catch (SQLException e) {}
+    }
+
 }

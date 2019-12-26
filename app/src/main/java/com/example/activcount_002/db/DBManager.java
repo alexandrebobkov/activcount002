@@ -161,6 +161,24 @@ public class DBManager {
         return cursor;
     }
 
+    public Cursor fetchEntries() throws SQLException
+    {
+        String[] columns = new String[] {
+                DatabaseHelper.GJ_ID,
+                DatabaseHelper.GJ_JE_ID,
+                DatabaseHelper.GJ_DATE,
+                DatabaseHelper.GJ_MEMO,
+                DatabaseHelper.GJ_DR_ACCT,
+                DatabaseHelper.GJ_CR_ACCT,
+                DatabaseHelper.GJ_AMOUNT };
+
+        Cursor cursor = database.query(DatabaseHelper.TBL_GJ, columns, null, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+
     public List<Entry> getListOfEntries() throws SQLException
     {
         entries = new ArrayList<>();

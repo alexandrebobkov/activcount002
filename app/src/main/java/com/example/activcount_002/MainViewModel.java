@@ -18,6 +18,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import java.util.ArrayList;
 import java.util.List;
+import com.example.activcount_002.db.Entry;
 
 public class MainViewModel extends ViewModel
 {
@@ -34,6 +35,7 @@ public class MainViewModel extends ViewModel
     private static String               str_direct_costs          = "500.00";
     private static String               str_operating_expenses    = "2500.00";
     private static ArrayList<String>    theList;
+    private static ArrayList<Entry>     entriesList;
 
     private MutableLiveData<String>     statusText;
     private MutableLiveData<String>     homeStatusText;
@@ -51,6 +53,7 @@ public class MainViewModel extends ViewModel
         direct_costs        = new MutableLiveData<>();
         operating_expenses  = new MutableLiveData<>();
         theList             = new ArrayList<>();
+        entriesList         = new ArrayList<>();
 
         statusText.setValue(status_msg);
         homeStatusText.setValue(home_status_msg);
@@ -74,6 +77,7 @@ public class MainViewModel extends ViewModel
     public void setDirectCosts(TextView tv)             {   str_direct_costs = ""+tv.getText();         }
 
     public void loadEntries(ArrayList<String> list)     {   theList = list;             }
+    public void loadJournalEntries(ArrayList<Entry> entries)     {   entriesList = entries;             }
 
     public String getAssetsCurrent()                    {   return str_assets_current;  }
     public String getAssetsSupplies()                   {   return str_assets_supplies; }
@@ -90,4 +94,5 @@ public class MainViewModel extends ViewModel
     public LiveData<String> getOperatingExpensesText()  {   return operating_expenses;  }
 
     public ArrayList<String> getEntriesList()           {   return theList;             }
+    public ArrayList<Entry> getJournalEntriesList()     {   return entriesList;         }
 }
