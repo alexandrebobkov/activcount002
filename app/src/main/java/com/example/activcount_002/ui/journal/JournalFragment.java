@@ -20,6 +20,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.widget.Button;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,11 +57,19 @@ public class JournalFragment extends Fragment
     private DatabaseHelper      dbHelper;
     private SQLiteDatabase      database;
     private ArrayList<Entry>    entriesList;
+    private ArrayList<String>         theList;
+    //private ListView            listView;
     private Cursor              c;
+
+    private String              SELECT_ENTRIES_QUERY;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
+        SELECT_ENTRIES_QUERY = String.format(
+            "SELECT * FROM %s",
+            DatabaseHelper.TBL_GenJrnl);
+
         mainViewModel   = ViewModelProviders.of(this).get(MainViewModel.class);
         entriesList     = new ArrayList<>();
         dbManager       = new DBManager(getContext());
@@ -76,12 +85,18 @@ public class JournalFragment extends Fragment
         readEntries(entriesList);
         database.close();
 
+        theList = new ArrayList<>();
+        fetchEntries(theList);
+        mainViewModel.loadEntries(theList);
+        listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getEntriesList());
+        journalView.setAdapter(listAdapter);
+
         return root;
     }
 
     public void readEntries (ArrayList<Entry> entry) throws SQLException
     {
-        String[] columns = new String[] {
+        /*String[] columns = new String[] {
                 DatabaseHelper.GJ_ID,
                 DatabaseHelper.GJ_JE_ID,
                 DatabaseHelper.GJ_DATE,
@@ -92,10 +107,9 @@ public class JournalFragment extends Fragment
 
         String SELECT_ENTRIES_QUERY = String.format(
                 "SELECT * FROM %s",
-                DatabaseHelper.TBL_GenJrnl);
+                DatabaseHelper.TBL_GenJrnl);*/
 
         try {
-            //c = database.query(DatabaseHelper.TBL_GenJrnl, columns, null, null, null, null, null);
             c = database.rawQuery(SELECT_ENTRIES_QUERY, null);
 
             if (c != null) {
@@ -176,4 +190,31 @@ public class JournalFragment extends Fragment
         catch (SQLException e) {}
     }
 
+    private void fetchEntries(ArrayList<String> l) throws SQLException
+    {
+        try {
+            // Define cursor for db table data
+            //c = database.rawQuery(SELECT_ENTRIES_QUERY, null);
+
+            // Read table rows.
+            c.moveToFirst();
+            do {
+                // Combine columns into 1 string
+
+                l.add("[ " +DatabaseHelper.GJ_ID + " " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_ID)) + " ; " +
+                                DatabaseHelper.GJ_JE_ID + " " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_JE_ID)) + " ]" +
+                                " on " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_DATE)) + ". " +
+                                c.getString(c.getColumnIndex(DatabaseHelper.GJ_MEMO)) + " " +
+                                " DR " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_DR_ACCT)) + " | " +
+                                " CR " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_CR_ACCT)) + " | " +
+                                " $" +c.getString(c.getColumnIndex(DatabaseHelper.GJ_AMOUNT)));
+                // Move to the next row.
+            } while (c.moveToNext());
+
+            /*mainViewModel.loadEntries(l);
+            listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getEntriesList());
+            journalView.setAdapter(listAdapter);*/
+
+        } catch (SQLException e) {}
+    }
 }
