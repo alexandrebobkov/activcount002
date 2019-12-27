@@ -8,7 +8,7 @@ public class Entry
     public String   memo;
     public String   dr_acct;
     public String   cr_acct;
-    public long     amount;
+    public float     amount;
 
     public Entry ()
     {
@@ -19,7 +19,7 @@ public class Entry
         cr_acct =   "";
         amount  =   0;
     }
-    public Entry (long id, long je, String date, String memo, String dr_acct, String cr_acct, long amount)
+    public Entry (long id, long je, String date, String memo, String dr_acct, String cr_acct, float amount)
     {
         this.id         = id;
         this.je         = je;

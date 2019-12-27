@@ -60,7 +60,7 @@ public class JournalFragment extends Fragment
     private Cursor              c;
     private String              SELECT_ENTRIES_QUERY;
 
-    private long                dr_ttl;
+    private float                dr_ttl;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
@@ -109,12 +109,14 @@ public class JournalFragment extends Fragment
                     {
                         Entry e = new Entry();
                         e.id        = c.getLong     (c.getColumnIndex(DatabaseHelper.GJ_ID));
+                        //e.je        = c.getLong     (c.getColumnIndex(DatabaseHelper.GJ_JE_ID));
                         e.je        = c.getLong     (c.getColumnIndex(DatabaseHelper.GJ_JE_ID));
                         e.date      = c.getString   (c.getColumnIndex(DatabaseHelper.GJ_DATE));
                         e.memo      = c.getString   (c.getColumnIndex(DatabaseHelper.GJ_MEMO));
                         e.dr_acct   = c.getString   (c.getColumnIndex(DatabaseHelper.GJ_DR_ACCT));
                         e.cr_acct   = c.getString   (c.getColumnIndex(DatabaseHelper.GJ_CR_ACCT));
-                        e.amount    = c.getLong     (c.getColumnIndex(DatabaseHelper.GJ_AMOUNT));
+                        //e.amount    = c.getLong     (c.getColumnIndex(DatabaseHelper.GJ_AMOUNT));
+                        e.amount    = c.getFloat    (c.getColumnIndex(DatabaseHelper.GJ_AMOUNT));
                         entry.add(e);
                     }
                     else
@@ -146,14 +148,14 @@ public class JournalFragment extends Fragment
             v.put(DatabaseHelper.GJ_MEMO, "Balance forward");
             v.put(DatabaseHelper.GJ_DR_ACCT, "Cash");
             v.put(DatabaseHelper.GJ_CR_ACCT, "");
-            v.put(DatabaseHelper.GJ_AMOUNT, 1500.01);
+            v.put(DatabaseHelper.GJ_AMOUNT, 1500.01f);
             database.insert(DatabaseHelper.TBL_GenJrnl, null, v);
             v.put(DatabaseHelper.GJ_JE_ID, 1);
             v.put(DatabaseHelper.GJ_DATE, "26-12-2019");
             v.put(DatabaseHelper.GJ_MEMO, "Balance forward");
             v.put(DatabaseHelper.GJ_DR_ACCT, "");
             v.put(DatabaseHelper.GJ_CR_ACCT, "Equity");
-            v.put(DatabaseHelper.GJ_AMOUNT, 1500.01);
+            v.put(DatabaseHelper.GJ_AMOUNT, 1500.01f);
             database.insert(DatabaseHelper.TBL_GenJrnl, null, v);
         }
         catch (SQLException e) {}
@@ -163,7 +165,7 @@ public class JournalFragment extends Fragment
     {
         ArrayList<String> l = new ArrayList<>();    // list of String arrays to hold entries information
         Entry entry;                                // Entry construct
-        long sum = 0;
+        float sum = 0.0f;
 
         // Loop through the entries array
         for (int i = 0; i < e.size(); i++)
@@ -175,9 +177,9 @@ public class JournalFragment extends Fragment
         return l;
     }
 
-    private long totalDebits(ArrayList<Entry> e)
+    private float totalDebits(ArrayList<Entry> e)
     {
-        long sum = 0;
+        float sum = 0.0f;
         Entry entry;
         for (int i = 0; i < e.size(); i++)
         {
