@@ -13,7 +13,7 @@ import android.database.SQLException;
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {
-    static final String     DB_NAME                     =   "ACTIVCOUNT_DATA_022.DB";       // Database Information
+    static final String     DB_NAME                     =   "ACTIVCOUNT_DATA_023.DB";       // Database Information
     static final String     DB_GENERAL_JOURNAL_NAME     =   "ACTIVCOUNT_GJ_001.DB";       // Database Information
     static final int        DB_VERSION                  =   1;                              // Database version
 

@@ -81,8 +81,8 @@ public class JournalFragment extends Fragment
         /** DATABASE OPERATIONS **/
         dbHelper = new DatabaseHelper(getContext());
         database = dbHelper.getWritableDatabase();
-        //initJournal();
-        //initGenJrnl();
+//        initJournal();
+//        initGenJrnl();
         readEntries(entriesList);       // array of Entries
         database.close();
 
@@ -101,19 +101,6 @@ public class JournalFragment extends Fragment
 
     public void readEntries (ArrayList<Entry> entry) throws SQLException
     {
-        /*String[] columns = new String[] {
-                DatabaseHelper.GJ_ID,
-                DatabaseHelper.GJ_JE_ID,
-                DatabaseHelper.GJ_DATE,
-                DatabaseHelper.GJ_MEMO,
-                DatabaseHelper.GJ_DR_ACCT,
-                DatabaseHelper.GJ_CR_ACCT,
-                DatabaseHelper.GJ_AMOUNT };
-
-        String SELECT_ENTRIES_QUERY = String.format(
-                "SELECT * FROM %s",
-                DatabaseHelper.TBL_GenJrnl);*/
-
         try {
             c = database.rawQuery(SELECT_ENTRIES_QUERY, null);
 
@@ -124,13 +111,13 @@ public class JournalFragment extends Fragment
                     if (c.getCount()>0)
                     {
                         Entry e = new Entry();
-                        e.id        = Long.parseLong(c.getString(c.getColumnIndex(  DatabaseHelper.GJ_ID)));
-                        e.je        = Long.parseLong(c.getString(c.getColumnIndex(  DatabaseHelper.GJ_JE_ID)));
-                        e.date      = c.getString(c.getColumnIndex(                 DatabaseHelper.GJ_DATE));
-                        e.memo      = c.getString(c.getColumnIndex(                 DatabaseHelper.GJ_MEMO));
-                        e.dr_acct   = c.getString(c.getColumnIndex(                 DatabaseHelper.GJ_DR_ACCT));
-                        e.cr_acct   = c.getString(c.getColumnIndex(                 DatabaseHelper.GJ_CR_ACCT));
-                        e.amount    = Long.parseLong(c.getString(c.getColumnIndex(  DatabaseHelper.GJ_AMOUNT)));
+                        e.id        = c.getLong     (c.getColumnIndex(DatabaseHelper.GJ_ID));
+                        e.je        = c.getLong     (c.getColumnIndex(DatabaseHelper.GJ_JE_ID));
+                        e.date      = c.getString   (c.getColumnIndex(DatabaseHelper.GJ_DATE));
+                        e.memo      = c.getString   (c.getColumnIndex(DatabaseHelper.GJ_MEMO));
+                        e.dr_acct   = c.getString   (c.getColumnIndex(DatabaseHelper.GJ_DR_ACCT));
+                        e.cr_acct   = c.getString   (c.getColumnIndex(DatabaseHelper.GJ_CR_ACCT));
+                        e.amount    = c.getLong     (c.getColumnIndex(DatabaseHelper.GJ_AMOUNT));
                         entry.add(e);
                     }
                     else
@@ -140,13 +127,18 @@ public class JournalFragment extends Fragment
             }
         } catch (SQLException e) {}
     }
-    
-    public void initJournal ()
+
+    public void initJournal() throws SQLException
     {
-        ContentValues cv = new ContentValues();
-        cv.put(DatabaseHelper.KEY_ENTRY_DATE, "" + Calendar.getInstance().getTime());
-        cv.put(DatabaseHelper.KEY_ENTRY_MEMO, "Balance forward");
-        database.insert(DatabaseHelper.TBL_JE, null, cv);
+        try {
+
+
+            ContentValues cv = new ContentValues();
+            cv.put(DatabaseHelper.KEY_ENTRY_DATE, "" + Calendar.getInstance().getTime());
+            cv.put(DatabaseHelper.KEY_ENTRY_MEMO, "Balance forward");
+            database.insert(DatabaseHelper.TBL_JE, null, cv);
+
+        }catch (SQLException e) {}
     }
 
     public void initGenJrnl () throws SQLException
@@ -162,14 +154,14 @@ public class JournalFragment extends Fragment
             v.put(DatabaseHelper.GJ_MEMO, "Balance forward");
             v.put(DatabaseHelper.GJ_DR_ACCT, "Cash");
             v.put(DatabaseHelper.GJ_CR_ACCT, "");
-            v.put(DatabaseHelper.GJ_AMOUNT, 1500);
+            v.put(DatabaseHelper.GJ_AMOUNT, 1500.01);
             database.insert(DatabaseHelper.TBL_GenJrnl, null, v);
             v.put(DatabaseHelper.GJ_JE_ID, 1);
             v.put(DatabaseHelper.GJ_DATE, "26-12-2019");
             v.put(DatabaseHelper.GJ_MEMO, "Balance forward");
             v.put(DatabaseHelper.GJ_DR_ACCT, "");
             v.put(DatabaseHelper.GJ_CR_ACCT, "Equity");
-            v.put(DatabaseHelper.GJ_AMOUNT, 1500);
+            v.put(DatabaseHelper.GJ_AMOUNT, 1500.01);
             database.insert(DatabaseHelper.TBL_GenJrnl, null, v);
             //database.setTransactionSuccessful();
         }
@@ -209,7 +201,7 @@ public class JournalFragment extends Fragment
         {
             entry = e.get(i);
             sum += entry.amount;
-            l.add("[ " +String.valueOf(entry.id) +" ; " +String.valueOf(entry.je) +" ] " +entry.date +" " +entry.memo + " $" +String.valueOf(entry.amount) +" BAL: $" +String.valueOf(sum));
+            l.add("[ " +String.valueOf(entry.id) +" ; " +String.valueOf(entry.je) +" ] DR " +entry.dr_acct +" CR " +entry.cr_acct +" $" +String.valueOf(entry.amount) +" BAL: $" +String.valueOf(sum));
         }
         return l;
     }
@@ -221,7 +213,10 @@ public class JournalFragment extends Fragment
         for (int i = 0; i < e.size(); i++)
         {
             entry = e.get(i);
-            sum += entry.amount;
+            if (entry.cr_acct.isEmpty()) {
+                //if ( entry.dr_acct.equalsIgnoreCase("Cash"))
+                sum += entry.amount;
+            }
         }
         return sum;
     }

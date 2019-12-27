@@ -15,8 +15,8 @@ public class Entry
         id      =   -1;
         je      =   -1;
         date    =   "01-01-2019";
-        dr_acct =   null;
-        cr_acct =   null;
+        dr_acct =   "";
+        cr_acct =   "";
         amount  =   0;
     }
     public Entry (long id, long je, String date, String memo, String dr_acct, String cr_acct, long amount)
