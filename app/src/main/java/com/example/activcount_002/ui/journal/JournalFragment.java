@@ -32,12 +32,14 @@ import android.widget.ListAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import androidx.lifecycle.Observer;
 
 import com.example.activcount_002.R;
 import com.example.activcount_002.MainViewModel;
@@ -57,39 +59,42 @@ public class JournalFragment extends Fragment
     private DatabaseHelper      dbHelper;
     private SQLiteDatabase      database;
     private ArrayList<Entry>    entriesList;
-    private ArrayList<String>         theList;
-    //private ListView            listView;
+    private ArrayList<String>   theList, theList2;
     private Cursor              c;
-
     private String              SELECT_ENTRIES_QUERY;
+
+    private long                dr_ttl;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
-        SELECT_ENTRIES_QUERY = String.format(
-            "SELECT * FROM %s",
-            DatabaseHelper.TBL_GenJrnl);
+        SELECT_ENTRIES_QUERY = String.format("SELECT * FROM %s", DatabaseHelper.TBL_GenJrnl);
 
         mainViewModel   = ViewModelProviders.of(this).get(MainViewModel.class);
         entriesList     = new ArrayList<>();
         dbManager       = new DBManager(getContext());
         View root       = inflater.inflate(R.layout.fragment_journal, container, false);
+        final TextView debits_total     = root.findViewById(R.id.dr_ttl);
 
         journalView = (ListView) root.findViewById(R.id.db_journal_view);
 
         /** DATABASE OPERATIONS **/
         dbHelper = new DatabaseHelper(getContext());
         database = dbHelper.getWritableDatabase();
-        initJournal();
-        initGenJrnl();
-        readEntries(entriesList);
+        //initJournal();
+        //initGenJrnl();
+        readEntries(entriesList);       // array of Entries
         database.close();
 
-        theList = new ArrayList<>();
-        fetchEntries(theList);
-        mainViewModel.loadEntries(theList);
+        theList2 = new ArrayList<>();   // list populated from array of Entries
+        theList2 = fetchEntriesArray(entriesList);
+        mainViewModel.loadEntries(theList2);     // pass ArrayList<String> to ViewModel.
         listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getEntriesList());
         journalView.setAdapter(listAdapter);
+
+        dr_ttl = totalDebits(entriesList);
+        mainViewModel.setDebitsTotal(String.valueOf(dr_ttl));
+        mainViewModel.getTotalDebits().observe(this, new Observer<String>() { @Override public void onChanged(@Nullable String s) {   debits_total.setText(s);   }});
 
         return root;
     }
@@ -114,7 +119,6 @@ public class JournalFragment extends Fragment
 
             if (c != null) {
                 c.moveToFirst();
-
                 // Read table rows.
                 do {
                     if (c.getCount()>0)
@@ -134,27 +138,9 @@ public class JournalFragment extends Fragment
                     // Move to the next row.
                 } while (c.moveToNext());
             }
-
-            /*mainViewModel.loadJournalEntries(entry);
-            listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getJournalEntriesList());
-            journalView.setAdapter(listAdapter);*/
-
         } catch (SQLException e) {}
     }
-
-    public void listEntries (ArrayList<Entry> entry)
-    {
-        ArrayList<String> je = new ArrayList<>();
-
-        for (int i = 0; i < entry.size(); i++)
-        {
-            entry.indexOf(entry);
-        }
-        mainViewModel.loadJournalEntries(entry);
-        listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getJournalEntriesList());
-        journalView.setAdapter(listAdapter);
-    }
-
+    
     public void initJournal ()
     {
         ContentValues cv = new ContentValues();
@@ -190,7 +176,7 @@ public class JournalFragment extends Fragment
         catch (SQLException e) {}
     }
 
-    private void fetchEntries(ArrayList<String> l) throws SQLException
+/*    private void fetchEntries(ArrayList<String> l) throws SQLException
     {
         try {
             // Define cursor for db table data
@@ -200,7 +186,6 @@ public class JournalFragment extends Fragment
             c.moveToFirst();
             do {
                 // Combine columns into 1 string
-
                 l.add("[ " +DatabaseHelper.GJ_ID + " " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_ID)) + " ; " +
                                 DatabaseHelper.GJ_JE_ID + " " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_JE_ID)) + " ]" +
                                 " on " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_DATE)) + ". " +
@@ -210,11 +195,34 @@ public class JournalFragment extends Fragment
                                 " $" +c.getString(c.getColumnIndex(DatabaseHelper.GJ_AMOUNT)));
                 // Move to the next row.
             } while (c.moveToNext());
-
-            /*mainViewModel.loadEntries(l);
-            listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getEntriesList());
-            journalView.setAdapter(listAdapter);*/
-
         } catch (SQLException e) {}
+    }*/
+
+    private ArrayList<String> fetchEntriesArray(ArrayList<Entry> e)
+    {
+        ArrayList<String> l = new ArrayList<>();    // list of String arrays to hold entries information
+        Entry entry;                                // Entry construct
+        long sum = 0;
+
+        // Loop through the entries array
+        for (int i = 0; i < e.size(); i++)
+        {
+            entry = e.get(i);
+            sum += entry.amount;
+            l.add("[ " +String.valueOf(entry.id) +" ; " +String.valueOf(entry.je) +" ] " +entry.date +" " +entry.memo + " $" +String.valueOf(entry.amount) +" BAL: $" +String.valueOf(sum));
+        }
+        return l;
+    }
+
+    private long totalDebits(ArrayList<Entry> e)
+    {
+        long sum = 0;
+        Entry entry;
+        for (int i = 0; i < e.size(); i++)
+        {
+            entry = e.get(i);
+            sum += entry.amount;
+        }
+        return sum;
     }
 }
