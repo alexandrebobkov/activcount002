@@ -40,11 +40,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import androidx.lifecycle.Observer;
-
 import com.example.activcount_002.R;
 import com.example.activcount_002.MainViewModel;
 import com.example.activcount_002.db.DBManager;
-
 import org.w3c.dom.Text;
 
 import com.example.activcount_002.db.DatabaseHelper;
@@ -55,11 +53,10 @@ public class JournalFragment extends Fragment
     MainViewModel               mainViewModel;
     private ListAdapter         listAdapter;
     private ListView            journalView;
-    private DBManager           dbManager;
     private DatabaseHelper      dbHelper;
     private SQLiteDatabase      database;
     private ArrayList<Entry>    entriesList;
-    private ArrayList<String>   theList, theList2;
+    private ArrayList<String>   theList2;
     private Cursor              c;
     private String              SELECT_ENTRIES_QUERY;
 
@@ -72,7 +69,7 @@ public class JournalFragment extends Fragment
 
         mainViewModel   = ViewModelProviders.of(this).get(MainViewModel.class);
         entriesList     = new ArrayList<>();
-        dbManager       = new DBManager(getContext());
+        //dbManager       = new DBManager(getContext());
         View root       = inflater.inflate(R.layout.fragment_journal, container, false);
         final TextView debits_total     = root.findViewById(R.id.dr_ttl);
 
@@ -131,8 +128,6 @@ public class JournalFragment extends Fragment
     public void initJournal() throws SQLException
     {
         try {
-
-
             ContentValues cv = new ContentValues();
             cv.put(DatabaseHelper.KEY_ENTRY_DATE, "" + Calendar.getInstance().getTime());
             cv.put(DatabaseHelper.KEY_ENTRY_MEMO, "Balance forward");
@@ -145,10 +140,7 @@ public class JournalFragment extends Fragment
     {
         try
         {
-            //database.beginTransaction();
-
             ContentValues v = new ContentValues();
-            //v.put(DatabaseHelper.GJ_ID, 1);
             v.put(DatabaseHelper.GJ_JE_ID, 1);
             v.put(DatabaseHelper.GJ_DATE, "26-12-2019");
             v.put(DatabaseHelper.GJ_MEMO, "Balance forward");
@@ -163,32 +155,9 @@ public class JournalFragment extends Fragment
             v.put(DatabaseHelper.GJ_CR_ACCT, "Equity");
             v.put(DatabaseHelper.GJ_AMOUNT, 1500.01);
             database.insert(DatabaseHelper.TBL_GenJrnl, null, v);
-            //database.setTransactionSuccessful();
         }
         catch (SQLException e) {}
     }
-
-/*    private void fetchEntries(ArrayList<String> l) throws SQLException
-    {
-        try {
-            // Define cursor for db table data
-            //c = database.rawQuery(SELECT_ENTRIES_QUERY, null);
-
-            // Read table rows.
-            c.moveToFirst();
-            do {
-                // Combine columns into 1 string
-                l.add("[ " +DatabaseHelper.GJ_ID + " " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_ID)) + " ; " +
-                                DatabaseHelper.GJ_JE_ID + " " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_JE_ID)) + " ]" +
-                                " on " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_DATE)) + ". " +
-                                c.getString(c.getColumnIndex(DatabaseHelper.GJ_MEMO)) + " " +
-                                " DR " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_DR_ACCT)) + " | " +
-                                " CR " +c.getString(c.getColumnIndex(DatabaseHelper.GJ_CR_ACCT)) + " | " +
-                                " $" +c.getString(c.getColumnIndex(DatabaseHelper.GJ_AMOUNT)));
-                // Move to the next row.
-            } while (c.moveToNext());
-        } catch (SQLException e) {}
-    }*/
 
     private ArrayList<String> fetchEntriesArray(ArrayList<Entry> e)
     {
@@ -213,10 +182,7 @@ public class JournalFragment extends Fragment
         for (int i = 0; i < e.size(); i++)
         {
             entry = e.get(i);
-            if (entry.cr_acct.isEmpty()) {
-                //if ( entry.dr_acct.equalsIgnoreCase("Cash"))
-                sum += entry.amount;
-            }
+            if (entry.cr_acct.isEmpty()) {  sum += entry.amount;    }
         }
         return sum;
     }
