@@ -23,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     private static final String TABLE_ENTRIES       = "ENTRIES";
 
     // ACCOUNTING
-    public  static final String TBL_GJ          =   "GENERAL_JOURNAL_0";              // General Journal
+    public  static final String TBL_GJ          =   "GENERAL_JOURNAL_0";            // General Journal
     public  static final String TBL_GenJrnl     =   "GENERAL_JOURNAL";              // General Journal v.2
     public  static final String TBL_JE          =   "JOURNAL_ENTRY";                // Journal entries
     // Standardized table columns
@@ -83,6 +83,8 @@ public class DatabaseHelper extends SQLiteOpenHelper
                     +GJ_CR_ACCT +" TEXT, "
                     +GJ_AMOUNT  +" NUMERIC, "
                     +"FOREIGN KEY(" +GJ_JE_ID + ") REFERENCES " +TBL_JE +"(" +KEY_ENTRY_ID +"));";
+    private static final String GenJrnl_TABLE_CREATE = CREATE_GenJrnl_TABLE;
+    private static final String GenJrnl_TABLE_INIT_DATA = "";
 
     // Creating Data table query
     public static final String CREATE_DATA_TABLE =
@@ -91,12 +93,12 @@ public class DatabaseHelper extends SQLiteOpenHelper
                     + DATA + " TEXT NOT NULL, "
                     + DESCRIPTION + " TEXT);";
 
-    public static final String DELETE_DATA_TABLE   = "DROP TABLE IF EXISTS " +DATA_TABLE_NAME;
+    public static final String DELETE_DATA_TABLE    = "DROP TABLE IF EXISTS " +DATA_TABLE_NAME;
     private static final String DELETE_TBL_GenJrnl  = "DROP TABLE IF EXISTS " +TBL_GenJrnl;
     private static final String DELETE_TBL_GJ       = "DROP TABLE IF EXISTS " +TBL_GJ;
     private static final String DELETE_TBL_JE       = "DROP TABLE IF EXISTS " +TBL_JE;
 
-    public DatabaseHelper(Context context) {
+   public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
