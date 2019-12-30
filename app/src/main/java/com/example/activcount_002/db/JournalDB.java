@@ -39,13 +39,6 @@ public class JournalDB
             +CAO_ACCT_NUM +" TEXT NOT NULL UNIQUE, "
             +CAO_ACCT_NAME +" TEXT );";
 
-    /*private static final String TBL_CAO_CREATE  =   "CREATE TABLE " +TBL_CAO +" ("
-            +CAO_ID +" INTEGER NOT NULL UNIQUE, "
-            +CAO_ACCT_NUM +" TEXT NOT NULL UNIQUE, "
-            +CAO_ACCT_NAME +" TEXT, "
-            +"PRIMARY KEY (" +CAO_ID +", " +CAO_ACCT_NUM +")"
-            +");";*/
-
     private static final String TBL_JE_CREATE   =   "CREATE TABLE " +TBL_JE +" ("
             +KEY_ENTRY_ID +" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, "
             +KEY_ENTRY_DATE +" TEXT NOT NULL, " +KEY_ENTRY_MEMO +" TEXT);";
