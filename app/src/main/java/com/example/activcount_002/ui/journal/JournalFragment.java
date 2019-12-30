@@ -80,7 +80,7 @@ public class JournalFragment extends Fragment
         /** DATABASE OPERATIONS **/
         dbJournal = new JournalDB(getContext());
         dbJournal.open();
-        journal = dbJournal.getJournal();
+//        journal = dbJournal.getJournal();
         dbJournal.close();
 
         dbHelper = new DatabaseHelper(getContext());
