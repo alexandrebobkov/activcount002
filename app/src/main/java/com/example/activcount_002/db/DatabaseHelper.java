@@ -13,7 +13,7 @@ import android.database.SQLException;
 
 public class DatabaseHelper extends SQLiteOpenHelper
 {
-    static final String     DB_NAME                     =   "ACTIVCOUNT_DATA_023.DB";       // Database Information
+    static final String     DB_NAME                     =   "ACTIVCOUNT_DATA_19-12-29.DB";       // Database Information
     static final String     DB_GENERAL_JOURNAL_NAME     =   "ACTIVCOUNT_GJ_001.DB";       // Database Information
     static final int        DB_VERSION                  =   1;                              // Database version
 
@@ -93,6 +93,15 @@ public class DatabaseHelper extends SQLiteOpenHelper
                     + DATA + " TEXT NOT NULL, "
                     + DESCRIPTION + " TEXT);";
 
+    // Initializing table SQLite statements
+    private static final String GE_TABLE_INIT = "INSERT INTO " +TBL_JE +
+            "( " +KEY_ENTRY_DATE +", " +KEY_ENTRY_MEMO +") " +
+            "VALUES (\"2019-12-29\", \"OPENING BALANCES\");";
+
+    private static final String GenJrnl_TABLE_INIT = "INSERT INTO " +TBL_GenJrnl +
+            " (" +GJ_JE_ID +", " +GJ_DATE +", " +GJ_MEMO +", " +GJ_DR_ACCT +", " +GJ_CR_ACCT +", " +GJ_AMOUNT +") " +
+            "VALUES (1, \"2019-12-29\", \"INITIAL VALUE\", 1010,\"\",500), (1,\"2019-12-29\", \"INITIAL VALUE\", 1020,\"\",500);";
+
     public static final String DELETE_DATA_TABLE    = "DROP TABLE IF EXISTS " +DATA_TABLE_NAME;
     private static final String DELETE_TBL_GenJrnl  = "DROP TABLE IF EXISTS " +TBL_GenJrnl;
     private static final String DELETE_TBL_GJ       = "DROP TABLE IF EXISTS " +TBL_GJ;
@@ -118,6 +127,10 @@ public class DatabaseHelper extends SQLiteOpenHelper
         db.execSQL(CREATE_JOURNAL_ENTRIES_TABLE);   // Create Journal Entries table
         //db.execSQL(CREATE_GENERAL_JOURNAL_TABLE);   // Create General Journal table
         db.execSQL(CREATE_GenJrnl_TABLE);           // Create General Journal table v.2
+
+        // Initialize table with beginning data
+        db.execSQL(GE_TABLE_INIT);
+        db.execSQL(GenJrnl_TABLE_INIT);
     }
 
     @Override

@@ -47,17 +47,19 @@ import org.w3c.dom.Text;
 
 import com.example.activcount_002.db.DatabaseHelper;
 import com.example.activcount_002.db.Entry;
+import com.example.activcount_002.db.JournalDB;
 
 public class JournalFragment extends Fragment
 {
     MainViewModel               mainViewModel;
     private ListAdapter         listAdapter;
     private ListView            journalView;
+    private JournalDB           dbJournal;
     private DatabaseHelper      dbHelper;
-    private SQLiteDatabase      database;
+    private SQLiteDatabase      database, acctdb;
     private ArrayList<Entry>    entriesList;
     private ArrayList<String>   theList2;
-    private Cursor              c;
+    private Cursor              c, journal;
     private String              SELECT_ENTRIES_QUERY;
 
     private float                dr_ttl;
@@ -76,6 +78,11 @@ public class JournalFragment extends Fragment
         journalView = (ListView) root.findViewById(R.id.db_journal_view);
 
         /** DATABASE OPERATIONS **/
+        dbJournal = new JournalDB(getContext());
+        dbJournal.open();
+        journal = dbJournal.getJournal();
+        dbJournal.close();
+
         dbHelper = new DatabaseHelper(getContext());
         database = dbHelper.getWritableDatabase();
 //        initJournal();
@@ -127,7 +134,7 @@ public class JournalFragment extends Fragment
         } catch (SQLException e) {}
     }
 
-    public void initJournal() throws SQLException
+    /*public void initJournal() throws SQLException
     {
         try {
             ContentValues cv = new ContentValues();
@@ -138,7 +145,7 @@ public class JournalFragment extends Fragment
         }catch (SQLException e) {}
     }
 
-    public void initGenJrnl () throws SQLException
+    /*public void initGenJrnl () throws SQLException
     {
         try
         {
@@ -159,7 +166,7 @@ public class JournalFragment extends Fragment
             database.insert(DatabaseHelper.TBL_GenJrnl, null, v);
         }
         catch (SQLException e) {}
-    }
+    }*/
 
     private ArrayList<String> fetchEntriesArray(ArrayList<Entry> e)
     {
