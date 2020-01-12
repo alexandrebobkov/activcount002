@@ -6,6 +6,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
 
+import java.util.ArrayList;
+
 public class JournalDB
 {
     static final String     DB_GENERAL_JOURNAL_NAME     =   "ACTIVCOUNT_GJ_19-12-29.DB";     // Database Information
@@ -128,5 +130,37 @@ public class JournalDB
     public Cursor getJournal()
     {
         return db.query(TBL_GJ, new String[] {GJ_ID, GJ_JE_ID, GJ_DATE, GJ_MEMO, GJ_DR_ACCT, GJ_CR_ACCT, GJ_AMOUNT}, null, null, null, null, null);
+    }
+
+    public void readGJ (ArrayList<Entry> entry) throws SQLException
+    {
+        Cursor c;
+        try {
+            //c = dbJournal.getJournal();
+            //c = journal;
+            c = db.rawQuery("SELECT * FROM " + TBL_GJ, null);
+
+            if (c != null) {
+                c.moveToFirst();
+                // Read table rows.
+                do {
+                    if (c.getCount()>0)
+                    {
+                        Entry e = new Entry();
+                        e.id        = c.getLong     (c.getColumnIndex(GJ_ID));
+                        e.je        = c.getLong     (c.getColumnIndex(GJ_JE_ID));
+                        e.date      = c.getString   (c.getColumnIndex(GJ_DATE));
+                        e.memo      = c.getString   (c.getColumnIndex(GJ_MEMO));
+                        e.dr_acct   = c.getString   (c.getColumnIndex(GJ_DR_ACCT));
+                        e.cr_acct   = c.getString   (c.getColumnIndex(GJ_CR_ACCT));
+                        e.amount    = c.getFloat    (c.getColumnIndex(GJ_AMOUNT));
+                        entry.add(e);
+                    }
+                    else
+                        break;
+                    // Move to the next row.
+                } while (c.moveToNext());
+            }
+        } catch (SQLException exception) {}
     }
 }

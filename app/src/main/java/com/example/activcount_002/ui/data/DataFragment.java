@@ -83,13 +83,13 @@ public class DataFragment extends Fragment {
                         +"\nLA: " +mainData.getAssetsSupplies()
                         +"\nTA: "+mainData.getAssetsTotal());
 
-                dbManager.open();
+                //dbManager.open();
                 /*dbManager.insert("created", "" + Calendar.getInstance().getTime());
                 dbManager.insert("business name", "activcount.ca");
                 dbManager.insert("business number", "145-5897-25");
                 dbManager.insert("anniversary date", "Jan 1, 2019");*/
-                dbManager.prepareDataTable();
-                dbManager.close();
+                //dbManager.prepareDataTable();
+                //dbManager.close();
             }
         });
 

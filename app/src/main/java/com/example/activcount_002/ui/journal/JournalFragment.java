@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import androidx.lifecycle.Observer;
+
+import com.example.activcount_002.MainData;
 import com.example.activcount_002.R;
 import com.example.activcount_002.MainViewModel;
 import com.example.activcount_002.db.DBManager;
@@ -52,6 +54,7 @@ import com.example.activcount_002.db.JournalDB;
 public class JournalFragment extends Fragment
 {
     MainViewModel               mainViewModel;
+    private MainData            mainData;
     private ListAdapter         listAdapter;
     private ListView            journalView;
     private JournalDB           dbJournal;
@@ -62,11 +65,13 @@ public class JournalFragment extends Fragment
     private Cursor              c, journal;
     private String              SELECT_ENTRIES_QUERY;
 
-    private float                dr_ttl;
+    private float                dr_ttl, cr_ttl;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
+        mainData = new MainData();
+
         SELECT_ENTRIES_QUERY = String.format("SELECT * FROM %s", DatabaseHelper.TBL_GenJrnl);
 
         mainViewModel   = ViewModelProviders.of(this).get(MainViewModel.class);
@@ -74,38 +79,48 @@ public class JournalFragment extends Fragment
         //dbManager       = new DBManager(getContext());
         View root       = inflater.inflate(R.layout.fragment_journal, container, false);
         final TextView debits_total     = root.findViewById(R.id.dr_ttl);
+        final TextView credits_total     = root.findViewById(R.id.cr_ttl);
 
         journalView = (ListView) root.findViewById(R.id.db_journal_view);
 
         /** DATABASE OPERATIONS **/
         dbJournal = new JournalDB(getContext());
         dbJournal.open();
-//        journal = dbJournal.getJournal();
+        journal = dbJournal.getJournal();
+        dbJournal.readGJ(entriesList);
         dbJournal.close();
 
-        dbHelper = new DatabaseHelper(getContext());
+        /*dbHelper = new DatabaseHelper(getContext());
         database = dbHelper.getWritableDatabase();
-//        initJournal();
-//        initGenJrnl();
-        readEntries(entriesList);       // array of Entries
-        database.close();
+        readEntries(entriesList);           // read array of Entries*/
+        dr_ttl = totalDebits(entriesList);  // calculate total Debits
+        cr_ttl = totalCredits(entriesList); // calculate total Credits
+        //database.close();                   // close database
 
         theList2 = new ArrayList<>();   // list populated from array of Entries
         theList2 = fetchEntriesArray(entriesList);
+
         mainViewModel.loadEntries(theList2);     // pass ArrayList<String> to ViewModel.
         listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getEntriesList());
         journalView.setAdapter(listAdapter);
 
-        dr_ttl = totalDebits(entriesList);
+        mainData.setTotalDebits(dr_ttl);
+        mainData.setTotalDebits(cr_ttl);
+        //mainViewModel.setDebitsTotal(String.valueOf(mainData.getTotalDebits()));
+        //mainViewModel.setCreditsTotal(String.valueOf(mainData.getTotalCredits()));
         mainViewModel.setDebitsTotal(String.valueOf(dr_ttl));
+        mainViewModel.setCreditsTotal(String.valueOf(cr_ttl));
         mainViewModel.getTotalDebits().observe(this, new Observer<String>() { @Override public void onChanged(@Nullable String s) {   debits_total.setText(s);   }});
+        mainViewModel.getTotalCredits().observe(this, new Observer<String>() { @Override public void onChanged(@Nullable String s) {   credits_total.setText(s);   }});
 
         return root;
     }
 
-    public void readEntries (ArrayList<Entry> entry) throws SQLException
+    /*public void readEntries (ArrayList<Entry> entry) throws SQLException
     {
         try {
+            //c = dbJournal.getJournal();
+            //c = journal;
             c = database.rawQuery(SELECT_ENTRIES_QUERY, null);
 
             if (c != null) {
@@ -116,13 +131,11 @@ public class JournalFragment extends Fragment
                     {
                         Entry e = new Entry();
                         e.id        = c.getLong     (c.getColumnIndex(DatabaseHelper.GJ_ID));
-                        //e.je        = c.getLong     (c.getColumnIndex(DatabaseHelper.GJ_JE_ID));
                         e.je        = c.getLong     (c.getColumnIndex(DatabaseHelper.GJ_JE_ID));
                         e.date      = c.getString   (c.getColumnIndex(DatabaseHelper.GJ_DATE));
                         e.memo      = c.getString   (c.getColumnIndex(DatabaseHelper.GJ_MEMO));
                         e.dr_acct   = c.getString   (c.getColumnIndex(DatabaseHelper.GJ_DR_ACCT));
                         e.cr_acct   = c.getString   (c.getColumnIndex(DatabaseHelper.GJ_CR_ACCT));
-                        //e.amount    = c.getLong     (c.getColumnIndex(DatabaseHelper.GJ_AMOUNT));
                         e.amount    = c.getFloat    (c.getColumnIndex(DatabaseHelper.GJ_AMOUNT));
                         entry.add(e);
                     }
@@ -132,7 +145,7 @@ public class JournalFragment extends Fragment
                 } while (c.moveToNext());
             }
         } catch (SQLException e) {}
-    }
+    }*/
 
     /*public void initJournal() throws SQLException
     {
@@ -192,6 +205,17 @@ public class JournalFragment extends Fragment
         {
             entry = e.get(i);
             if (entry.cr_acct.isEmpty()) {  sum += entry.amount;    }
+        }
+        return sum;
+    }
+    private float totalCredits(ArrayList<Entry> e)
+    {
+        float sum = 0.0f;
+        Entry entry;
+        for (int i = 0; i < e.size(); i++)
+        {
+            entry = e.get(i);
+            if (entry.dr_acct.isEmpty()) {  sum += entry.amount;    }
         }
         return sum;
     }

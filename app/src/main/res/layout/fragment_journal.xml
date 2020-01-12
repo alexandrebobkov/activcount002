@@ -48,4 +48,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/db_journal" />
 
+    <TextView
+        android:id="@+id/cr_ttl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/dr_ttl"
+        app:layout_constraintTop_toTopOf="@+id/dr_ttl" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
