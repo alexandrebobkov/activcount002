@@ -94,6 +94,7 @@ public class JournalFragment extends Fragment
         database = dbHelper.getWritableDatabase();
         readEntries(entriesList);           // read array of Entries*/
         dr_ttl = totalDebits(entriesList);  // calculate total Debits
+        //dr_ttl = dbJournal.getTotalDebits();
         cr_ttl = totalCredits(entriesList); // calculate total Credits
         //database.close();                   // close database
 

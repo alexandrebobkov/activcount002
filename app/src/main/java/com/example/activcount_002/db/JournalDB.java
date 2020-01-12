@@ -70,6 +70,10 @@ public class JournalDB
             " (" +GJ_JE_ID +", " +GJ_DATE +", " +GJ_MEMO +", " +GJ_DR_ACCT +", " +GJ_CR_ACCT +", " +GJ_AMOUNT +") " +
             "VALUES (1, \"2019-12-29\", \"INITIAL VALUE\", \"1010\", \"\",500), (1, \"2019-12-29\", \"INITIAL VALUE\", \"1010\", \"\",700), (1,\"2019-12-29\", \"INITIAL VALUE\", \"\", \"5100\",-1200);";
 
+    // SQLite Queries
+    private static final String QRY_GET_DR_TTL = "SELECT * FROM " +TBL_GJ;// +" WHERE " +GJ_DR_ACCT +" IS 1010";//NOT \"\"";
+
+    // Upgrade SQLite statements
     private static final String TBL_GJ_DELETE       = "DROP TABLE IF EXISTS " +TBL_GJ;
     private static final String TBL_JE_DELETE       = "DROP TABLE IF EXISTS " +TBL_JE;
     private static final String TBL_CAO_DELETE      = "DROP TABLE IF EXISTS " +TBL_CAO;
@@ -136,9 +140,7 @@ public class JournalDB
     {
         Cursor c;
         try {
-            //c = dbJournal.getJournal();
-            //c = journal;
-            c = db.rawQuery("SELECT * FROM " + TBL_GJ, null);
+            c = db.query(TBL_GJ, new String[] {GJ_ID, GJ_JE_ID, GJ_DATE, GJ_MEMO, GJ_DR_ACCT, GJ_CR_ACCT, GJ_AMOUNT}, null, null, null, null, GJ_ID);
 
             if (c != null) {
                 c.moveToFirst();
@@ -161,6 +163,36 @@ public class JournalDB
                     // Move to the next row.
                 } while (c.moveToNext());
             }
+            c.close();
         } catch (SQLException exception) {}
+        finally {}
+    }
+
+    public float getTotalDebits () throws SQLException
+    {
+        Cursor c;
+        //Cursor c = db.rawQuery("SELECT * FROM " +TBL_GJ, null);
+        float ttl_dr = 0;
+
+        try {
+            c = db.query(TBL_GJ, new String[] {GJ_ID, GJ_JE_ID, GJ_DATE, GJ_MEMO, GJ_DR_ACCT, GJ_CR_ACCT, GJ_AMOUNT}, GJ_CR_ACCT, null, null, "1010", GJ_ID);
+            if (c != null) {
+                c.moveToFirst();
+                // Read table rows.
+                do {
+                    if (c.getCount()>0)
+                    {
+                        ttl_dr += c.getFloat(c.getColumnIndex(GJ_AMOUNT));
+                    }
+                    else
+                        break;
+                    // Move to the next row.
+                } while (c.moveToNext());
+            }
+            c.close();
+        } catch (SQLException exception) {}
+        finally {}
+
+        return ttl_dr;
     }
 }
