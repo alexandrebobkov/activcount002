@@ -171,7 +171,7 @@ public class JournalDB
     public float getTotalDebits () throws SQLException
     {
         Cursor c;
-        
+
         float ttl_dr = 0;
 
         try {
