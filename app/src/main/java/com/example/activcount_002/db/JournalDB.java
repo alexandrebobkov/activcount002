@@ -171,11 +171,12 @@ public class JournalDB
     public float getTotalDebits () throws SQLException
     {
         Cursor c;
-        //Cursor c = db.rawQuery("SELECT * FROM " +TBL_GJ, null);
+        
         float ttl_dr = 0;
 
         try {
-            c = db.query(TBL_GJ, new String[] {GJ_ID, GJ_JE_ID, GJ_DATE, GJ_MEMO, GJ_DR_ACCT, GJ_CR_ACCT, GJ_AMOUNT}, GJ_CR_ACCT, null, null, "1010", GJ_ID);
+            // SELECT * FROM TBL_GJ WHERE GJ_CR_ACCT = ""
+            c = db.query(TBL_GJ, new String[] {GJ_ID, GJ_JE_ID, GJ_DATE, GJ_MEMO, GJ_DR_ACCT, GJ_CR_ACCT, GJ_AMOUNT}, GJ_CR_ACCT+"=?", new String[] {""}, null, null, GJ_ID);
             if (c != null) {
                 c.moveToFirst();
                 // Read table rows.

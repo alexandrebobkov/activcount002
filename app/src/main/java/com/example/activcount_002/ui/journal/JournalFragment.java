@@ -67,6 +67,7 @@ public class JournalFragment extends Fragment
 
     private float                dr_ttl, cr_ttl;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
@@ -88,17 +89,15 @@ public class JournalFragment extends Fragment
         dbJournal.open();
         journal = dbJournal.getJournal();
         dbJournal.readGJ(entriesList);
-        dbJournal.close();
-
-        /*dbHelper = new DatabaseHelper(getContext());
-        database = dbHelper.getWritableDatabase();
-        readEntries(entriesList);           // read array of Entries*/
-        dr_ttl = totalDebits(entriesList);  // calculate total Debits
         //dr_ttl = dbJournal.getTotalDebits();
-        cr_ttl = totalCredits(entriesList); // calculate total Credits
-        //database.close();                   // close database
+        //dbJournal.close();
 
-        theList2 = new ArrayList<>();   // list populated from array of Entries
+        dr_ttl = totalDebits(entriesList);  // calculate total Debits
+        dr_ttl = dbJournal.getTotalDebits();
+        cr_ttl = totalCredits(entriesList); // calculate total Credits
+        dbJournal.close();                  // close database
+
+        theList2 = new ArrayList<>();       // list populated from array of Entries
         theList2 = fetchEntriesArray(entriesList);
 
         mainViewModel.loadEntries(theList2);     // pass ArrayList<String> to ViewModel.
@@ -116,7 +115,6 @@ public class JournalFragment extends Fragment
 
         return root;
     }
-
     /*public void readEntries (ArrayList<Entry> entry) throws SQLException
     {
         try {
