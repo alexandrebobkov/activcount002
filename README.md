@@ -2,10 +2,13 @@
  
  Accounting app
  
- Screenshoots
- ![screenshot 1](/img/screenshoot_001.PNG)
+ ## Screenshoots
  
- Work-in-progress
+ ![screenshot 1](/img/screenshoot_001.PNG)
+ ![screenshot 2](/img/screenshoot_002.PNG)
+ 
+ ## Work-in-progress
+ 
  ![screenshot 1](/img/app006.PNG)
  
  ![screenshot 2](/img/app002.PNG)
