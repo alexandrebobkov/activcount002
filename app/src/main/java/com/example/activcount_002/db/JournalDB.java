@@ -103,17 +103,18 @@ public class JournalDB
         public void onCreate (SQLiteDatabase db)
         {
             try {
+                // Create and initialize Chart of Accounts table
                 db.execSQL(TBL_CAO_CREATE);
                 db.execSQL(TBL_CAO_INIT_DATA);
-
+                // Create and initialize Journal Entries table
                 db.execSQL(TBL_JE_CREATE);
                 db.execSQL(TBL_JE_INIT_DATA);
-
+                // Create and initialize General Journal table
                 db.execSQL(TBL_GJ_CREATE);
                 db.execSQL(TBL_GJ_INIT_DATA);
-
             } catch (SQLException e) {  e.printStackTrace();    }
         }
+
         @Override
         public void onUpgrade (SQLiteDatabase db, int oldVersion, int newVersion)
         {
@@ -129,13 +130,15 @@ public class JournalDB
         db = DBHelper.getWritableDatabase();
         return this;
     }
-    public void close()    {   DBHelper.close();   }
+
+    public void close() {   DBHelper.close();   }
 
     public Cursor getJournal()
     {
         return db.query(TBL_GJ, new String[] {GJ_ID, GJ_JE_ID, GJ_DATE, GJ_MEMO, GJ_DR_ACCT, GJ_CR_ACCT, GJ_AMOUNT}, null, null, null, null, null);
     }
 
+    // Return array of Entries
     public void readGJ (ArrayList<Entry> entry) throws SQLException
     {
         Cursor c;
@@ -182,9 +185,7 @@ public class JournalDB
                 // Read table rows.
                 do {
                     if (c.getCount()>0)
-                    {
                         ttl_dr += c.getFloat(c.getColumnIndex(GJ_AMOUNT));
-                    }
                     else
                         break;
                     // Move to the next row.
