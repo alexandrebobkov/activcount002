@@ -53,7 +53,7 @@ public class AboutFragment extends Fragment
 
     private void updateDetail()
     {
-        msg   = "By: Alexandre Bobkov 2019 \n Press OK to initialize data.";
+        msg   = "By: Alexandre Bobkov 2020 \n Press OK to initialize data.";
         mainViewModel.setStatus_msg(msg);
         mainViewModel.setHomeStatus_msg("updated!");
 
