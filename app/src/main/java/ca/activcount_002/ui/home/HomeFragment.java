@@ -54,6 +54,9 @@ public class HomeFragment extends Fragment
 
     private ArrayList<String[]> theEntriesList;
     private List<Entry>         entries_list;
+    private Cursor c;
+    private ArrayList<String> l;
+    private int value;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
@@ -171,14 +174,17 @@ public class HomeFragment extends Fragment
                     public void onClick(View v)
                     {
 
-                        String entry[] = theEntriesList.get(argument_2);
+                        theList = new ArrayList<>();
+                        long pos = locateEntry(dbManager.fetch(), theList, (long)argument_2);
+
+                        //String entry[] = theEntriesList.get(argument_2);
 
                         //update_field(true, Integer.getInteger(entry[0]), "__DELETED__",  "__NA__");
                         //update_field(true, Integer.getInteger("" +field_value.getText()), "__DELETED__",  "__NA__");
-                        Toast.makeText(getContext(), "Deleted! pos: " +argument_2 + " id: " +argument_3 +" _id: " +entry[0], Toast.LENGTH_SHORT).show();
-
-                        theList = new ArrayList<>();
-                        fetchEntries(dbManager.fetch(), theList);
+                        // Toast.makeText(getContext(), "Deleted! pos: " +argument_2 + " id: " +argument_3 +" _id: " +entry[0], Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Deleted! pos: " +argument_2 + " id: " +argument_3 +" pos: " +Long.toString(pos), Toast.LENGTH_SHORT).show();
+                        // theList = new ArrayList<>();
+                        // fetchEntries(dbManager.fetch(), theList);
                         dialog.cancel();
                     }
                 });
@@ -213,9 +219,7 @@ public class HomeFragment extends Fragment
             //dbManager.delete(1+(long)arg2);
         }
         else
-        {
             dbManager.update(1+(long)arg2, field, description);
-        }
     }
 
     private void fetchEntries(Cursor c, ArrayList<String> l) throws SQLException
@@ -239,5 +243,21 @@ public class HomeFragment extends Fragment
             listView.setAdapter(listAdapter);
 
         } catch (SQLException e) {}
+    }
+
+    // method to locate entry in database given the value selected from the view list.
+    private int locateEntry(Cursor c, ArrayList<String> l, long id) throws SQLException
+    {
+        int pos = -1;
+        try {
+            c = dbManager.fetch();
+            while (c.getLong(0) != (long)id+1)
+            {
+                c.moveToNext();
+            }
+            pos = c.getInt(0);
+
+        } catch (SQLException e) {}
+        return pos;
     }
 }
