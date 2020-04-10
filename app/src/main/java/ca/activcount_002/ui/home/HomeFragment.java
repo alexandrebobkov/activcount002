@@ -37,10 +37,6 @@ import java.util.List;
 import ca.activcount_002.R;
 import ca.activcount_002.MainViewModel;
 import ca.activcount_002.db.DBManager;
-
-import org.w3c.dom.Text;
-
-import ca.activcount_002.db.DatabaseHelper;
 import ca.activcount_002.db.Entry;
 
 public class HomeFragment extends Fragment
@@ -52,8 +48,8 @@ public class HomeFragment extends Fragment
     private ArrayList<String>   theList;
     private Entry               e;
 
-    private ArrayList<String[]> theEntriesList;
-    private List<Entry>         entries_list;
+    //private ArrayList<String[]> theEntriesList;
+    //private List<Entry>         entries_list;
     private Cursor c;
     private ArrayList<String> l;
     private int value;
@@ -73,7 +69,7 @@ public class HomeFragment extends Fragment
 
         listView = (ListView) root.findViewById(R.id.db_list_view);
         theList = new ArrayList<>();
-        theEntriesList  = new ArrayList<String[]>();
+        //theEntriesList  = new ArrayList<String[]>();
 
         dbManager = new DBManager(getContext());
         dbManager.open();
@@ -150,21 +146,16 @@ public class HomeFragment extends Fragment
                     @Override
                     public void onClick(View v)
                     {
-                        // String entry[] = theEntriesList.get(argument_2);
-                        //update_field(false, argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
-
                         update_field(false, 1+argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
 
                         theList = new ArrayList<>();
                         fetchEntries(dbManager.fetch(), theList);
-                        //int row = Integer.getInteger(entry[0]);
 
                         e.id = argument_2;
                         e.date = "" +field_value_1.getText();
                         e.memo = "" +field_value_2.getText();
                         dbManager.addEntry(e);
 
-                        //Toast.makeText(getContext(), "Updated! _id: " +entry[0] + " arg3: " +argument_3 +" entry.id: " +e.id, Toast.LENGTH_SHORT).show();
                         Toast.makeText(getContext(), "Updated! _id: " + " arg3: " +argument_3 +" entry.id: " +e.id, Toast.LENGTH_SHORT).show();
                         dialog.cancel();
                     }
@@ -175,27 +166,15 @@ public class HomeFragment extends Fragment
                     @Override
                     public void onClick(View v)
                     {
-
                         theList = new ArrayList<>();
                         long pos = locateEntry(dbManager.fetch(), theList, (long)1+argument_2);
                         update_field(true, 1+(int)pos, "", "");
 
-                        //String entry[] = theEntriesList.get(argument_2);
-
-                        //update_field(true, Integer.getInteger(entry[0]), "__DELETED__",  "__NA__");
-                        //update_field(true, Integer.getInteger("" +field_value.getText()), "__DELETED__",  "__NA__");
-                        // Toast.makeText(getContext(), "Deleted! pos: " +argument_2 + " id: " +argument_3 +" _id: " +entry[0], Toast.LENGTH_SHORT).show();
                         Toast.makeText(getContext(), "Deleted! arg2: " +argument_2 + " arg3: " +argument_3 +" pos: " +Long.toString(pos), Toast.LENGTH_SHORT).show();
-                        // theList = new ArrayList<>();
-                        // fetchEntries(dbManager.fetch(), theList);
                         dialog.cancel();
 
                         theList = new ArrayList<>();
                         fetchEntries(dbManager.fetch(), theList);
-
-                        /*mainViewModel.loadEntries(theList);
-                        listAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, mainViewModel.getEntriesList());
-                        listView.setAdapter(listAdapter);*/
                     }
                 });
 
@@ -204,7 +183,6 @@ public class HomeFragment extends Fragment
                     @Override
                     public void onClick(View v)
                     {
-                        //update_field(true, argument_2, "__DELETED__");
                         Toast.makeText(getContext(), "No changes were made!", Toast.LENGTH_SHORT).show();
                         theList = new ArrayList<>();
                         fetchEntries(dbManager.fetch(), theList);
@@ -212,8 +190,6 @@ public class HomeFragment extends Fragment
                     }
                 });
 
-                //theList = new ArrayList<>();
-                //fetchEntries(dbManager.fetch(), theList);
                 dialog.show();
             }
         });

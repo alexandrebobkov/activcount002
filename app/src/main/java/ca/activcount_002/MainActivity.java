@@ -1,7 +1,7 @@
 /**
  *
  *  Date Created:       October 15, 2019
- *  Last time updated:  October 30, 2019
+ *  Last time updated:  April 9, 2020; October 30, 2019
  *  Revision:           2
  *
  *  Author: Alexandre Bobkov
@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
@@ -94,19 +93,6 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 Snackbar.make(view, "Toolbar clicked", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
-                //getSupportFragmentManager().beginTransaction().add(R.id.nav_host_fragment, new DataFragment()).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE).commit();
-
-                /*Fragment fragment = new DataFragment();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.detail_fragment_container, fragment);
-                ft.addToBackStack(null);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-                ft.commit();*/
-                //setContentView(R.layout.fragment_data);
-
-                //Navigation.findNavController(view).navigate(R.id.fragment_data);
-                //Navigation.findNavController(view).navigate(R.id.action_to_nav_data);
             }
         });
     }
@@ -123,7 +109,6 @@ public class MainActivity extends AppCompatActivity
     public boolean onSupportNavigateUp()
     {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
+        return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 }
