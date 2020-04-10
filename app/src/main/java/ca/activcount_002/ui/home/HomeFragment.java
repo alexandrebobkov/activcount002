@@ -150,10 +150,10 @@ public class HomeFragment extends Fragment
                     @Override
                     public void onClick(View v)
                     {
-                        String entry[] = theEntriesList.get(argument_2);
+                        // String entry[] = theEntriesList.get(argument_2);
                         //update_field(false, argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
 
-                        update_field(false, argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
+                        update_field(false, 1+argument_2, "" +field_value_1.getText(), "" +field_value_2.getText());
 
                         theList = new ArrayList<>();
                         fetchEntries(dbManager.fetch(), theList);
@@ -164,7 +164,8 @@ public class HomeFragment extends Fragment
                         e.memo = "" +field_value_2.getText();
                         dbManager.addEntry(e);
 
-                        Toast.makeText(getContext(), "Updated! _id: " +entry[0] + " arg3: " +argument_3 +" entry.id: " +e.id, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "Updated! _id: " +entry[0] + " arg3: " +argument_3 +" entry.id: " +e.id, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Updated! _id: " + " arg3: " +argument_3 +" entry.id: " +e.id, Toast.LENGTH_SHORT).show();
                         dialog.cancel();
                     }
                 });
@@ -223,10 +224,7 @@ public class HomeFragment extends Fragment
     private void update_field (boolean delete, int arg2, String field, String description)
     {
         if (delete)
-        {
             dbManager.update((long)arg2, field, description);
-            //dbManager.delete(1+(long)arg2);
-        }
         else
             dbManager.update((long)arg2, field, description);
     }
@@ -239,7 +237,7 @@ public class HomeFragment extends Fragment
 
             // Read table rows.
             do {
-                // Combine 3 table fields into 1 string
+                // Combine 3 fields into 1 string
                 //String[] entry = {c.getString(0), c.getString(1), c.getString(2)};
                 //theEntriesList.add(entry);
 
