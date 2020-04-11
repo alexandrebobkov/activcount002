@@ -113,23 +113,11 @@ public class JournalFragment extends Fragment
         mainViewModel.setDebitsTotal(String.valueOf(dr_ttl));
         mainViewModel.setCreditsTotal(String.valueOf(cr_ttl));
         //mainViewModel.setJournalStatusMessage("");
-        mainViewModel.getTotalDebits().observe(this, new Observer<String>() { @Override public void onChanged(@Nullable String s) {   debits_total.setText(s);   }});
-        mainViewModel.getTotalCredits().observe(this, new Observer<String>() { @Override public void onChanged(@Nullable String s) {   credits_total.setText(s);   }});
-        mainViewModel.getJournalStatusMsg().observe(this, new Observer<String>()
-        {
-            @Override
-            public void onChanged(@Nullable String s) { msg.setText(s);}
-        });
+        mainViewModel.getTotalDebits().observe(this, new Observer<String>() { @Override public void onChanged(@Nullable String s) { debits_total.setText(s); }});
+        mainViewModel.getTotalCredits().observe(this, new Observer<String>() { @Override public void onChanged(@Nullable String s) { credits_total.setText(s); }});
+        mainViewModel.getJournalStatusMsg().observe(this, new Observer<String>() { @Override public void onChanged(@Nullable String s) { msg.setText(s); }});
 
-        btn_jrnl_post.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //msg.setText("Posted Journal Entry!");
-                msg.setText("Moroniké, I like you a lot!!!");
-            }
-        });
+        btn_jrnl_post.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { msg.setText("Posted Journal Entry."); }});
 
         return root;
     }
