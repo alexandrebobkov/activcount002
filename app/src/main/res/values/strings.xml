@@ -35,6 +35,7 @@
     <string name="title_activity_attach_doc">AttachDoc</string>
     <string name="title_activity_overview">Overview</string>
     <string name="title_activity_about_app">About this Application</string>
+    <string name="title_activity_journal_app">Journal Entries</string>
     <string name="credits"></string>
     <string name="contact_info_email">books@activcount.ca</string>
     <string name="contact_info_phone">(613) 882-8404</string>
