@@ -56,7 +56,7 @@ public class JournalFragment extends Fragment
     MainViewModel               mainViewModel;
     private MainData            mainData;
     private ListAdapter         listAdapter;
-    private ListView            journalView;
+    //private ListView            journalView;
     private JournalDB           dbJournal;
     private DatabaseHelper      dbHelper;
     private SQLiteDatabase      database, acctdb;
@@ -79,10 +79,11 @@ public class JournalFragment extends Fragment
         entriesList     = new ArrayList<>();
         //dbManager       = new DBManager(getContext());
         View root       = inflater.inflate(R.layout.fragment_journal, container, false);
-        final TextView debits_total     = root.findViewById(R.id.dr_ttl);
-        final TextView credits_total     = root.findViewById(R.id.cr_ttl);
-
-        journalView = (ListView) root.findViewById(R.id.db_journal_view);
+        final TextView  debits_total     = root.findViewById(R.id.dr_ttl);
+        final TextView  credits_total    = root.findViewById(R.id.cr_ttl);
+        final TextView  msg              = root.findViewById(R.id.db_journal_msg);
+        final ListView  journalView      = (ListView) root.findViewById(R.id.db_journal_view);
+        final Button    btn_jrnl_post   = root.findViewById(R.id.btn_jrnl_post);
 
         /** DATABASE OPERATIONS **/
         dbJournal = new JournalDB(getContext());
@@ -106,12 +107,29 @@ public class JournalFragment extends Fragment
 
         mainData.setTotalDebits(dr_ttl);
         mainData.setTotalDebits(cr_ttl);
+        //mainData.setJournalStatusMessage("");
         //mainViewModel.setDebitsTotal(String.valueOf(mainData.getTotalDebits()));
         //mainViewModel.setCreditsTotal(String.valueOf(mainData.getTotalCredits()));
         mainViewModel.setDebitsTotal(String.valueOf(dr_ttl));
         mainViewModel.setCreditsTotal(String.valueOf(cr_ttl));
+        //mainViewModel.setJournalStatusMessage("");
         mainViewModel.getTotalDebits().observe(this, new Observer<String>() { @Override public void onChanged(@Nullable String s) {   debits_total.setText(s);   }});
         mainViewModel.getTotalCredits().observe(this, new Observer<String>() { @Override public void onChanged(@Nullable String s) {   credits_total.setText(s);   }});
+        mainViewModel.getJournalStatusMsg().observe(this, new Observer<String>()
+        {
+            @Override
+            public void onChanged(@Nullable String s) { msg.setText(s);}
+        });
+
+        btn_jrnl_post.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //msg.setText("Posted Journal Entry!");
+                msg.setText("Moroniké, I like you a lot!!!");
+            }
+        });
 
         return root;
     }

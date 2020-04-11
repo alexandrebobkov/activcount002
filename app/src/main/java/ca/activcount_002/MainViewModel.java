@@ -24,6 +24,7 @@ public class MainViewModel extends ViewModel
 {
     private static String status_msg                = "By: Alexandre Bobkov\n2020\n\nPRESS OK TO INITIALIZE DATA";         // define static variable: one for all instances.
     private static String home_status_msg           = "initial home status";   // define static variable: one for all instances.
+    private static String jrnl_status_msg           = "ready";
 
     private static String               str_assets_current          = "20.25";
     private static String               str_assets_supplies         = "10.15";
@@ -39,13 +40,14 @@ public class MainViewModel extends ViewModel
     private static ArrayList<String>    theList;
     private static ArrayList<Entry>     entriesList;
 
-    private MutableLiveData<String>     statusText, homeStatusText;
+    private MutableLiveData<String>     statusText, homeStatusText, journalStatusText;
     private MutableLiveData<String>     assetsCurrentText, assetsSuppliesText, assetsTotalText;
     private MutableLiveData<String>     net_revenues, direct_costs, operating_expenses, total_debits, total_credits;
 
     public MainViewModel()
     {
         statusText          = new MutableLiveData<>();
+        journalStatusText   = new MutableLiveData<>();
         homeStatusText      = new MutableLiveData<>();
         assetsCurrentText   = new MutableLiveData<>();
         assetsSuppliesText  = new MutableLiveData<>();
@@ -61,6 +63,7 @@ public class MainViewModel extends ViewModel
 
         statusText.setValue(status_msg);
         homeStatusText.setValue(home_status_msg);
+        journalStatusText.setValue(jrnl_status_msg);
         total_debits.setValue(str_dr_ttl);
         total_credits.setValue(str_cr_ttl);
 
@@ -77,6 +80,7 @@ public class MainViewModel extends ViewModel
     public void setHomeStatus_msg(String s)             {   home_status_msg = s;        }
     public void setDebitsTotal(String s)                {   str_dr_ttl = s;             }
     public void setCreditsTotal(String s)               {   str_cr_ttl = s;             }
+    public void setJournalStatusMessage(String s)       {   jrnl_status_msg = s;        }
 
     public void setAssetsCurrent(TextView tv)           {   str_assets_current = ""+tv.getText();       }
     public void setAssetsSupplies(TextView tv)          {   str_assets_supplies = ""+tv.getText();      }
@@ -103,7 +107,8 @@ public class MainViewModel extends ViewModel
     public LiveData<String> getDirectCostsText()        {   return direct_costs;        }
     public LiveData<String> getOperatingExpensesText()  {   return operating_expenses;  }
     public LiveData<String> getTotalDebits()            {   return total_debits;        }
-    public LiveData<String> getTotalCredits()           {   return total_credits;        }
+    public LiveData<String> getTotalCredits()           {   return total_credits;       }
+    public LiveData<String> getJournalStatusMsg()       {   return journalStatusText;   }
 
     public ArrayList<String> getEntriesList()           {   return theList;             }
     public ArrayList<Entry> getJournalEntriesList()     {   return entriesList;         }

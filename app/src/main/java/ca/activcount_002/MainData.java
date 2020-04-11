@@ -13,6 +13,7 @@ public final class MainData
     private static float liabilities_current, liabilities_long_term, liabilities_total;
     private static float net_revenues, direct_costs, operating_expenses;
     private static float ttl_dr, ttl_cr;
+    private static String jrnl_msg;
 
     public MainData()
     {
@@ -30,6 +31,8 @@ public final class MainData
 
         ttl_dr                  = 0;
         ttl_cr                  = 0;
+
+        jrnl_msg                = "";
     }
 
     public void setAssetsCurrent(Float num)         {   assets_current = num;       }
@@ -39,13 +42,15 @@ public final class MainData
     public void setDirectCosts(Float num)           {   direct_costs = num;         }
     public void setOperating_expenses(Float num)    {   operating_expenses = num;   }
 
-    public void setTotalDebits(Float num)           {   ttl_dr = num;   }
-    public void setTotalCredits(Float num)          {   ttl_cr = num;   }
+    public void setTotalDebits(Float num)           {   ttl_dr = num;               }
+    public void setTotalCredits(Float num)          {   ttl_cr = num;               }
+    public void setJournalStatusMessage(String s)   {   jrnl_msg = s;               }
 
-    public float getAssetsCurrent ()            {   return assets_current;      }
-    public float getAssetsSupplies ()           {   return assets_supplies;     }
-    public float getAssetsTotal ()              {   return assets_total;        }
-    public float getTotalDebits ()              {   return ttl_dr;              }
-    public float getTotalCredits ()             {   return ttl_cr;              }
+    public float getAssetsCurrent ()                {   return assets_current;      }
+    public float getAssetsSupplies ()               {   return assets_supplies;     }
+    public float getAssetsTotal ()                  {   return assets_total;        }
+    public float getTotalDebits ()                  {   return ttl_dr;              }
+    public float getTotalCredits ()                 {   return ttl_cr;              }
+    public String getJournalStatusMessage()         {   return jrnl_msg;            }
 
 }

@@ -60,12 +60,15 @@ public class DBManager {
         {
             long id = addOrUpdateEntry(entry);
             ContentValues values = new ContentValues();
-            values.put(dbHelper.KEY_ENTRY_ID, id);
-            values.put(dbHelper.KEY_ENTRY_MEMO, entry.memo);
+            //values.put(dbHelper.KEY_ENTRY_ID, id);
+            values.put(DatabaseHelper.KEY_ENTRY_ID, id);
+            //values.put(dbHelper.KEY_ENTRY_MEMO, entry.memo);
+            values.put(DatabaseHelper.KEY_ENTRY_MEMO, entry.memo);
 
             // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
             //db.insertOrThrow(TABLE_ENTRIES, null, values);
-            database.insertOrThrow(dbHelper.TBL_GJ, null, values);
+            //database.insertOrThrow(dbHelper.TBL_GJ, null, values);
+            database.insertOrThrow(DatabaseHelper.TBL_GJ, null, values);
             database.setTransactionSuccessful();
 
         } catch (Exception e) {}
@@ -259,8 +262,10 @@ public class DBManager {
     public void resetTables() throws SQLException
     {
         try {
-            database.execSQL(dbHelper.DELETE_DATA_TABLE);
-            database.execSQL(dbHelper.CREATE_DATA_TABLE);
+            //database.execSQL(dbHelper.DELETE_DATA_TABLE);
+            database.execSQL(DatabaseHelper.DELETE_DATA_TABLE);
+            //database.execSQL(dbHelper.CREATE_DATA_TABLE);
+            database.execSQL(DatabaseHelper.CREATE_DATA_TABLE);
         }
         catch (SQLException e) {}
     }
