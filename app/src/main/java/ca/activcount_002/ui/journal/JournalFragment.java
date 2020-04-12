@@ -67,6 +67,8 @@ public class JournalFragment extends Fragment
 
     private float                dr_ttl, cr_ttl;
 
+    //private Dialog              dialog;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
@@ -79,10 +81,10 @@ public class JournalFragment extends Fragment
         entriesList     = new ArrayList<>();
         //dbManager       = new DBManager(getContext());
         View root       = inflater.inflate(R.layout.fragment_journal, container, false);
-        final TextView  debits_total     = root.findViewById(R.id.dr_ttl);
-        final TextView  credits_total    = root.findViewById(R.id.cr_ttl);
-        final TextView  msg              = root.findViewById(R.id.db_journal_msg);
-        final ListView  journalView      = (ListView) root.findViewById(R.id.db_journal_view);
+        final TextView  debits_total    = root.findViewById(R.id.dr_ttl);
+        final TextView  credits_total   = root.findViewById(R.id.cr_ttl);
+        final TextView  msg             = root.findViewById(R.id.db_journal_msg);
+        final ListView  journalView     = (ListView) root.findViewById(R.id.db_journal_view);
         final Button    btn_jrnl_post   = root.findViewById(R.id.btn_jrnl_post);
 
         /** DATABASE OPERATIONS **/
@@ -117,7 +119,14 @@ public class JournalFragment extends Fragment
         mainViewModel.getTotalCredits().observe(this, new Observer<String>() { @Override public void onChanged(@Nullable String s) { credits_total.setText(s); }});
         mainViewModel.getJournalStatusMsg().observe(this, new Observer<String>() { @Override public void onChanged(@Nullable String s) { msg.setText(s); }});
 
-        btn_jrnl_post.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) { msg.setText("Posted Journal Entry."); }});
+        // Post Journal Entry button
+        btn_jrnl_post.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
+            Dialog dialog          = new Dialog(getContext());
+            dialog.setTitle("Post Journal Entry");
+            dialog.setContentView(R.layout.fragment_journal_dialog_wide);
+            dialog.show();
+            msg.setText("Posted Journal Entry.");
+        }});
 
         return root;
     }

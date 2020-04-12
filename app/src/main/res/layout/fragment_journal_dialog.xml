@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:gravity="center_horizontal|center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:title="Journal Entry"
+        app:titleTextColor="#FFFFFF" />
+
+    <EditText
+        android:id="@+id/dialog_field"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:editable="false"
+        android:enabled="false"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="ID"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <EditText
+        android:id="@+id/dialog_field_1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="Value"
+        android:singleLine="true"
+        app:layout_constraintStart_toEndOf="@+id/dialog_field"
+        app:layout_constraintTop_toTopOf="@+id/dialog_field" />
+
+    <EditText
+        android:id="@+id/dialog_field_2"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="Description"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dialog_field_1"
+        app:layout_constraintTop_toTopOf="@+id/dialog_field_1" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"></LinearLayout>
+
+    <Button
+        android:id="@+id/dialog_btn_update"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/design_default_color_primary_dark"
+        android:clickable="true"
+        android:text="@string/btn_update"
+        android:textColor="@android:color/white"
+        android:textStyle="normal|bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_btn_delete"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_field" />
+
+    <Button
+        android:id="@+id/dialog_btn_delete"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:background="@color/colorRed"
+        android:clickable="true"
+        android:text="@string/btn_delete"
+        android:textColor="@android:color/white"
+        android:textStyle="normal|bold"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_btn_update"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_btn_close"
+        app:layout_constraintTop_toTopOf="@+id/dialog_btn_update" />
+
+    <Button
+        android:id="@+id/dialog_btn_close"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:background="@color/colorGreen"
+        android:clickable="true"
+        android:text="@string/btn_close"
+        android:textColor="@android:color/white"
+        android:textStyle="normal|bold"
+        app:layout_constraintBottom_toBottomOf="@+id/dialog_btn_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dialog_btn_delete" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
