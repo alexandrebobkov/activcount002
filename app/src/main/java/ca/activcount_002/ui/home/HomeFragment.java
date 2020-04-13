@@ -123,7 +123,7 @@ public class HomeFragment extends Fragment
                 final   String  msg;
                 final   Dialog  dialog = new Dialog(getContext());
 
-                dialog.setTitle("SQLITE DATA");
+                //dialog.setTitle("SQLITE DATA");
                 dialog.setContentView(R.layout.app_dialog_layout);
 
                 btn_save        =   (Button)    dialog.findViewById(R.id.dialog_btn_update);

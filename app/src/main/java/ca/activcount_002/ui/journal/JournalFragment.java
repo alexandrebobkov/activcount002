@@ -122,7 +122,7 @@ public class JournalFragment extends Fragment
         // Post Journal Entry button
         btn_jrnl_post.setOnClickListener(new View.OnClickListener() { @Override public void onClick(View v) {
             Dialog dialog          = new Dialog(getContext());
-            dialog.setTitle("Post Journal Entry");
+            //dialog.setTitle("Post Journal Entry");
             dialog.setContentView(R.layout.fragment_journal_dialog_wide);
             dialog.show();
             msg.setText("Posted Journal Entry.");
