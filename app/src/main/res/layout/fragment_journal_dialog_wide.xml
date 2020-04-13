@@ -3,17 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:gravity="center|center_horizontal|fill|top|center_vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         app:buttonGravity="top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +30,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="24dp"
         android:editable="false"
         android:enabled="false"
         android:gravity="center_horizontal|center_vertical"
@@ -41,28 +40,50 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <EditText
-        android:id="@+id/dialog_field_1"
+        android:id="@+id/dialog_je_description"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:gravity="center_horizontal|center_vertical"
-        android:hint="Value"
+        android:hint="description"
         android:singleLine="true"
         app:layout_constraintStart_toEndOf="@+id/dialog_field"
         app:layout_constraintTop_toTopOf="@+id/dialog_field" />
 
     <EditText
-        android:id="@+id/dialog_field_2"
+        android:id="@+id/dialog_je_amount"
         android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="amount"
+        android:singleLine="true"
+        app:layout_constraintStart_toEndOf="@+id/dialog_je_description"
+        app:layout_constraintTop_toTopOf="@+id/dialog_je_description" />
+
+    <EditText
+        android:id="@+id/dialog_je_dr_acct"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="debit acct"
+        android:singleLine="true"
+        app:layout_constraintStart_toEndOf="@+id/dialog_je_amount"
+        app:layout_constraintTop_toTopOf="@+id/dialog_je_amount"/>
+
+    <EditText
+        android:id="@+id/dialog_je_cr_acct"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:gravity="center_horizontal|center_vertical"
-        android:hint="Description"
+        android:hint="credit acct"
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/dialog_field_1"
-        app:layout_constraintTop_toTopOf="@+id/dialog_field_1" />
+        app:layout_constraintStart_toEndOf="@+id/dialog_je_dr_acct"
+        app:layout_constraintTop_toTopOf="@+id/dialog_je_dr_acct" />
 
     <Button
         android:id="@+id/dialog_btn_update"
@@ -70,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/design_default_color_primary_dark"
         android:clickable="true"
         android:text="@string/btn_update"
