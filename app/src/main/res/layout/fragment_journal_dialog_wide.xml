@@ -9,14 +9,10 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:gravity="center|center_horizontal|fill|top|center_vertical"
         android:visibility="visible"
         app:buttonGravity="top"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:title="Journal Entry Dialog"
         app:titleMarginBottom="0dp"
@@ -41,7 +37,7 @@
 
     <EditText
         android:id="@+id/dialog_je_description"
-        android:layout_width="150dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:gravity="center_horizontal|center_vertical"
@@ -52,7 +48,7 @@
 
     <EditText
         android:id="@+id/dialog_je_amount"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:gravity="center_horizontal|center_vertical"
@@ -70,18 +66,16 @@
         android:hint="debit acct"
         android:singleLine="true"
         app:layout_constraintStart_toEndOf="@+id/dialog_je_amount"
-        app:layout_constraintTop_toTopOf="@+id/dialog_je_amount"/>
+        app:layout_constraintTop_toTopOf="@+id/dialog_je_amount" />
 
     <EditText
         android:id="@+id/dialog_je_cr_acct"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:gravity="center_horizontal|center_vertical"
         android:hint="credit acct"
         android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/dialog_je_dr_acct"
         app:layout_constraintTop_toTopOf="@+id/dialog_je_dr_acct" />
 
@@ -89,8 +83,8 @@
         android:id="@+id/dialog_btn_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:background="@color/design_default_color_primary_dark"
         android:clickable="true"
@@ -98,35 +92,35 @@
         android:textColor="@android:color/white"
         android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/dialog_btn_delete"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_je_id" />
 
     <Button
         android:id="@+id/dialog_btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="16dp"
         android:background="@color/colorRed"
         android:clickable="true"
         android:text="@string/btn_delete"
         android:textColor="@android:color/white"
         android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_btn_update"
-        app:layout_constraintEnd_toStartOf="@+id/dialog_btn_close"
+        app:layout_constraintStart_toEndOf="@+id/dialog_btn_update"
         app:layout_constraintTop_toTopOf="@+id/dialog_btn_update" />
 
     <Button
         android:id="@+id/dialog_btn_close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="16dp"
         android:background="@color/colorGreen"
         android:clickable="true"
         android:text="@string/btn_close"
         android:textColor="@android:color/white"
         android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="@+id/dialog_btn_delete"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dialog_btn_delete"
         app:layout_constraintTop_toTopOf="@+id/dialog_btn_delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
