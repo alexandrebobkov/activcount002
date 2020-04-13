@@ -8,7 +8,6 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:gravity="center_horizontal|center_vertical"
@@ -17,6 +16,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:title="Journal Entry"
+        app:titleMargin="0dp"
+        app:titleMarginEnd="0dp"
+        app:titleMarginStart="0dp"
+        app:titleMarginTop="0dp"
         app:titleTextColor="#FFFFFF" />
 
     <EditText
