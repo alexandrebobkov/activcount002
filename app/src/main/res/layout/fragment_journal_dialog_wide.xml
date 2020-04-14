@@ -103,7 +103,7 @@
         android:id="@+id/dialog_btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="24dp"
         android:background="@color/colorRed"
         android:clickable="true"
         android:text="@string/btn_delete"
