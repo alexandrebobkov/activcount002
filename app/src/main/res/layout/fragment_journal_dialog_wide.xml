@@ -38,63 +38,66 @@
 
     <EditText
         android:id="@+id/dialog_je_description"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_horizontal|center_vertical"
         android:hint="description"
         android:singleLine="true"
-        app:layout_constraintStart_toEndOf="@+id/dialog_je_id"
-        app:layout_constraintTop_toTopOf="@+id/dialog_je_id" />
+        app:layout_constraintEnd_toEndOf="@+id/dialog_je_cr_acct"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_je_id" />
 
     <EditText
         android:id="@+id/dialog_je_amount"
-        android:layout_width="100dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center_horizontal|center_vertical"
         android:hint="amount"
         android:singleLine="true"
-        app:layout_constraintStart_toEndOf="@+id/dialog_je_description"
-        app:layout_constraintTop_toTopOf="@+id/dialog_je_description" />
+        app:layout_constraintEnd_toStartOf="@+id/dialog_je_dr_acct"
+        app:layout_constraintStart_toEndOf="@+id/dialog_je_id"
+        app:layout_constraintTop_toTopOf="@+id/dialog_je_id" />
 
     <EditText
         android:id="@+id/dialog_je_dr_acct"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center_horizontal|center_vertical"
         android:hint="debit acct"
         android:singleLine="true"
-        app:layout_constraintStart_toEndOf="@+id/dialog_je_amount"
+        app:layout_constraintEnd_toStartOf="@+id/dialog_je_cr_acct"
         app:layout_constraintTop_toTopOf="@+id/dialog_je_amount" />
 
     <EditText
         android:id="@+id/dialog_je_cr_acct"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center_horizontal|center_vertical"
         android:hint="credit acct"
         android:singleLine="true"
-        app:layout_constraintStart_toEndOf="@+id/dialog_je_dr_acct"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/dialog_je_dr_acct" />
 
     <Button
         android:id="@+id/dialog_btn_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@color/design_default_color_primary_dark"
         android:clickable="true"
         android:text="@string/btn_update"
         android:textColor="@android:color/white"
         android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dialog_je_id" />
+        app:layout_constraintStart_toStartOf="@+id/dialog_je_description"
+        app:layout_constraintTop_toBottomOf="@+id/dialog_je_description" />
 
     <Button
         android:id="@+id/dialog_btn_delete"
