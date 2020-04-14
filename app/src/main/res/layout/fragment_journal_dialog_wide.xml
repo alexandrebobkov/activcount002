@@ -9,6 +9,7 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:gravity="center|center_horizontal|fill|top|center_vertical"
         android:visibility="visible"
