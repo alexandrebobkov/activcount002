@@ -25,7 +25,7 @@
     <string name="btn_update">UPDATE</string>
     <string name="btn_delete">DELETE</string>
     <string name="btn_close">CLOSE</string>
-    <string name="btn_post_je">POST JE</string>
+    <string name="btn_post_je">ADD JE</string>
     <string name="btn_reset">RESET</string>
     <string name="btn_init">INITIALIZE</string>
     <string name="status_msg">...</string>
