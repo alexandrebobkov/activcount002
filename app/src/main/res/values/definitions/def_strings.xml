@@ -1,0 +1,3 @@
+<resources>
+	<string name="def_ratio_quick">Liquidity test. Calculated by dividing the most liquid current assets by current liabilities. In general, ratio should at least be equal to 1.</string>
+</resources>

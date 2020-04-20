@@ -44,6 +44,9 @@
     <string name="ratio_quick">Quick Ratio</string>
     <string name="ratio_quick_def">Liquidity test. Calculated by dividing the most liquid current assets by current liabilities. In general, ratio should at least be equal to 1.</string>
 
+    <string name="ratio_debt_equity">Debt-Equity Ratio</string>
+    <string name="ratio_debt_equity_def">Measure that shows the amount of protection available to creditors.</string>
+
     <string name="data_cash">Cash and Deposits</string>
     <string name="data_inventory">Supplies and Inventory</string>
     <string name="data_total_assets">TOTAL ASSETS</string>
