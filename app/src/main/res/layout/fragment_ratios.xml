@@ -10,7 +10,9 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:gravity="center"
         android:text="@string/ratio_quick"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/text_ratio_quick_def"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/text_ratio_quick_def" />
@@ -33,7 +35,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:singleLine="false"
         android:text="@string/ratio_debt_equity"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_ratio_quick_def" />
 
