@@ -1,6 +1,0 @@
-theme: jekyll-theme-cayman
-title: activcount Android App
-author: Alexander B.
-email: alexander@activcount.ca
-description: > # this means to ignore newlines until "baseurl:"
-  Accounting application for Android.
