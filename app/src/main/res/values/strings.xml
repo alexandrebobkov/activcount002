@@ -30,7 +30,7 @@
     <string name="btn_init">INITIALIZE</string>
     <string name="status_msg">...</string>
 
-    <string name="app_objective">This program provides condensed visualization of financial information about your business. In addition, program provides: key ratio analysis, forecasting, and pro-forma financial statements \nv.1.2.1</string>
+    <string name="app_objective">The aim of this program is to provide condensed visualization of financial information about your business. In addition, program provides: key ratio analysis, forecasting, and pro-forma financial statements \nv.1.2.1 \n\nM060 - 1554 Carling Ave\nOttawa ON K1Z 7M4\n\napp@activcount.ca\n(343) 202 - 2043</string>
     <string name="company_name">Alexandre Comptabilité Spécialisé</string>
     <string name="title_activity_attach_doc">AttachDoc</string>
     <string name="title_activity_overview">Overview</string>
