@@ -32,7 +32,7 @@ public class ShareFragment extends Fragment {
         appWebView.setWebViewClient(new WebViewClient());
         appWebView.getSettings().setJavaScriptEnabled(true);
         appWebView.canGoBack();
-        appWebView.loadUrl("https://www.activcount.ca");
+        appWebView.loadUrl("https://app.activcount.ca/");
 
 
         shareViewModel.getText().observe(this, new Observer<String>() {
