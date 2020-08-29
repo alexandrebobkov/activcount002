@@ -66,10 +66,12 @@ public class ShareFragment extends Fragment {
     }
 
     //@Override
-    public void onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && appWebView.canGoBack()) {
             appWebView.goBack();
+            return true;
         }
+        return this.onKeyDown(keyCode, event);
     }
 
 
